@@ -1,0 +1,26 @@
+{
+  "name": "wfd",
+  "version": "0.0.1",
+  "description": "a workflow designer base on @antv/g6",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "authors": {
+    "name": "guozhaolong",
+    "email": "guozhaolong@gmail.com"
+  },
+  "repository": "https://github.com/guozhaolong/wfd",
+  "scripts": {
+    "dev": "umi-lib doc dev",
+    "build": "umi-lib build"
+  },
+  "dependencies": {
+    "@antv/g6": "^3.0.0"
+  },
+  "peerDependencies": {
+    "react": "16.x"
+  },
+  "devDependencies": {
+    "umi-library": "^1.1.1"
+  },
+  "license": "MIT"
+}

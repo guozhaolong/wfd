@@ -1,6 +1,5 @@
 # @umi-material/wfd
 
-a workflow designer base on @antv/g6
 
 ## Usage
 

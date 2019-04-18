@@ -1,6 +1,6 @@
 {
   "name": "wfd",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "a workflow designer base on @antv/g6",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -17,7 +17,8 @@
     "build": "umi-lib build"
   },
   "files": [
-    "dist"
+    "dist",
+    "assets"
   ],
   "dependencies": {
     "@antv/g6": "^3.0.0",

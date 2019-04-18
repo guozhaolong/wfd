@@ -8,11 +8,17 @@
     "name": "guozhaolong",
     "email": "guozhaolong@gmail.com"
   },
-  "repository": "https://github.com/guozhaolong/wfd",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guozhaolong/wfd.git"
+  },
   "scripts": {
     "dev": "umi-lib doc dev",
     "build": "umi-lib build"
   },
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "@antv/g6": "^3.0.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.17",
@@ -29,5 +35,18 @@
   "devDependencies": {
     "umi-library": "^1.1.1"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/guozhaolong/wfd/issues"
+  },
+  "homepage": "https://github.com/guozhaolong/wfd#readme",
+  "directories": {
+    "example": "example"
+  },
+  "keywords": [
+    "workflow",
+    "design",
+    "diagram"
+  ],
+  "author": "stevenkwok"
 }

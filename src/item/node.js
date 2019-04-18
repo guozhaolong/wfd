@@ -74,7 +74,6 @@ export default function(G6) {
           cursor: editorStyle.cursor.hoverNode
         }
       };
-
       group.anchorShapes = [];
       group.showAnchor = (group) => {
         this.drawAnchor(group);

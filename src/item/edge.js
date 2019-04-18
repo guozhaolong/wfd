@@ -1,8 +1,18 @@
 import editorStyle from "../util/defaultStyle";
+import _ from 'lodash';
 const Util = require('@antv/g6/src/util');
 
 export default function(G6){
   G6.registerEdge('flow-polyline-round', {
+    drawShape(cfg, group) {
+      this.group = group;
+      const shapeStyle = this.getShapeStyle(cfg);
+      const shape = group.addShape('path', {
+        className: 'edge-shape',
+        attrs: shapeStyle
+      });
+      return shape;
+    },
     getShapeStyle(cfg) {
       cfg = this.getPathPoints(cfg);
       const startPoint = cfg.startPoint;
@@ -24,28 +34,37 @@ export default function(G6){
     },
     getPath(points){
       const path = [];
-      const last = points.length - 1;
-      const cornerLen = 5;
-      Util.each(points, (point, index) => {
-        if (index === 0) {
+      for(let i = 0; i < points.length; i++){
+        const point = points[i];
+        if (i === 0) {
           path.push([ 'M', point.x, point.y ]);
-        } else if(index === last) {
+        } else if(i === points.length - 1) {
           path.push([ 'L', point.x, point.y ]);
         } else {
-          const prevPoint = points[index - 1];
-          const nextPoint = points[index + 1];
-          if(prevPoint.x === point.x) {
-            path.push(['L', point.x, point.y > prevPoint.y ? point.y - cornerLen : point.y + cornerLen]);
-          } else {
-            path.push(['L', point.x > prevPoint.x ? point.x - cornerLen : point.x + cornerLen, point.y]);
+          const prevPoint = points[i - 1];
+          let nextPoint = points[i + 1];
+          let cornerLen = 5;
+          if(Math.abs(point.y - prevPoint.y) > cornerLen || Math.abs(point.x - prevPoint.x) > cornerLen){
+            if(prevPoint.x === point.x) {
+              path.push(['L', point.x, point.y > prevPoint.y ? point.y - cornerLen : point.y + cornerLen]);
+            } else if(prevPoint.y === point.y) {
+              path.push(['L', point.x > prevPoint.x ? point.x - cornerLen : point.x + cornerLen, point.y]);
+            }
           }
-          if(nextPoint.x === point.x) {
+          const yLen = Math.abs(point.y - nextPoint.y);
+          const xLen = Math.abs(point.x - nextPoint.x);
+          if(yLen > 0 && yLen < cornerLen){
+            cornerLen = yLen;
+          }else if(xLen > 0 && xLen < cornerLen){
+            cornerLen = xLen;
+          }
+          if(prevPoint.x !== nextPoint.x && nextPoint.x === point.x) {
             path.push([ 'Q', point.x, point.y, point.x, point.y > nextPoint.y ? point.y - cornerLen : point.y + cornerLen]);
-          } else {
+          } else if(prevPoint.y !== nextPoint.y && nextPoint.y === point.y) {
             path.push([ 'Q', point.x, point.y, point.x > nextPoint.x ? point.x - cornerLen : point.x + cornerLen, point.y]);
           }
         }
-      });
+      }
       return path;
     },
     getControlPoints(cfg) {
@@ -53,16 +72,7 @@ export default function(G6){
         return cfg.controlPoints;
       }
 
-      const startPoint = cfg.startPoint;
-      const endPoint = cfg.endPoint;
-      const startIdx = startPoint.index;
-      const endIdx = endPoint.index;
-      const gap = 20;
-      const sourceBox = cfg.sourceNode.getBBox();
-      const targetBox = cfg.targetNode.getBBox();
-      // console.log(this.findPath(startPoint,endPoint,cfg.sourceNode,cfg.targetNode));
-
-      return cfg.controlPoints;
+      return this.polylineFinding(cfg.sourceNode,cfg.targetNode,cfg.startPoint,cfg.endPoint,15);
     },
     setState(name, value, item) {
       const group = item.getContainer();
@@ -81,29 +91,26 @@ export default function(G6){
           path.attr('stroke',editorStyle.edgeStyle.stroke);
       }
     },
-    getPointBBox(t) {
-      return { centerX: t.x, centerY: t.y, minX: t.x, minY: t.y, maxX: t.x, maxY: t.y, height: 0, width: 0 };
-    },
-    getBBoxWithGap(bbox, gap) {
+    getExpandedBBox(bbox, offset) {
       return 0 === bbox.width && 0 === bbox.height ? bbox : {
         centerX: bbox.centerX,
         centerY: bbox.centerY,
-        minX: bbox.minX - gap,
-        minY: bbox.minY - gap,
-        maxX: bbox.maxX + gap,
-        maxY: bbox.maxY + gap,
-        height: bbox.height + 2 * gap,
-        width: bbox.width + 2 * gap,
+        minX: bbox.minX - offset,
+        minY: bbox.minY - offset,
+        maxX: bbox.maxX + offset,
+        maxY: bbox.maxY + offset,
+        height: bbox.height + 2 * offset,
+        width: bbox.width + 2 * offset,
       };
     },
-    getGapPoint(bbox, point) {
+    getExpandedPort(bbox, point) {
       return Math.abs(point.x - bbox.centerX) / bbox.width > Math.abs(point.y - bbox.centerY) / bbox.height //判断点是在图形左右还是上下
         ? { x: point.x > bbox.centerX ? bbox.maxX : bbox.minX, y: point.y } //左右时
         : { x: point.x, y: point.y > bbox.centerY ? bbox.maxY : bbox.minY }; //上下时
     },
-    getMergeBBox(sourceBBox, targetBBox) {
-      const minX = Math.min(sourceBBox.minX, targetBBox.minX), minY = Math.min(sourceBBox.minY, targetBBox.minY), maxX = Math.max(sourceBBox.maxX, targetBBox.maxX),
-        maxY = Math.max(sourceBBox.maxY, targetBBox.maxY);
+    combineBBoxes(sBBox, tBBox) {
+      const minX = Math.min(sBBox.minX, tBBox.minX), minY = Math.min(sBBox.minY, tBBox.minY),
+        maxX = Math.max(sBBox.maxX, tBBox.maxX), maxY = Math.max(sBBox.maxY, tBBox.maxY);
       return {
         centerX: (minX + maxX) / 2,
         centerY: (minY + maxY) / 2,
@@ -115,64 +122,146 @@ export default function(G6){
         width: maxX - minX,
       };
     },
-    getRectPoint(t) {
-      return [{ x: t.minX, y: t.minY }, { x: t.maxX, y: t.minY }, { x: t.maxX, y: t.maxY }, { x: t.minX, y: t.maxY }];
-    },
-    hit(point, bbox) {
-      return point.x < bbox.minX || point.x > bbox.maxX || point.y < bbox.minY || point.y > bbox.maxY;
-    },
-    getPointsId(points) {
-      return points.map(p => {
-        p.id = p.x + '-' + p.y;
-        let obj = {};
-        obj[p.id] = p;
-        return obj;
-      })
-    },
-    findPath(startPoint, endPoint, sourceNode, targetNode) {
-      const gap = 20;
-      const sourceBBox = sourceNode && sourceNode.getBBox() ? sourceNode.getBBox() : this.getPointBBox(startPoint);
-      const targetBBox = targetNode && targetNode.getBBox() ? targetNode.getBBox() : this.getPointBBox(endPoint);
-      const sourceGapBBox = this.getBBoxWithGap(sourceBBox,gap);
-      const targetGapBBox = this.getBBoxWithGap(targetBBox,gap);
-      const startGapPoint = this.getGapPoint(sourceGapBBox,startPoint);
-      const endGapPoint = this.getGapPoint(targetGapBBox,endPoint);
-      const minX = Math.min(startGapPoint.x,endGapPoint.x);
-      const maxX = Math.max(startGapPoint.x,endGapPoint.x);
-      const minY = Math.min(startGapPoint.y,endGapPoint.y);
-      const maxY = Math.max(startGapPoint.y,endGapPoint.y);
-      const virtualBBox = {
+    getBBoxFromVertexes(sPoint, tPoint){
+      const minX = Math.min(sPoint.x,tPoint.x), maxX = Math.max(sPoint.x,tPoint.x),
+        minY = Math.min(sPoint.y,tPoint.y), maxY = Math.max(sPoint.y,tPoint.y);
+      return {
         centerX: (minX + maxX) / 2,
         centerY: (minY + maxY) / 2,
         maxX: maxX,
-        maxY: minY,
+        maxY: maxY,
         minX: minX,
-        minY: maxY,
+        minY: minY,
         height: maxY - minY,
         width: maxX - minX,
       };
-      const bbox1 = this.getMergeBBox(sourceGapBBox,targetGapBBox);
-      const bbox2 = this.getMergeBBox(sourceGapBBox,virtualBBox);
-      const bbox3 = this.getMergeBBox(targetGapBBox,virtualBBox);
-      let points = [this.getRectPoint(bbox1),this.getRectPoint(bbox2),this.getRectPoint(bbox3)];
-      const bboxCenter = { x: (startPoint.x + endPoint.x) / 2, y: (startPoint.y + endPoint.y) / 2 };
-
-      [virtualBBox, bbox1, bbox2,bbox3].forEach((bbox) => {
-        if(bboxCenter.x < bbox.minX || bboxCenter.x > bbox.maxX)
-          points.push([{ x: bboxCenter.x, y: bbox.minY }, { x: bboxCenter.x, y: bbox.maxY }]);
-        if(bboxCenter.y < bbox.minY || bboxCenter.y > bbox.maxY)
-          points.push([{ x: bbox.minX, y: bboxCenter.y }, { x: bbox.maxX, y: bboxCenter.y }]);
-        points = points.filter(p => this.hit(p,sourceGapBBox) && this.hit(p,targetGapBBox))
+    },
+    vertexOfBBox(bbox){
+      return [{ x: bbox.minX, y: bbox.minY }, { x: bbox.maxX, y: bbox.minY }, { x: bbox.maxX, y: bbox.maxY }, { x: bbox.minX, y: bbox.maxY }];
+    },
+    crossPointsByLineAndBBox(bbox,centerPoint){
+      let crossPoints = [];
+      if(!(centerPoint.x < bbox.minX || centerPoint.x > bbox.maxX))
+        crossPoints = crossPoints.concat([{ x: centerPoint.x, y: bbox.minY }, { x: centerPoint.x, y: bbox.maxY }]);
+      if(!(centerPoint.y < bbox.minY || centerPoint.y > bbox.maxY))
+        crossPoints = crossPoints.concat([{ x: bbox.minX, y: centerPoint.y }, { x: bbox.maxX, y: centerPoint.y }]);
+      return crossPoints;
+    },
+    getConnectablePoints(sBBox, tBBox, sPoint, tPoint){
+      const lineBBox = this.getBBoxFromVertexes(sPoint, tPoint);
+      const outerBBox = this.combineBBoxes(sBBox, tBBox);
+      const sLineBBox = this.combineBBoxes(sBBox, lineBBox);
+      const tLineBBox = this.combineBBoxes(tBBox, lineBBox);
+      let points = [];
+      points = points.concat(this.vertexOfBBox(sLineBBox),this.vertexOfBBox(tLineBBox),this.vertexOfBBox(outerBBox));
+      const centerPoint = { x: outerBBox.centerX, y: outerBBox.centerY };
+      [ outerBBox, sLineBBox, tLineBBox, lineBBox ].forEach(bbox => {
+        points = points.concat(this.crossPointsByLineAndBBox(bbox, centerPoint)) // 包含 bbox 延长线和线段的相交线
       });
-      [{ x: startGapPoint.x, y: endGapPoint.y }, { x: endGapPoint.x, y: startGapPoint.y }].forEach((p) => {
-        this.hit(p, sourceGapBBox) && this.hit(p, targetGapBBox) && points.push(p);
-      })
-      points.unshift(startGapPoint);
-      points.push(endGapPoint);
-      let result = points;
-      result.unshift(startPoint);
-      result.push(endPoint);
-      return result;
-    }
+      points.push({ x: sPoint.x, y: tPoint.y });
+      points.push({ x: tPoint.x, y: sPoint.y });
+      return points
+    },
+    filterConnectablePoints(points,bbox){
+      return points.filter(point => point.x <= bbox.minX || point.x >= bbox.maxX || point.y <= bbox.minY || point.y >= bbox.maxY)
+    },
+    AStar(points, sPoint, tPoint, sBBox, tBBox){
+      const openList = [sPoint];
+      const closeList = [];
+      points = _.uniqBy(this.fillId(points),'id');
+      points.push(tPoint);
+      let endPoint;
+      while(openList.length > 0){
+        let minCostPoint;
+        openList.forEach((p,i) => {
+          if(!p.parent)
+            p.f = 0;
+          if(!minCostPoint)
+            minCostPoint = p;
+          if(p.f < minCostPoint.f)
+            minCostPoint = p;
+        });
+        if(minCostPoint.x === tPoint.x && minCostPoint.y === tPoint.y) {
+          endPoint = minCostPoint;
+          break;
+        }
+        openList.splice(openList.findIndex(o => o.x === minCostPoint.x && o.y === minCostPoint.y),1);
+        closeList.push(minCostPoint);
+        const neighbor = points.filter(p => (p.x === minCostPoint.x || p.y === minCostPoint.y)
+          && !(p.x === minCostPoint.x && p.y === minCostPoint.y)
+          && !this.crossBBox([sBBox,tBBox],minCostPoint,p));
+        neighbor.forEach(p => {
+          const inOpen = openList.find(o => o.x === p.x && o.y === p.y);
+          const currentG = this.getCost(p,minCostPoint);
+          if(closeList.find(o => o.x === p.x && o.y === p.y)){
+
+          }else if(inOpen) {
+            if(p.g > currentG) {
+              p.parent = minCostPoint;
+              p.g = currentG;
+              p.f = p.g + p.h;
+            }
+          }else {
+            p.parent = minCostPoint;
+            p.g = currentG;
+            let h = this.getCost(p,tPoint);
+            if(this.crossBBox([tBBox],p,tPoint)){
+              h += (tBBox.width/2+tBBox.height/2); //如果穿过bbox则增加该点的预估代价为bbox周长的一半
+            }
+            p.h = h;
+            p.f = p.g + p.h;
+            openList.push(p)
+          }
+        });
+      }
+      if(endPoint){
+        const result = [];
+        result.push({x:endPoint.x,y:endPoint.y});
+        while(endPoint.parent){
+          endPoint = endPoint.parent;
+          result.push({x:endPoint.x,y:endPoint.y});
+        }
+        return result.reverse();
+      }
+      return [];
+    },
+    crossBBox(bboxes,p1,p2){
+      for(let i=0; i < bboxes.length; i++) {
+        const bbox = bboxes[i];
+        if (p1.x === p2.x && bbox.minX < p1.x && bbox.maxX > p1.x) {
+          if (p1.y < bbox.maxY && p2.y >= bbox.maxY || p2.y < bbox.maxY && p1.y >= bbox.maxY)
+            return true
+        } else if (p1.y === p2.y && bbox.minY < p1.y && bbox.maxY > p1.y) {
+          if (p1.x < bbox.maxX && p2.x >= bbox.maxX || p2.x < bbox.maxX && p1.x >= bbox.maxX)
+            return true
+        }
+      }
+      return false;
+    },
+    getCost(p1,p2){
+      return Math.abs(p1.x - p2.x) + Math.abs(p1.y - p2.y);
+    },
+    getPointBBox(t) {
+      return { centerX: t.x, centerY: t.y, minX: t.x, minY: t.y, maxX: t.x, maxY: t.y, height: 0, width: 0 };
+    },
+    fillId(points) {
+      points.forEach(p => {
+        p.id = p.x + '-' + p.y;
+      });
+      return points;
+    },
+    polylineFinding(sNode, tNode, sPort, tPort, offset) {
+      const sourceBBox = sNode && sNode.getBBox() ? sNode.getBBox() : this.getPointBBox(sPort);
+      const targetBBox = tNode && tNode.getBBox() ? tNode.getBBox() : this.getPointBBox(tPort);
+      const sBBox = this.getExpandedBBox(sourceBBox,offset);
+      const tBBox = this.getExpandedBBox(targetBBox,offset);
+      const sPoint = this.getExpandedPort(sBBox,sPort);
+      const tPoint = this.getExpandedPort(tBBox,tPort);
+      let points = this.getConnectablePoints(sBBox, tBBox, sPoint, tPoint); // 获取合法折点集
+      points = this.filterConnectablePoints(points, sBBox); // 清除box内部点
+      points = this.filterConnectablePoints(points, tBBox); // 清除box内部点
+      const polylinePoints = this.AStar(points, sPoint, tPoint, sBBox, tBBox); // 用 A-Star 算法寻径
+      return polylinePoints;
+    },
   },'polyline');
 }

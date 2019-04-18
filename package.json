@@ -14,7 +14,14 @@
     "build": "umi-lib build"
   },
   "dependencies": {
-    "@antv/g6": "^3.0.0"
+    "@antv/g6": "^3.0.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.17",
+    "@fortawesome/free-regular-svg-icons": "^5.8.1",
+    "@fortawesome/free-solid-svg-icons": "^5.8.1",
+    "@fortawesome/react-fontawesome": "^0.1.4",
+    "lodash": "^4.17.11",
+    "i": "^0.3.6",
+    "npm": "^6.9.0"
   },
   "peerDependencies": {
     "react": "16.x"

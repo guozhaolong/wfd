@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import styles from './index.less';
 import G6 from '@antv/g6/src';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSave,faReply,faShare,faCopy, faPaste,faTrash,faSearchPlus,faSearchMinus,faCompress,faExpandArrowsAlt } from '@fortawesome/free-solid-svg-icons'
+library.add(faSave,faReply,faShare,faCopy,faPaste,faTrash,faSearchPlus,faSearchMinus,faCompress,faExpandArrowsAlt);
 import registerItem from './item'
 import registerBehavior from './behavior'
 registerItem(G6);
@@ -13,6 +17,9 @@ const toolbarHeight = 40;
 
 
 class Designer extends Component {
+  static defaultProps = {
+    onSave: ()=>{}
+  };
   constructor(props) {
     super(props);
     this.pageRef= React.createRef();
@@ -82,13 +89,25 @@ class Designer extends Component {
 
   render() {
     return (
-      <div className="root">
-        <div className="toolbar">
-          
+      <div className={styles.root}>
+        <div className={styles.toolbar}>
+          <span className={styles.command}><FontAwesomeIcon icon="reply" color="#666" /></span>
+          <span className={styles.command}><FontAwesomeIcon icon="share" color="#666" /></span>
+          <span className={styles.separator} />
+          <span className={styles.command}><FontAwesomeIcon icon="copy" color="#666" /></span>
+          <span className={styles.command}><FontAwesomeIcon icon="paste" color="#666" /></span>
+          <span className={styles.command}><FontAwesomeIcon icon="trash" color="#666" /></span>
+          <span className={styles.separator} />
+          <span className={styles.command}><FontAwesomeIcon icon="search-plus" color="#666" /></span>
+          <span className={styles.command}><FontAwesomeIcon icon="search-minus" color="#666" /></span>
+          <span className={styles.command}><FontAwesomeIcon icon="compress" color="#666" /></span>
+          <span className={styles.command}><FontAwesomeIcon icon="expand-arrows-alt" color="#666" /></span>
+          <span className={styles.separator} />
+          <span className={styles.command} onClick={()=>this.props.onSave(this.graph.save())}><FontAwesomeIcon icon="save" color="#1890ff" size="lg"/></span>
         </div>
         <div>
           <div style={{flex:'0 0 auto',float: 'left',width:'10%'}}>
-            <div className="itemPanel">
+            <div className={styles.itemPanel}>
               <img onDragStart={(e)=>this.dragAddNodeStart(e,{shape:'start-node',size:'40*40',label:'开始'})}
                    onDragEnd={(e)=>this.dragAddNodeEnd(e)}
                    src={require('../assets/start.svg')} style={{width:58,height:58}}/>
@@ -110,8 +129,10 @@ class Designer extends Component {
           </div>
           <div style={{flex:'0 0 auto',float: 'left',width:'20%'}}>
             <div>
-              <div className="panelTitle"></div>
-              <div>asdfasdfasd</div>
+              <div className={styles.panelTitle}>属性</div>
+              <div>
+                <div><label>名称：</label></div>
+              </div>
             </div>
           </div>
         </div>

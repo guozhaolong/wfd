@@ -23,4 +23,4 @@ const data = {
 MIT
 
 ## Contact
-Wechat: stevenkwoksl
+WX: stevenkwoksl

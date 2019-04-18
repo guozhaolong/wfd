@@ -1,5 +1,5 @@
 ## Usage
-
+![image](http://github.com/guozhaolong/wfd/example/images/demo.jpg)
 ```
 import Designer from 'wfd';
 

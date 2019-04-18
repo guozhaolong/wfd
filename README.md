@@ -3,8 +3,9 @@
 [![NPM Version](http://img.shields.io/npm/v/wfd.svg?style=flat)](https://www.npmjs.org/package/wfd)
 [![NPM Downloads](https://img.shields.io/npm/dm/wfd.svg?style=flat)](https://www.npmjs.org/package/wfd)
 
-## Usage
 ![image](https://github.com/guozhaolong/wfd/raw/master/example/images/demo.jpg)
+
+## Usage
 ```
 import Designer from 'wfd';
 

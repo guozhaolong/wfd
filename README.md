@@ -1,6 +1,3 @@
-# @umi-material/wfd
-
-
 ## Usage
 
 ```

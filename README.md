@@ -1,3 +1,6 @@
+##wfd
+[![NPM Version](http://img.shields.io/npm/v/wfd.svg?style=flat)](https://www.npmjs.org/package/wfd)
+
 ## Usage
 ![image](https://github.com/guozhaolong/wfd/raw/master/example/images/demo.jpg)
 ```

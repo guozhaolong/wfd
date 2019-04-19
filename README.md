@@ -1,10 +1,8 @@
 ## Workflow Designer
-[![](https://img.shields.io/travis/guozhaolong/wfd)](https://travis-ci.org/guozhaolong/wfd)
-![](https://img.shields.io/badge/language-javascript-red.svg)
-![](https://img.shields.io/badge/license-MIT-000000.svg)
 
 [![NPM Version](http://img.shields.io/npm/v/wfd.svg?style=flat)](https://www.npmjs.org/package/wfd)
 [![NPM Downloads](https://img.shields.io/npm/dm/wfd.svg?style=flat)](https://www.npmjs.org/package/wfd)
+![](https://img.shields.io/badge/license-MIT-000000.svg)
 
 ![image](https://github.com/guozhaolong/wfd/raw/master/example/snapshots/1.jpg)
 
@@ -31,9 +29,6 @@ const data = {
 
 <Designer data={data} onSave={(d)=>{console.log(d)}}/>
 ```
-## LICENSE
-
-MIT
 
 ## Contact
 WX: stevenkwoksl

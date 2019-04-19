@@ -27,6 +27,7 @@ class Designer extends Component {
         label: '',
         assignee: '',
         isSequential: false,
+        conditionExpression: '',
       },
       curZoom: 1,
       minZoom: 0.5,
@@ -66,7 +67,7 @@ class Designer extends Component {
       if(item)
         this.setState({selectedModel:{  ...item.getModel() }});
       else
-        this.setState({selectedModel:{ clazz: '',label: '',assignee: '',isSequential:false,}});
+        this.setState({selectedModel:{ clazz: '',label: '',assignee: '',isSequential:false, conditionExpression: ''}});
     });
   }
 
@@ -204,7 +205,7 @@ class Designer extends Component {
                   <div>条件表达式：</div>
                   <Input.TextArea style={{ width: 200,fontSize:12 }}
                                   rows={4}
-                                  value={this.state.selectedModel.label}
+                                  value={this.state.selectedModel.conditionExpression}
                                   onChange={(e)=>{this.onItemCfgChange('conditionExpression',e.target.value)}}/>
                 </div>
               </div>

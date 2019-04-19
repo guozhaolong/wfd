@@ -13,6 +13,41 @@ export default function(G6){
       });
       return shape;
     },
+    drawLabel(cfg, group) {
+      const labelCfg = cfg.labelCfg || {};
+      const labelStyle = this.getLabelStyle(cfg, labelCfg, group);
+      const label = group.addShape('text', {
+        attrs: labelStyle
+      });
+      const labelBBox = label.getBBox();
+      group.addShape('rect',{
+        className: 'edge-labelRect',
+        attrs: {
+          x:labelBBox.x-editorStyle.edgeLabelRectPadding/2,
+          y:labelBBox.y-editorStyle.edgeLabelRectPadding/2,
+          width: labelBBox.width+editorStyle.edgeLabelRectPadding,
+          height: labelBBox.height+editorStyle.edgeLabelRectPadding,
+          fill:'#fff',
+          stroke:'#fff',
+        }
+      });
+      group.toBack();
+      label.toFront();
+      return label;
+    },
+    afterUpdate(cfg, item){
+      const label = item.getContainer().findByClassName('edge-label');
+      const labelRect = item.getContainer().findByClassName('edge-labelRect');
+      if(label) {
+        const labelBBox = label.getBBox();
+        labelRect.attr({
+          x: labelBBox.x - editorStyle.edgeLabelRectPadding / 2,
+          y: labelBBox.y - editorStyle.edgeLabelRectPadding / 2,
+          width: labelBBox.width + editorStyle.edgeLabelRectPadding,
+          height: labelBBox.height + editorStyle.edgeLabelRectPadding,
+        });
+      }
+    },
     getShapeStyle(cfg) {
       cfg = this.getPathPoints(cfg);
       const startPoint = cfg.startPoint;

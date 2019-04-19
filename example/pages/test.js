@@ -2,17 +2,21 @@ import Designer from "../../dist";
 import React from "react";
 export default () => {
   const data = {
-    nodes: [{ id: 'node1', x: 100, y: 200, label: '开始', shape: 'start-node', },
-      { id: 'node2', x: 300, y: 200, label: '主任审批', shape: 'task-node', },
-      { id: 'node3', x: 200, y: 300, label: '经理审批', shape: 'task-node', },
-      { id: 'node4', x: 400, y: 400, label: '金额大于1000', shape: 'decision-node', },
-      { id: 'node5', x: 500, y: 300, label: '董事长审批', shape: 'task-node', },
-      { id: 'node6', x: 600, y: 200, label: '结束', shape: 'end-node', }],
-    edges: [{ source: 'node1', target: 'node2',sourceAnchor:1,targetAnchor:3 },
-      { source: 'node2', target: 'node3',sourceAnchor:2,targetAnchor:1 },
-      // { source: 'node3', target: 'node4',sourceAnchor:0,targetAnchor:2 },
-      // { source: 'node4', target: 'node5',sourceAnchor:0,targetAnchor:3 },
-      // { source: 'node3', target: 'node6',sourceAnchor:1,targetAnchor:3 }
+    nodes: [{ id: 'startNode', x: 50, y: 200, label: '开始', clazz: 'startEvent', shape: 'start-node', },
+      { id: 'taskNode1', x: 200, y: 200, label: '主任审批', assignee: 'admin', isSequential:false, clazz: 'userTask', shape: 'task-node', },
+      { id: 'taskNode2', x: 400, y: 200, label: '经理审批', assignee: 'admin', isSequential:false, clazz: 'userTask', shape: 'task-node', },
+      { id: 'decisionNode', x: 400, y: 320, label: '金额大于1000', clazz: 'exclusiveGateway', shape: 'decision-node', },
+      { id: 'taskNode3', x: 400, y: 450, label: '董事长审批', assignee: 'admin', isSequential:false, clazz: 'userTask', shape: 'task-node', },
+      { id: 'endNode', x: 600, y: 320, label: '结束', clazz: 'endEvent', shape: 'end-node', }],
+    edges: [{ source: 'startNode', target: 'taskNode1', sourceAnchor:1, targetAnchor:3, clazz: 'sequenceFlow' },
+      { source: 'taskNode1', target: 'endNode', sourceAnchor:0, targetAnchor:0, clazz: 'sequenceFlow' },
+      { source: 'taskNode1', target: 'taskNode2', sourceAnchor:1, targetAnchor:3, clazz: 'sequenceFlow' },
+      { source: 'taskNode2', target: 'decisionNode', sourceAnchor:1, targetAnchor:0, clazz: 'sequenceFlow' },
+      { source: 'taskNode2', target: 'taskNode1', sourceAnchor:2, targetAnchor:2, clazz: 'sequenceFlow' },
+      { source: 'decisionNode', target: 'taskNode3', sourceAnchor:2, targetAnchor:0, clazz: 'sequenceFlow' },
+      { source: 'decisionNode', target: 'endNode', sourceAnchor:1, targetAnchor:2, clazz: 'sequenceFlow'},
+      { source: 'taskNode3', target: 'endNode', sourceAnchor:1, targetAnchor:1, clazz: 'sequenceFlow' },
+      { source: 'taskNode3', target: 'taskNode1', sourceAnchor:3, targetAnchor:2, clazz: 'sequenceFlow'},
     ]
   };
   return (

@@ -63,9 +63,7 @@ export default function(G6){
         const x = p.x;
         const y = p.y;
         const node = this.graph.add('node', {
-          shape:addModel.shape,
-          size: addModel.size,
-          label: addModel.label,
+          ...addModel,
           x: x,
           y: y,
         });

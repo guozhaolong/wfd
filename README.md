@@ -1,5 +1,8 @@
 ## Workflow Designer
-[![Build Status](https://travis-ci.org/guozhaolong/wfd.svg?branch=master)](http://travis-ci.org/guozhaolong/wfd)
+[![](https://img.shields.io/travis/guozhaolong/wfd)](https://travis-ci.org/guozhaolong/wfd)
+![](https://img.shields.io/badge/language-javascript-red.svg)
+![](https://img.shields.io/badge/license-MIT-000000.svg)
+
 [![NPM Version](http://img.shields.io/npm/v/wfd.svg?style=flat)](https://www.npmjs.org/package/wfd)
 [![NPM Downloads](https://img.shields.io/npm/dm/wfd.svg?style=flat)](https://www.npmjs.org/package/wfd)
 

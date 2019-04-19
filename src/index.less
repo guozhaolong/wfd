@@ -71,7 +71,30 @@
   border-top: 1px solid #DCE3E8;
   border-bottom: 1px solid #DCE3E8;
 }
-
+.panelBody {
+  padding: 5px;
+  .panelRow {
+    display: inline-block;
+    margin: 5px;
+    font-size: 12px;
+    .panelInput {
+      margin-top: 3px;
+      padding: 4px 11px;
+      width: 100%;
+      height: 32px;
+      line-height: 1.5;
+      color: rgba(0, 0, 0, 0.65);
+      background-color: #fff;
+      background-image: none;
+      border: 1px solid #d9d9d9;
+      border-radius: 4px;
+      transition: all .3s;
+      &:hover {
+        border-color: #1890ff;
+      }
+    }
+  }
+}
 .contextmenu {
   display: none;
   width: 200px;

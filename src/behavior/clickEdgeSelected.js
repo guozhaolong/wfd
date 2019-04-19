@@ -12,6 +12,7 @@ export default function(G6){
       this._clearSelected();
       this.graph.setItemState(e.item, 'selected', true);
       this.graph.set('selectedItem',e.item);
+      this.graph.emit('selectedItem',e.item);
     },
     onEdgeMouseOver(e){
       if(!e.item.hasState('selected'))
@@ -29,6 +30,7 @@ export default function(G6){
       if(item) {
         this.graph.setItemState(item, 'selected', false);
         this.graph.set('selectedItem',null);
+        this.graph.emit('selectedItem',null);
       }
     }
   });

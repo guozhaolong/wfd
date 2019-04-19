@@ -1,4 +1,8 @@
 import React, {Component} from 'react';
+import {Switch,Input,Select} from 'antd'
+import 'antd/lib/input/style/css';
+import 'antd/lib/select/style/css';
+import 'antd/lib/switch/style/css';
 import styles from './index.less';
 import G6 from '@antv/g6/src';
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -10,12 +14,6 @@ import registerBehavior from './behavior'
 registerItem(G6);
 registerBehavior(G6);
 
-const headerHeight = 64;
-const footHeight = 55;
-const marginHeight = 48;
-const toolbarHeight = 40;
-
-
 class Designer extends Component {
   static defaultProps = {
     onSave: ()=>{}
@@ -24,7 +22,12 @@ class Designer extends Component {
     super(props);
     this.pageRef= React.createRef();
     this.state = {
-      selectedModel: {},
+      selectedModel: {
+        clazz: '',
+        label: '',
+        assignee: '',
+        isSequential: false,
+      },
       curZoom: 1,
       minZoom: 0.5,
       maxZoom: 2,
@@ -55,6 +58,24 @@ class Designer extends Component {
     this.graph.data(this.props.data ? this.props.data : []);
     this.graph.render();
     this.initGhostImg();
+    this.onItemClick();
+  }
+
+  onItemClick(){
+    this.graph.on('selectedItem',(item)=>{
+      if(item)
+        this.setState({selectedModel:{  ...item.getModel() }});
+      else
+        this.setState({selectedModel:{ clazz: '',label: '',assignee: '',isSequential:false,}});
+    });
+  }
+
+  onItemCfgChange(key,value){
+    const item = this.graph.get('selectedItem');
+    if(item){
+      this.graph.updateItem(item,{[key]:value});
+      this.setState({selectedModel:{  ...item.getModel() }});
+    }
   }
 
   componentWillUnmount(){
@@ -108,16 +129,16 @@ class Designer extends Component {
         <div>
           <div style={{flex:'0 0 auto',float: 'left',width:'10%'}}>
             <div className={styles.itemPanel}>
-              <img onDragStart={(e)=>this.dragAddNodeStart(e,{shape:'start-node',size:'40*40',label:'开始'})}
+              <img onDragStart={(e)=>this.dragAddNodeStart(e,{shape:'start-node',clazz:'startEvent',size:'40*40',label:'开始'})}
                    onDragEnd={(e)=>this.dragAddNodeEnd(e)}
                    src={require('../assets/start.svg')} style={{width:58,height:58}}/>
-              <img onDragStart={(e)=>this.dragAddNodeStart(e,{shape:'task-node',size:'80*48',label:'任务节点'})}
+              <img onDragStart={(e)=>this.dragAddNodeStart(e,{shape:'task-node',clazz:'userTask',assignee:'',size:'80*48',label:'任务节点'})}
                    onDragEnd={(e)=>this.dragAddNodeEnd(e)}
                    src={require('../assets/task.svg')} style={{width:80,height:48}}/>
-              <img onDragStart={(e)=>this.dragAddNodeStart(e,{shape:'decision-node',size:'60*60',label:'判断节点'})}
+              <img onDragStart={(e)=>this.dragAddNodeStart(e,{shape:'decision-node',clazz:'exclusiveGateway',size:'60*60',label:'判断节点'})}
                    onDragEnd={(e)=>this.dragAddNodeEnd(e)}
                    src={require('../assets/decision.svg')} style={{width:68,height:68}}/>
-              <img onDragStart={(e)=>this.dragAddNodeStart(e,{shape:'end-node',size:'40*40',label:'结束'})}
+              <img onDragStart={(e)=>this.dragAddNodeStart(e,{shape:'end-node',clazz:'endEvent',size:'40*40',label:'结束'})}
                    onDragEnd={(e)=>this.dragAddNodeEnd(e)}
                    src={require('../assets/end.svg')} style={{width:58,height:58}}/>
             </div>
@@ -130,9 +151,64 @@ class Designer extends Component {
           <div style={{flex:'0 0 auto',float: 'left',width:'20%'}}>
             <div>
               <div className={styles.panelTitle}>属性</div>
-              <div>
-                <div><label>名称：</label></div>
+              { this.state.selectedModel.clazz === 'userTask' &&
+              <div className={styles.panelBody}>
+                <div className={styles.panelRow}>
+                  <div>标题：</div>
+                  <Input style={{ width: 200,fontSize:12 }}
+                         value={this.state.selectedModel.label}
+                         onChange={(e) => this.onItemCfgChange('label',e.target.value)}/>
+                </div>
+                <div className={styles.panelRow}>
+                  <div>审批人：</div>
+                  <Select
+                    mode="multiple"
+                    showSearch
+                    style={{ width: 200,fontSize:12 }}
+                    placeholder="Select a assignee"
+                    optionFilterProp="children"
+                    defaultValue={this.state.selectedModel.assignee}
+                    onChange={(e) => this.onItemCfgChange('assignee',e)}
+                    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                  >
+                    <Select.Option value="admin">管理员</Select.Option>
+                    <Select.Option value="zhang3">张三</Select.Option>
+                    <Select.Option value="li4">李四</Select.Option>
+                  </Select>
+                </div>
+                <div className={styles.panelRow}>
+                  <div style={{display:'inline-block',marginRight: 5}}>是否为会签：</div>
+                  <Switch defaultChecked onChange={(e) => this.onItemCfgChange('isSequential',e)} />
+                </div>
               </div>
+              }
+              { this.state.selectedModel.clazz === 'exclusiveGateway' &&
+              <div className={styles.panelBody}>
+                <div className={styles.panelRow}>
+                  <div>标题：</div>
+                  <Input style={{ width: 200,fontSize:12 }}
+                         value={this.state.selectedModel.label}
+                         onChange={(e)=>{this.onItemCfgChange('label',e.target.value)}}/>
+                </div>
+              </div>
+              }
+              { this.state.selectedModel.clazz === 'sequenceFlow' &&
+              <div className={styles.panelBody}>
+                <div className={styles.panelRow}>
+                  <div>标题：</div>
+                  <Input style={{ width: 200,fontSize:12 }}
+                         value={this.state.selectedModel.label}
+                         onChange={(e)=>{this.onItemCfgChange('label',e.target.value)}}/>
+                </div>
+                <div className={styles.panelRow}>
+                  <div>条件表达式：</div>
+                  <Input.TextArea style={{ width: 200,fontSize:12 }}
+                                  rows={4}
+                                  value={this.state.selectedModel.label}
+                                  onChange={(e)=>{this.onItemCfgChange('conditionExpression',e.target.value)}}/>
+                </div>
+              </div>
+              }
             </div>
           </div>
         </div>

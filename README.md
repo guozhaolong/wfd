@@ -29,6 +29,3 @@ const data = {
 
 <Designer data={data} onSave={(d)=>{console.log(d)}}/>
 ```
-
-## Contact
-WX: stevenkwoksl

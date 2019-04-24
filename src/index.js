@@ -7,8 +7,10 @@ import styles from './index.less';
 import G6 from '@antv/g6/src';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSave,faReply,faShare,faCopy, faPaste,faTrash,faSearchPlus,faSearchMinus,faCompress,faExpandArrowsAlt } from '@fortawesome/free-solid-svg-icons'
-library.add(faSave,faReply,faShare,faCopy,faPaste,faTrash,faSearchPlus,faSearchMinus,faCompress,faExpandArrowsAlt);
+const classNames = require('classnames');
+import { faSave,faReply,faShare,faCopy, faPaste,faTrash,faSearchPlus,faSearchMinus,faCompress,faExpand,faLayerGroup } from '@fortawesome/free-solid-svg-icons'
+library.add(faSave,faReply,faShare,faCopy,faPaste,faTrash,faSearchPlus,faSearchMinus,faCompress,faExpand,faLayerGroup);
+import Command from './plugins/command'
 import registerItem from './item'
 import registerBehavior from './behavior'
 registerItem(G6);
@@ -42,14 +44,16 @@ class Designer extends Component {
   componentDidMount() {
     const height = window.innerHeight - 160;
     const width = this.pageRef.current.offsetWidth;
+    const cmd = new Command();
     this.graph = new G6.Graph({
+      plugins: [ cmd ],
       container: this.pageRef.current,
       height: height < 500 ? 500 : height,
       width: width,
       modes: {
         default: [ 'drag-canvas', 'tooltip'],
-        edit: ['drag-canvas', 'drag-node','hoverNodeActived','hoverAnchorActived','dragEdge',
-          'dragPanelItemAddNode','clickNodeSelected','clickEdgeSelected','deleteItem'],
+        edit: ['drag-canvas', 'hoverNodeActived','hoverAnchorActived','dragNode','dragEdge',
+          'dragPanelItemAddNode','clickSelected','deleteItem'],
       },
       defaultEdge: {
         shape: 'flow-polyline-round',
@@ -63,18 +67,32 @@ class Designer extends Component {
   }
 
   onItemClick(){
-    this.graph.on('selectedItem',(item)=>{
-      if(item)
-        this.setState({selectedModel:{  ...item.getModel() }});
-      else
-        this.setState({selectedModel:{ clazz: '',label: '',assignee: '',isSequential:false, conditionExpression: ''}});
+    this.graph.on('selectedItems',(items)=>{
+      if(items && items.length > 0) {
+        const item = this.graph.findById(items[0]);
+        this.setState({selectedModel: {...item.getModel()}});
+      } else {
+        this.setState({
+          selectedModel: {
+            clazz: '',
+            label: '',
+            assignee: '',
+            isSequential: false,
+            conditionExpression: ''
+          }
+        });
+      }
     });
   }
 
   onItemCfgChange(key,value){
-    const item = this.graph.get('selectedItem');
-    if(item){
-      this.graph.updateItem(item,{[key]:value});
+    const items = this.graph.get('selectedItems');
+    if(items && items.length > 0){
+      const item = this.graph.findById(items[0]);
+      this.graph.executeCommand('update',{
+        itemId:items[0],
+        updateModel: {[key]:value}
+      });
       this.setState({selectedModel:{  ...item.getModel() }});
     }
   }
@@ -109,21 +127,67 @@ class Designer extends Component {
     this.graph.emit('canvas:mouseleave',e.nativeEvent);
   }
 
+  onUndo(){
+    this.graph.executeCommand('undo',{});
+  }
+
+  onRedo(){
+    this.graph.executeCommand('redo',{});
+  }
+
+  onCopy(){
+    this.graph.executeCommand('copy');
+  }
+
+  onPaste(){
+    this.graph.executeCommand('paste');
+  }
+
+  onDelete(){
+    this.graph.executeCommand('delete');
+  }
+
+  onZoomIn(){
+    this.graph.executeCommand('zoomIn');
+  }
+
+  onZoomOut(){
+    this.graph.executeCommand('zoomOut');
+  }
+
+  onZoomCurrent(){
+    this.graph.executeCommand('zoomTo',{ zoom: 1});
+  }
+
+  onAutoFit(){
+    this.graph.fitView(5);
+  }
+
+  onToFront(){
+    this.graph.executeCommand('toFront',{});
+  }
+
+  onToBack(){
+    this.graph.executeCommand('toBack',{});
+  }
   render() {
     return (
       <div className={styles.root}>
         <div className={styles.toolbar}>
-          <span className={styles.command}><FontAwesomeIcon icon="reply" color="#666" /></span>
-          <span className={styles.command}><FontAwesomeIcon icon="share" color="#666" /></span>
+          <span className={styles.command} onClick={()=>this.onUndo()}><FontAwesomeIcon icon="reply" color="#666" /></span>
+          <span className={styles.command} onClick={()=>this.onRedo()}><FontAwesomeIcon icon="share" color="#666" /></span>
           <span className={styles.separator} />
-          <span className={styles.command}><FontAwesomeIcon icon="copy" color="#666" /></span>
-          <span className={styles.command}><FontAwesomeIcon icon="paste" color="#666" /></span>
-          <span className={styles.command}><FontAwesomeIcon icon="trash" color="#666" /></span>
+          <span className={styles.command} onClick={()=>this.onCopy()}><FontAwesomeIcon icon="copy" color="#666" /></span>
+          <span className={styles.command} onClick={()=>this.onPaste()}><FontAwesomeIcon icon="paste" color="#666" /></span>
+          <span className={styles.command} onClick={()=>this.onDelete()}><FontAwesomeIcon icon="trash" color="#666" /></span>
           <span className={styles.separator} />
-          <span className={styles.command}><FontAwesomeIcon icon="search-plus" color="#666" /></span>
-          <span className={styles.command}><FontAwesomeIcon icon="search-minus" color="#666" /></span>
-          <span className={styles.command}><FontAwesomeIcon icon="compress" color="#666" /></span>
-          <span className={styles.command}><FontAwesomeIcon icon="expand-arrows-alt" color="#666" /></span>
+          <span className={styles.command} onClick={()=>this.onZoomIn()}><FontAwesomeIcon icon="search-plus" color="#666" /></span>
+          <span className={styles.command} onClick={()=>this.onZoomOut()}><FontAwesomeIcon icon="search-minus" color="#666" /></span>
+          <span className={styles.command} onClick={()=>this.onZoomCurrent()}><FontAwesomeIcon icon="compress" color="#666" /></span>
+          <span className={styles.command} onClick={()=>this.onAutoFit()}><FontAwesomeIcon icon="expand" color="#666" /></span>
+          <span className={styles.separator} />
+          <span className={styles.command} onClick={()=>this.onToFront()}><FontAwesomeIcon icon="layer-group" color="#666" /></span>
+          <span className={styles.command} onClick={()=>this.onToBack()}><FontAwesomeIcon icon="layer-group" color="#666" rotation={180}/></span>
           <span className={styles.separator} />
           <span className={styles.command} onClick={()=>this.props.onSave(this.graph.save())}><FontAwesomeIcon icon="save" color="#1890ff" size="lg"/></span>
         </div>
@@ -133,7 +197,7 @@ class Designer extends Component {
               <img onDragStart={(e)=>this.dragAddNodeStart(e,{shape:'start-node',clazz:'startEvent',size:'40*40',label:'开始'})}
                    onDragEnd={(e)=>this.dragAddNodeEnd(e)}
                    src={require('../assets/start.svg')} style={{width:58,height:58}}/>
-              <img onDragStart={(e)=>this.dragAddNodeStart(e,{shape:'task-node',clazz:'userTask',assignee:'',size:'80*48',label:'任务节点'})}
+              <img onDragStart={(e)=>this.dragAddNodeStart(e,{shape:'task-node',clazz:'userTask',size:'80*48',label:'任务节点'})}
                    onDragEnd={(e)=>this.dragAddNodeEnd(e)}
                    src={require('../assets/task.svg')} style={{width:80,height:48}}/>
               <img onDragStart={(e)=>this.dragAddNodeStart(e,{shape:'decision-node',clazz:'exclusiveGateway',size:'60*60',label:'判断节点'})}

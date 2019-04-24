@@ -29,7 +29,7 @@ const data = {
 
 <Designer data={data} onSave={(d)=>{console.log(d)}}/>
 ```
-## Example
+## Run Example
 ```
 > cd example
 > umi dev

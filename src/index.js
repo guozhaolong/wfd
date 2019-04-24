@@ -9,7 +9,8 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const classNames = require('classnames');
 import { faSave,faReply,faShare,faCopy, faPaste,faTrash,faSearchPlus,faSearchMinus,faCompress,faExpand,faLayerGroup } from '@fortawesome/free-solid-svg-icons'
-library.add(faSave,faReply,faShare,faCopy,faPaste,faTrash,faSearchPlus,faSearchMinus,faCompress,faExpand,faLayerGroup);
+import { faLayerUp, faLayerDown } from './util/faIcons';
+library.add(faSave,faReply,faShare,faCopy,faPaste,faTrash,faSearchPlus,faSearchMinus,faCompress,faExpand,faLayerGroup,faLayerUp,faLayerDown);
 import Command from './plugins/command'
 import registerItem from './item'
 import registerBehavior from './behavior'
@@ -186,8 +187,8 @@ class Designer extends Component {
           <span className={styles.command} onClick={()=>this.onZoomCurrent()}><FontAwesomeIcon icon="compress" color="#666" /></span>
           <span className={styles.command} onClick={()=>this.onAutoFit()}><FontAwesomeIcon icon="expand" color="#666" /></span>
           <span className={styles.separator} />
-          <span className={styles.command} onClick={()=>this.onToFront()}><FontAwesomeIcon icon="layer-group" color="#666" /></span>
-          <span className={styles.command} onClick={()=>this.onToBack()}><FontAwesomeIcon icon="layer-group" color="#666" rotation={180}/></span>
+          <span className={styles.command} onClick={()=>this.onToFront()}><FontAwesomeIcon icon="layer-up" color="#666" /></span>
+          <span className={styles.command} onClick={()=>this.onToBack()}><FontAwesomeIcon icon="layer-down" color="#666" /></span>
           <span className={styles.separator} />
           <span className={styles.command} onClick={()=>this.props.onSave(this.graph.save())}><FontAwesomeIcon icon="save" color="#1890ff" size="lg"/></span>
         </div>

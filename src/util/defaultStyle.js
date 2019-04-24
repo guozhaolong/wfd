@@ -17,7 +17,6 @@ const editorStyle = {
     shadowColor: 'rgba(13, 26, 38, 0.08)',
     lineWidth: 1,
     radius: 4,
-    fillOpacity: .1,
     strokeOpacity: .7,
   },
   edgeStyle: { stroke: '#A3B1BF', strokeOpacity: .92, lineWidth: 1, lineAppendWidth: 8, endArrow: true},

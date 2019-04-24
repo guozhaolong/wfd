@@ -31,6 +31,6 @@ const data = {
 ```
 ## Run Example
 ```
-/wfd> cd example
-/wfd/example> umi dev
+> cd example
+> umi dev
 ```

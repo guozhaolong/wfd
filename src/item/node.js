@@ -101,9 +101,9 @@ export default function(G6) {
       } else if (name === 'selected') {
         const rect = group.getChildByIndex(0);
         if (value) {
-          rect.attr('fillOpacity', editorStyle.nodeSelectedStyle.fillOpacity);
+          rect.attr('fill', item.getModel().selectedColor);
         } else {
-          rect.attr('fillOpacity', editorStyle.nodeStyle.fillOpacity);
+          rect.attr('fill', item.getModel().unSelectedColor);
         }
       }
     },
@@ -122,6 +122,8 @@ export default function(G6) {
     getShapeStyle(cfg) {
       cfg.size = [80, 44];
       cfg.label = cfg.label || '任务节点';
+      cfg.selectedColor = '#95D6FB';
+      cfg.unSelectedColor = '#E7F7FE';
       const width = cfg.size[0];
       const height = cfg.size[1];
       const style = {
@@ -130,8 +132,8 @@ export default function(G6) {
         width,
         height,
         ...editorStyle.nodeStyle,
+        fill: cfg.unSelectedColor,
         stroke: '#1890FF',
-        fill: '#1890FF',
       };
       return style;
     }
@@ -141,6 +143,8 @@ export default function(G6) {
     getShapeStyle(cfg) {
       cfg.size = [60, 60];
       cfg.label = cfg.label || '判断节点';
+      cfg.selectedColor = '#8CE8DE';
+      cfg.unSelectedColor = '#E8FEFA';
       const width = cfg.size[0];
       const height = cfg.size[1];
       const gap = 4;
@@ -157,8 +161,8 @@ export default function(G6) {
           ['Z'] // close
         ],
         ...editorStyle.nodeStyle,
+        fill: cfg.unSelectedColor,
         stroke: '#13C2C2',
-        fill: '#13C2C2',
       };
       return style;
     },
@@ -168,14 +172,16 @@ export default function(G6) {
     getShapeStyle(cfg) {
       cfg.size = [40, 40];
       cfg.label = cfg.label || '开始';
+      cfg.selectedColor = '#FCD49A';
+      cfg.unSelectedColor = '#FEF7E8';
       const width = cfg.size[0];
       const style = {
         x: 0,
         y: 0,
         r: width / 2,
         ...editorStyle.nodeStyle,
+        fill: cfg.unSelectedColor,
         stroke: '#FA8C16',
-        fill: '#FA8C16',
       };
       return style;
     },
@@ -192,14 +198,16 @@ export default function(G6) {
     getShapeStyle(cfg) {
       cfg.size = [40, 40];
       cfg.label = cfg.label || '结束';
+      cfg.selectedColor = '#CFD49A';
+      cfg.unSelectedColor = '#EFF7E8';
       const width = cfg.size[0];
       const style = {
         x: 0,
         y: 0,
         r: width / 2,
         ...editorStyle.nodeStyle,
+        fill: cfg.unSelectedColor,
         stroke: '#F5222D',
-        fill: '#F5222D',
       };
       return style;
     },

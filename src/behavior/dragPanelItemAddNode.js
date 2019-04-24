@@ -62,12 +62,14 @@ export default function(G6){
         const addModel = this.graph.get('addModel');
         const x = p.x;
         const y = p.y;
-        const node = this.graph.add('node', {
-          ...addModel,
-          x: x,
-          y: y,
+        this.graph.executeCommand('add',{
+          type: 'node',
+          addModel:{
+            ...addModel,
+            x: x,
+            y: y,
+          }
         });
-
       }
     }
   });

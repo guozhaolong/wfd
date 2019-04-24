@@ -8,12 +8,12 @@ export default function(G6){
       }
     },
     onKeydown(e){
-      const item = this.graph.get('selectedItem');
+      const items = this.graph.get('selectedItems');
       const focus = this.graph.get('focusGraphWrapper');
-      if(e.keyCode === 8 && item && focus){
-        this.graph.remove(item);
-        this.graph.set('selectedItem',null);
-        this.graph.emit('selectedItem',null);
+      if(e.keyCode === 8 && items && items.length > 0 && focus){
+        this.graph.executeCommand('delete',{});
+        this.graph.set('selectedItems',[]);
+        this.graph.emit('selectedItems',[]);
       }
     },
     onCanvasLeave(e){

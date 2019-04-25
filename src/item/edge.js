@@ -138,9 +138,9 @@ export default function(G6){
       };
     },
     getExpandedPort(bbox, point) {
-      return Math.abs(point.x - bbox.centerX) / bbox.width > Math.abs(point.y - bbox.centerY) / bbox.height //判断点是在图形左右还是上下
-        ? { x: point.x > bbox.centerX ? bbox.maxX : bbox.minX, y: point.y } //左右时
-        : { x: point.x, y: point.y > bbox.centerY ? bbox.maxY : bbox.minY }; //上下时
+      return Math.abs(point.x - bbox.centerX) / bbox.width > Math.abs(point.y - bbox.centerY) / bbox.height
+        ? { x: point.x > bbox.centerX ? bbox.maxX : bbox.minX, y: point.y }
+        : { x: point.x, y: point.y > bbox.centerY ? bbox.maxY : bbox.minY };
     },
     combineBBoxes(sBBox, tBBox) {
       const minX = Math.min(sBBox.minX, tBBox.minX), minY = Math.min(sBBox.minY, tBBox.minY),
@@ -190,7 +190,7 @@ export default function(G6){
       points = points.concat(this.vertexOfBBox(sLineBBox),this.vertexOfBBox(tLineBBox),this.vertexOfBBox(outerBBox));
       const centerPoint = { x: outerBBox.centerX, y: outerBBox.centerY };
       [ outerBBox, sLineBBox, tLineBBox, lineBBox ].forEach(bbox => {
-        points = points.concat(this.crossPointsByLineAndBBox(bbox, centerPoint)) // 包含 bbox 延长线和线段的相交线
+        points = points.concat(this.crossPointsByLineAndBBox(bbox, centerPoint))
       });
       points.push({ x: sPoint.x, y: tPoint.y });
       points.push({ x: tPoint.x, y: sPoint.y });
@@ -291,10 +291,10 @@ export default function(G6){
       const tBBox = this.getExpandedBBox(targetBBox,offset);
       const sPoint = this.getExpandedPort(sBBox,sPort);
       const tPoint = this.getExpandedPort(tBBox,tPort);
-      let points = this.getConnectablePoints(sBBox, tBBox, sPoint, tPoint); // 获取合法折点集
-      points = this.filterConnectablePoints(points, sBBox); // 清除box内部点
-      points = this.filterConnectablePoints(points, tBBox); // 清除box内部点
-      const polylinePoints = this.AStar(points, sPoint, tPoint, sBBox, tBBox); // 用 A-Star 算法寻径
+      let points = this.getConnectablePoints(sBBox, tBBox, sPoint, tPoint);
+      points = this.filterConnectablePoints(points, sBBox);
+      points = this.filterConnectablePoints(points, tBBox);
+      const polylinePoints = this.AStar(points, sPoint, tPoint, sBBox, tBBox);
       return polylinePoints;
     },
   },'polyline');

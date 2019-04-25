@@ -15,6 +15,7 @@ import Command from './plugins/command'
 import Toolbar from './plugins/toolbar'
 import AddItemPanel from './plugins/addItemPanel'
 import CanvasPanel from './plugins/canvasPanel'
+import DetailPanel from './plugins/detailPanel'
 import registerItem from './item'
 import registerBehavior from './behavior'
 registerItem(G6);
@@ -26,9 +27,10 @@ class Designer extends Component {
   };
   constructor(props) {
     super(props);
-    this.pageRef= React.createRef();
-    this.toolbarRef= React.createRef();
-    this.itemPanelRef= React.createRef();
+    this.pageRef = React.createRef();
+    this.toolbarRef = React.createRef();
+    this.itemPanelRef = React.createRef();
+    this.detailPanelRef = React.createRef();
     this.state = {
       selectedModel: {
         clazz: '',
@@ -53,9 +55,11 @@ class Designer extends Component {
     const cmd = new Command();
     const toolbar = new Toolbar({container:this.toolbarRef.current});
     const addItemPanel = new AddItemPanel({container:this.itemPanelRef.current});
-    const canvasPanel = new CanvasPanel({container:this.pageRef.current})
+    const canvasPanel = new CanvasPanel({container:this.pageRef.current});
+    const detailPanel = new DetailPanel({container:this.detailPanelRef.current});
+
     this.graph = new G6.Graph({
-      plugins: [ cmd,toolbar,addItemPanel,canvasPanel ],
+      plugins: [ cmd,toolbar,addItemPanel,canvasPanel,detailPanel ],
       container: this.pageRef.current,
       height: height < 500 ? 500 : height,
       width: width,
@@ -75,7 +79,7 @@ class Designer extends Component {
   }
 
   onItemClick(){
-    this.graph.on('aftertitemselected',(items)=>{
+    this.graph.on('afteritemselected',(items)=>{
       if(items && items.length > 0) {
         const item = this.graph.findById(items[0]);
         this.setState({selectedModel: {...item.getModel()}});
@@ -147,66 +151,68 @@ class Designer extends Component {
             <div ref={this.pageRef} style={{backgroundColor:'#fff',border: '1px solid #E9E9E9'}}/>
           </div>
           <div style={{flex:'0 0 auto',float: 'left',width:'20%'}}>
-            <div>
-              <div className={styles.panelTitle}>属性</div>
-              { this.state.selectedModel.clazz === 'userTask' &&
-              <div className={styles.panelBody}>
-                <div className={styles.panelRow}>
-                  <div>标题：</div>
-                  <Input style={{ width: 200,fontSize:12 }}
-                         value={this.state.selectedModel.label}
-                         onChange={(e) => this.onItemCfgChange('label',e.target.value)}/>
-                </div>
-                <div className={styles.panelRow}>
-                  <div>审批人：</div>
-                  <Select
-                    mode="multiple"
-                    showSearch
-                    style={{ width: 200,fontSize:12 }}
-                    placeholder="Select a assignee"
-                    optionFilterProp="children"
-                    defaultValue={this.state.selectedModel.assignee}
-                    onChange={(e) => this.onItemCfgChange('assignee',e)}
-                    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                  >
-                    <Select.Option value="admin">管理员</Select.Option>
-                    <Select.Option value="zhang3">张三</Select.Option>
-                    <Select.Option value="li4">李四</Select.Option>
-                  </Select>
-                </div>
-                <div className={styles.panelRow}>
-                  <div style={{display:'inline-block',marginRight: 5}}>是否为会签：</div>
-                  <Switch defaultChecked onChange={(e) => this.onItemCfgChange('isSequential',e)} />
-                </div>
-              </div>
-              }
-              { this.state.selectedModel.clazz === 'exclusiveGateway' &&
-              <div className={styles.panelBody}>
-                <div className={styles.panelRow}>
-                  <div>标题：</div>
-                  <Input style={{ width: 200,fontSize:12 }}
-                         value={this.state.selectedModel.label}
-                         onChange={(e)=>{this.onItemCfgChange('label',e.target.value)}}/>
+            <div ref={this.detailPanelRef}>
+              <div data-clazz="userTask">
+                <div className={styles.panelTitle}>审批节点属性</div>
+                <div className={styles.panelBody}>
+                  <div className={styles.panelRow}>
+                    <div>标题：</div>
+                    <Input style={{ width: 200,fontSize:12 }}
+                           value={this.state.selectedModel.label}
+                           onChange={(e) => this.onItemCfgChange('label',e.target.value)}/>
+                  </div>
+                  <div className={styles.panelRow}>
+                    <div>审批人：</div>
+                    <Select
+                      mode="multiple"
+                      showSearch
+                      style={{ width: 200,fontSize:12 }}
+                      placeholder="Select a assignee"
+                      optionFilterProp="children"
+                      defaultValue={this.state.selectedModel.assignee}
+                      onChange={(e) => this.onItemCfgChange('assignee',e)}
+                      filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                    >
+                      <Select.Option value="admin">管理员</Select.Option>
+                      <Select.Option value="zhang3">张三</Select.Option>
+                      <Select.Option value="li4">李四</Select.Option>
+                    </Select>
+                  </div>
+                  <div className={styles.panelRow}>
+                    <div style={{display:'inline-block',marginRight: 5}}>是否为会签：</div>
+                    <Switch defaultChecked onChange={(e) => this.onItemCfgChange('isSequential',e)} />
+                  </div>
                 </div>
               </div>
-              }
-              { this.state.selectedModel.clazz === 'sequenceFlow' &&
-              <div className={styles.panelBody}>
-                <div className={styles.panelRow}>
-                  <div>标题：</div>
-                  <Input style={{ width: 200,fontSize:12 }}
-                         value={this.state.selectedModel.label}
-                         onChange={(e)=>{this.onItemCfgChange('label',e.target.value)}}/>
-                </div>
-                <div className={styles.panelRow}>
-                  <div>条件表达式：</div>
-                  <Input.TextArea style={{ width: 200,fontSize:12 }}
-                                  rows={4}
-                                  value={this.state.selectedModel.conditionExpression}
-                                  onChange={(e)=>{this.onItemCfgChange('conditionExpression',e.target.value)}}/>
+              <div data-clazz="exclusiveGateway">
+                <div className={styles.panelTitle}>判断节点属性</div>
+                <div className={styles.panelBody}>
+                  <div className={styles.panelRow}>
+                    <div>标题：</div>
+                    <Input style={{ width: 200,fontSize:12 }}
+                           value={this.state.selectedModel.label}
+                           onChange={(e)=>{this.onItemCfgChange('label',e.target.value)}}/>
+                  </div>
                 </div>
               </div>
-              }
+              <div data-clazz="sequenceFlow">
+                <div className={styles.panelTitle}>连接线属性</div>
+                <div className={styles.panelBody}>
+                  <div className={styles.panelRow}>
+                    <div>标题：</div>
+                    <Input style={{ width: 200,fontSize:12 }}
+                           value={this.state.selectedModel.label}
+                           onChange={(e)=>{this.onItemCfgChange('label',e.target.value)}}/>
+                  </div>
+                  <div className={styles.panelRow}>
+                    <div>条件表达式：</div>
+                    <Input.TextArea style={{ width: 200,fontSize:12 }}
+                                    rows={4}
+                                    value={this.state.selectedModel.conditionExpression}
+                                    onChange={(e)=>{this.onItemCfgChange('conditionExpression',e.target.value)}}/>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -16,6 +16,7 @@ export default function(G6){
     },
     onClick(e) {
       this._clearSelected();
+      console.log(2);
       this.graph.setItemState(e.item, 'selected', true);
       let selectedItems = this.graph.get('selectedItems');
       if(!selectedItems)
@@ -46,6 +47,7 @@ export default function(G6){
       });
       this.graph.set('selectedItems',[]);
       this.graph.emit('afteritemselected',[]);
+      console.log(1);
     }
   });
 }

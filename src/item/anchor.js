@@ -24,8 +24,6 @@ export default function(G6){
         }else{
           this.update({style: {...editorStyle.anchorPointStyle}}, item);
         }
-      }else if(name === 'active-hotpot'){
-
       }
     }
   }));

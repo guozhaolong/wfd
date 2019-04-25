@@ -14,6 +14,7 @@ library.add(faSave,faReply,faShare,faCopy,faPaste,faTrash,faSearchPlus,faSearchM
 import Command from './plugins/command'
 import Toolbar from './plugins/toolbar'
 import AddItemPanel from './plugins/addItemPanel'
+import CanvasPanel from './plugins/canvasPanel'
 import registerItem from './item'
 import registerBehavior from './behavior'
 registerItem(G6);
@@ -52,8 +53,9 @@ class Designer extends Component {
     const cmd = new Command();
     const toolbar = new Toolbar({container:this.toolbarRef.current});
     const addItemPanel = new AddItemPanel({container:this.itemPanelRef.current});
+    const canvasPanel = new CanvasPanel({container:this.pageRef.current})
     this.graph = new G6.Graph({
-      plugins: [ cmd,toolbar,addItemPanel ],
+      plugins: [ cmd,toolbar,addItemPanel,canvasPanel ],
       container: this.pageRef.current,
       height: height < 500 ? 500 : height,
       width: width,
@@ -107,17 +109,6 @@ class Designer extends Component {
     }
   }
 
-  onCanvasDragOver(e){
-    this.graph.emit('canvas:mousemove',e.nativeEvent);
-  }
-
-  onCanvasDragLeave(e){
-    this.graph.emit('canvas:mouseleave',e.nativeEvent);
-  }
-
-  onAutoFit(){
-    this.graph.fitView(5);
-  }
   render() {
     return (
       <div className={styles.root}>
@@ -132,7 +123,7 @@ class Designer extends Component {
           <span className={styles.command} data-command="zoomIn"><FontAwesomeIcon icon="search-plus" color="#666" /></span>
           <span className={styles.command} data-command="zoomOut"><FontAwesomeIcon icon="search-minus" color="#666" /></span>
           <span className={styles.command} data-command="resetZoom"><FontAwesomeIcon icon="compress" color="#666" /></span>
-          <span className={styles.command} onClick={()=>this.onAutoFit()}><FontAwesomeIcon icon="expand" color="#666" /></span>
+          <span className={styles.command} onClick={()=>this.graph.fitView(5)}><FontAwesomeIcon icon="expand" color="#666" /></span>
           <span className={styles.separator} />
           <span className={styles.command} data-command="toFront"><FontAwesomeIcon icon="layer-up" color="#666" /></span>
           <span className={styles.command} data-command="toBack"><FontAwesomeIcon icon="layer-down" color="#666" /></span>
@@ -153,9 +144,7 @@ class Designer extends Component {
             </div>
           </div>
           <div style={{flex:'0 0 auto',float: 'left',width:'70%'}}>
-            <div ref={this.pageRef} style={{backgroundColor:'#fff',border: '1px solid #E9E9E9'}}
-                 onDragOver={(e)=>{this.onCanvasDragOver(e)}}
-                 onDragLeave={(e)=>{this.onCanvasDragLeave(e)}} />
+            <div ref={this.pageRef} style={{backgroundColor:'#fff',border: '1px solid #E9E9E9'}}/>
           </div>
           <div style={{flex:'0 0 auto',float: 'left',width:'20%'}}>
             <div>

@@ -22,7 +22,7 @@ export default function(G6){
         selectedItems = [];
       selectedItems = [e.item.get('id')];
       this.graph.set('selectedItems',selectedItems);
-      this.graph.emit('aftertitemselected',selectedItems);
+      this.graph.emit('afteritemselected',selectedItems);
     },
     onEdgeMouseOver(e){
       if(!e.item.hasState('selected'))
@@ -45,7 +45,7 @@ export default function(G6){
         this.graph.setItemState(edge, 'selected', false);
       });
       this.graph.set('selectedItems',[]);
-      this.graph.emit('aftertitemselected',[]);
+      this.graph.emit('afteritemselected',[]);
     }
   });
 }

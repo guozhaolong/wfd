@@ -39,7 +39,7 @@ class Toolbar {
   }
 
   getEvents() {
-    return { aftertitemselected: 'updateToolbar',aftercommandexecute: 'updateToolbar' };
+    return { afteritemselected: 'updateToolbar',aftercommandexecute: 'updateToolbar' };
   }
 
   initEvents() {

@@ -21,29 +21,6 @@ class CanvasPanel {
   }
 
   initPlugin(graph) {
-    const self = this;
-    this.set('graph', graph);
-    const events = self.getEvents();
-    const bindEvents = {};
-    each(events, (v, k) => {
-      const event = wrapBehavior(self, v);
-      bindEvents[k] = event;
-      graph.on(k, event);
-    });
-    this._events = bindEvents;
-    this.init();
-  }
-
-  init(){
-    this.initEvents();
-  }
-
-  getEvents() {
-    return {  };
-  }
-
-  initEvents() {
-    const graph = this.get('graph');
     const parentNode = this.get('container');
     parentNode.addEventListener('dragover', e => {
       graph.emit('canvas:mousemove',e);

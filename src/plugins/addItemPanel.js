@@ -20,29 +20,6 @@ class AddItemPanel {
   }
 
   initPlugin(graph) {
-    const self = this;
-    this.set('graph', graph);
-    const events = self.getEvents();
-    const bindEvents = {};
-    each(events, (v, k) => {
-      const event = wrapBehavior(self, v);
-      bindEvents[k] = event;
-      graph.on(k, event);
-    });
-    this._events = bindEvents;
-    this.init();
-  }
-
-  init(){
-    this.initEvents();
-  }
-
-  getEvents() {
-    return {  };
-  }
-
-  initEvents() {
-    const graph = this.get('graph');
     const parentNode = this.get('container');
     const ghost = createDOM('<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"'+' style="opacity:0"/>');
     each(parentNode.children,(child,i)=>{

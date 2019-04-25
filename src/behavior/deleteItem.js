@@ -17,7 +17,7 @@ export default function(G6){
           this.graph.remove(items[0]);
         }
         this.graph.set('selectedItems',[]);
-        this.graph.emit('aftertitemselected',[]);
+        this.graph.emit('afteritemselected',[]);
       }
     },
     onCanvasLeave(e){

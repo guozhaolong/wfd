@@ -235,12 +235,12 @@ class Command{
       },
       shortcutCodes: [['metaKey', '-'], ['ctrlKey', '-']],
     });
-    cmdPlugin.registerCommand('zoomTo', {
+    cmdPlugin.registerCommand('resetZoom', {
       queue: false,
       execute: function(graph) {
         const zoom = graph.getZoom();
         this.originZoom = zoom;
-        graph.zoomTo(Number(this.zoom));
+        graph.zoomTo(1);
       },
       back: function(graph) {
         graph.zoomTo(this.originZoom);

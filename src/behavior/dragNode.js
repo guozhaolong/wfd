@@ -68,16 +68,19 @@ export default function(G6){
         this._updateDelegate(item, x, y);
         return;
       }
-      this.graph.executeCommand('update',{
-        itemId:item.get('id'),
-        updateModel: { x, y }
-      });
-      // if (this.get('updateEdge')) {
-      //   this.graph.updateItem(item, { x, y });
-      // } else {
-      //   item.updatePosition({ x, y });
-      //   this.graph.paint();
-      // }
+      if(this.graph.executeCommand) {
+        this.graph.executeCommand('update', {
+          itemId: item.get('id'),
+          updateModel: {x, y}
+        });
+      }else {
+        if (this.get('updateEdge')) {
+          this.graph.updateItem(item, { x, y });
+        } else {
+          item.updatePosition({ x, y });
+          this.graph.paint();
+        }
+      }
     },
     _updateDelegate(item, x, y) {
       const self = this;

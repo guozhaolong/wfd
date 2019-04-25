@@ -123,27 +123,20 @@ export default function(G6){
     },
     _addEdge(){
       if(this.origin.targetNode) {
+        const addModel = {
+          clazz: 'sequenceFlow',
+          source: this.origin.sourceNode.get('id'),
+          target: this.origin.targetNode.get('id'),
+          sourceAnchor: this.origin.sourceAnchor,
+          targetAnchor: this.origin.targetAnchor,
+        }
         if(this.graph.executeCommand){
           this.graph.executeCommand('add', {
             type: 'edge',
-            addModel: {
-              clazz: 'sequenceFlow',
-              source: this.origin.sourceNode.get('id'),
-              target: this.origin.targetNode.get('id'),
-              sourceAnchor: this.origin.sourceAnchor,
-              targetAnchor: this.origin.targetAnchor,
-              style: {...editorStyle.edgeStyle}
-            }
+            addModel: addModel
           });
         }else{
-          this.graph.add('edge', {
-            clazz: 'sequenceFlow',
-            source: this.origin.sourceNode.get('id'),
-            target: this.origin.targetNode.get('id'),
-            sourceAnchor: this.origin.sourceAnchor,
-            targetAnchor: this.origin.targetAnchor,
-            style:{ ...editorStyle.edgeStyle }
-          });
+          this.graph.add('edge', addModel);
         }
       }
     }

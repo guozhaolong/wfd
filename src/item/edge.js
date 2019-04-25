@@ -1,6 +1,5 @@
 import editorStyle from "../util/defaultStyle";
 import _ from 'lodash';
-const Util = require('@antv/g6/src/util');
 
 export default function(G6){
   G6.registerEdge('flow-polyline-round', {

@@ -6,7 +6,12 @@ export default function(G6){
       return {
         updateEdge: true,
         delegate: true,
-        delegateStyle: {}
+        delegateStyle: {},
+        alignLineStyle: { stroke: '#FA8C16', lineWidth: 1 },
+        tolerance: 5,
+        _horizontalLines: {},
+        _verticalLines: {},
+        _alignLines: [],
       };
     },
     getEvents() {

@@ -2,6 +2,11 @@ import editorStyle from "../util/defaultStyle";
 
 export default function(G6){
   G6.registerBehavior('dragPanelItemAddNode', {
+    getDefaultCfg() {
+      return {
+
+      };
+    },
     getEvents() {
       return {
         'canvas:mousemove': 'onMouseMove',

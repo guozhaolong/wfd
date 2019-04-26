@@ -4,7 +4,7 @@ import 'antd/lib/input/style/css';
 import 'antd/lib/select/style/css';
 import 'antd/lib/switch/style/css';
 import styles from './index.less';
-import G6 from '@antv/g6';
+import G6 from '@antv/g6/src';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const classNames = require('classnames');

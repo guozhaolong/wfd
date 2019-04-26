@@ -30,10 +30,7 @@ class Toolbar {
       graph.on(k, event);
     });
     this._events = bindEvents;
-    this.init();
-  }
 
-  init(){
     this.initEvents();
     this.updateToolbar();
   }

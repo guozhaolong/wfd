@@ -1,6 +1,6 @@
 {
   "name": "wfd",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a workflow designer base on @antv/g6",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -22,21 +22,21 @@
     "assets"
   ],
   "dependencies": {
-    "@antv/g6": "^3.0.0",
+    "@antv/g6": "^3.0.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.17",
     "@fortawesome/free-regular-svg-icons": "^5.8.1",
     "@fortawesome/free-solid-svg-icons": "^5.8.1",
-    "@fortawesome/react-fontawesome": "^0.1.4",
-    "antd": "^3.16.3",
-    "i": "^0.3.6",
-    "lodash": "^4.17.11",
-    "npm": "^6.9.0"
+    "@fortawesome/react-fontawesome": "^0.1.4"
   },
   "peerDependencies": {
-    "react": "16.x"
+    "react": "16.x",
+    "antd": "^3.16.3",
+    "lodash": "^4.17.11"
   },
   "devDependencies": {
-    "umi-library": "^1.1.1"
+    "umi-library": "^1.1.1",
+    "antd": "^3.16.3",
+    "lodash": "^4.17.11"
   },
   "license": "MIT",
   "bugs": {

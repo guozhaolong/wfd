@@ -44,10 +44,14 @@
 }
 
 .itemPanel {
-  height: 100%;
+  flex: 0 0 auto;
+  float: left;
+  width: 10%;
   padding-top: 8px;
   background: #f0f2f5;
   text-align: center;
+  border-left: 1px solid #E9E9E9;
+  border-bottom: 1px solid #E9E9E9;
   img{
     width: 92px;
     height: 96px;
@@ -59,6 +63,24 @@
       cursor: move;
     }
   }
+}
+
+.canvasPanel {
+  flex: 0 0 auto;
+  float: left;
+  width:70%;
+  background-color: #fff;
+  border-bottom: 1px solid #E9E9E9;
+}
+
+.detailPanel {
+  height: 100%;
+  background: #f0f2f5;
+  flex: 0 0 auto;
+  float: left;
+  width: 20%;
+  border-right: 1px solid #E9E9E9;
+  border-bottom: 1px solid #E9E9E9;
 }
 
 .panelTitle {

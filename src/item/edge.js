@@ -105,7 +105,6 @@ export default function(G6){
       if(!cfg.sourceNode){
         return cfg.controlPoints;
       }
-
       return this.polylineFinding(cfg.sourceNode,cfg.targetNode,cfg.startPoint,cfg.endPoint,15);
     },
     setState(name, value, item) {

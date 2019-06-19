@@ -1,6 +1,6 @@
 {
   "name": "wfd",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "a workflow designer base on @antv/g6",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -22,7 +22,7 @@
     "assets"
   ],
   "dependencies": {
-    "@antv/g6": "^3.0.2",
+    "@antv/g6": "^3.0.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.17",
     "@fortawesome/free-regular-svg-icons": "^5.8.1",
     "@fortawesome/free-solid-svg-icons": "^5.8.1",

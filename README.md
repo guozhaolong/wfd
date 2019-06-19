@@ -8,6 +8,7 @@
 
 ## Usage
 ```
+import React, { Component,Fragment } from 'react';
 import Designer from 'wfd';
 
 const data = {
@@ -26,11 +27,34 @@ const data = {
       { source: 'decisionNode', target: 'endNode', sourceAnchor:1, targetAnchor:2, clazz: 'sequenceFlow'},
       { source: 'taskNode3', target: 'endNode', sourceAnchor:1, targetAnchor:1, clazz: 'sequenceFlow' },
       { source: 'taskNode3', target: 'taskNode1', sourceAnchor:3, targetAnchor:2, clazz: 'sequenceFlow'},
-
-<Designer data={data} onSave={(d)=>{console.log(d)}}/>
+class WFDemo extends Component {
+    constructor(props) {
+        super(props);
+        this.wfDef = React.createRef();
+    }
+    
+    handleSave = () => {
+        const bpm = this.wfDef.current.graph.save();
+        
+    }
+      
+    render(){
+        return (
+            <Fragment>
+                <a onClick={this.handleSave}>Save</a>
+                <Designer data={data} ref={this.wfRef}/>
+            </Fragment>
+        )
+    }
+}
 ```
 ## Run Example
 ```
 > cd example
 > umi dev
+```
+
+## React Version
+```
+>= 16.x
 ```

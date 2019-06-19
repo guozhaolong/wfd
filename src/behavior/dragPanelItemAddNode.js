@@ -65,6 +65,9 @@ export default function(G6){
     _addNode(p){
       if(this.graph.get('onDragAddNode')) {
         const addModel = this.graph.get('addModel');
+        const { clazz = 'node' } = addModel;
+        const timestamp = new Date().getTime();
+        const id = clazz + timestamp;
         const x = p.x;
         const y = p.y;
         if(this.graph.executeCommand) {
@@ -74,7 +77,8 @@ export default function(G6){
               ...addModel,
               x: x,
               y: y,
-            }
+            },
+            addId: id,
           });
         }else {
           this.graph.add('node', {

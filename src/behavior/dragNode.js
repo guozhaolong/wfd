@@ -1,4 +1,5 @@
 import editorStyle from "../util/defaultStyle";
+const each = require('@antv/util/lib/each');
 
 export default function(G6){
   G6.registerBehavior('dragNode', {
@@ -7,11 +8,7 @@ export default function(G6){
         updateEdge: true,
         delegate: true,
         delegateStyle: {},
-        alignLineStyle: { stroke: '#FA8C16', lineWidth: 1 },
-        tolerance: 5,
-        _horizontalLines: {},
-        _verticalLines: {},
-        _alignLines: [],
+        align: true,
       };
     },
     getEvents() {
@@ -30,6 +27,14 @@ export default function(G6){
         x: e.x,
         y: e.y
       };
+      if(this.get('align')){
+        this.alignLineStyle = { stroke: '#FA8C16', lineWidth: 1 };
+        this.tolerance = 5;
+        this._horizontalLines = {};
+        this._verticalLines = {};
+        this._alignLines = [];
+        this._itemAlign(e.item);
+      }
     },
     onDrag(e) {
       if (!this.origin) {
@@ -109,7 +114,18 @@ export default function(G6){
       }
       shape.attr({ x: x - bbox.width / 2, y: y - bbox.height / 2 });
       this.graph.paint();
-    }
+    },
+    _itemAlign(item){
+      const nodes = this.graph.findAll('node',(n) => n.get('id') !== item.get('id'));
+      each(nodes, (node) => {
 
+      })
+    },
+    _clearAlignLine(){
+      each(this._alignLines, (line) => {
+        line.remove();
+      });
+      this._alignLines = [];
+    }
   });
 }

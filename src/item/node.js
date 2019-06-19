@@ -1,6 +1,18 @@
 import editorStyle from "../util/defaultStyle";
 const Item = require('@antv/g6/src/item/item');
-
+const dashArray = [
+  [0,1],
+  [0,2],
+  [1,2],
+  [0,1,1,2],
+  [0,2,1,2],
+  [1,2,1,2],
+  [2,2,1,2],
+  [3,2,1,2],
+  [4,2,1,2]
+];
+const interval = 9;
+const lineDash = [4, 2, 1, 2];
 export default function(G6) {
   G6.registerNode('flow-node', {
     drawAnchor(group) {
@@ -69,6 +81,23 @@ export default function(G6) {
           cursor: editorStyle.cursor.hoverNode
         }
       });
+      if(cfg.active){
+        let totalArray = [];
+        let index = 0;
+        shape.animate({
+          onFrame(ratio) {
+            for (let i = 0; i < 9; i += interval) {
+              totalArray = totalArray.concat(lineDash);
+            }
+            const cfg = {
+              lineDash: dashArray[index].concat(totalArray)
+            };
+            index = (index + 1) % interval;
+            return cfg;
+          },
+          repeat: true
+        }, 5000);
+      }
       cfg.labelCfg = {
         style: {
           cursor: editorStyle.cursor.hoverNode

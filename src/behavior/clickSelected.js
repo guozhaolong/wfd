@@ -12,6 +12,7 @@ export default function(G6){
         'edge:mouseover': 'onEdgeMouseOver',
         'edge:mouseleave': 'onEdgeMouseLeave',
         'canvas:click': 'onCanvasClick',
+        'node:mouseover': 'onNodeMouseOver',
       }
     },
     onClick(e) {
@@ -23,6 +24,12 @@ export default function(G6){
       selectedItems = [e.item.get('id')];
       this.graph.set('selectedItems',selectedItems);
       this.graph.emit('afteritemselected',selectedItems);
+    },
+    onNodeMouseOver(e){
+      if(this.graph.getCurrentMode() === 'edit')
+        this.graph.setItemState(e.item, 'hover', true);
+      else
+        this.graph.setItemState(e.item, 'hover', false);
     },
     onEdgeMouseOver(e){
       if(this.graph.getCurrentMode() === 'edit' && !e.item.hasState('selected'))

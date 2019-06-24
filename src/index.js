@@ -54,6 +54,7 @@ class Designer extends Component {
       if(this.graph){
         this.graph.changeData(this.props.data);
         this.graph.setMode(this.props.mode);
+        this.graph.emit('canvas:click');
         if(this.props.isView){
           this.graph.fitView(5)
         }

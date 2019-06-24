@@ -78,7 +78,6 @@ export default function(G6) {
       const shape = group.addShape(shapeType, {
         attrs: {
           ...style,
-          cursor: editorStyle.cursor.hoverNode
         }
       });
       if(cfg.active){
@@ -98,11 +97,6 @@ export default function(G6) {
           repeat: true
         }, 5000);
       }
-      cfg.labelCfg = {
-        style: {
-          cursor: editorStyle.cursor.hoverNode
-        }
-      };
       group.anchorShapes = [];
       group.showAnchor = (group) => {
         this.drawAnchor(group);
@@ -133,6 +127,16 @@ export default function(G6) {
           rect.attr('fill', item.getModel().selectedColor);
         } else {
           rect.attr('fill', item.getModel().unSelectedColor);
+        }
+      } else if (name === 'hover') {
+        const rect = group.getChildByIndex(0);
+        const text = group.getChildByIndex(1);
+        if (value) {
+          rect.attr('cursor', editorStyle.cursor.hoverNode);
+          text.attr('cursor', editorStyle.cursor.hoverNode);
+        } else {
+          rect.attr('cursor', 'default');
+          text.attr('cursor', 'default');
         }
       }
     },

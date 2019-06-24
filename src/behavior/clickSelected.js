@@ -25,11 +25,11 @@ export default function(G6){
       this.graph.emit('afteritemselected',selectedItems);
     },
     onEdgeMouseOver(e){
-      if(!e.item.hasState('selected'))
+      if(this.graph.getCurrentMode() === 'edit' && !e.item.hasState('selected'))
         this.graph.setItemState(e.item, 'hover', true);
     },
     onEdgeMouseLeave(e){
-      if(!e.item.hasState('selected'))
+      if(this.graph.getCurrentMode() === 'edit' && !e.item.hasState('selected'))
         this.graph.setItemState(e.item, 'hover', false);
     },
     onCanvasClick(){

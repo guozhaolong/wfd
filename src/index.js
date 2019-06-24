@@ -49,20 +49,16 @@ class Designer extends Component {
     };
   }
 
-  static getDerivedStateFromProps(props, state){
-    if(!state.loaded && props.data && props.data.nodes){
-      if(state.graph){
-        state.graph.changeData(props.data);
-        if(props.isView){
-          state.graph.fitView(5)
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if(prevProps.data !== this.props.data){
+      if(this.graph){
+        this.graph.changeData(this.props.data);
+        this.graph.setMode(this.props.mode);
+        if(this.props.isView){
+          this.graph.fitView(5)
         }
       }
-      return {
-        ...state,
-        loaded: true
-      }
     }
-    return null
   }
 
   componentDidMount() {
@@ -146,7 +142,8 @@ class Designer extends Component {
 
   render() {
     const height = this.props.height-47;
-    const { isView } = this.props;
+    const { isView,mode } = this.props;
+    const readOnly = mode !== "edit";
     return (
       <div className={styles.root}>
         { !isView &&
@@ -191,7 +188,9 @@ class Designer extends Component {
                       <div>标题：</div>
                       <Input style={{width: 200, fontSize: 12}}
                              value={this.state.selectedModel.label}
-                             onChange={(e) => this.onItemCfgChange('label', e.target.value)}/>
+                             onChange={(e) => this.onItemCfgChange('label', e.target.value)}
+                             disabled={readOnly}
+                      />
                     </div>
                     <div className={styles.panelRow}>
                       <div>审批人：</div>
@@ -204,6 +203,7 @@ class Designer extends Component {
                         defaultValue={this.state.selectedModel.assignee}
                         onChange={(e) => this.onItemCfgChange('assignee', e)}
                         filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                        disabled={readOnly}
                       >
                         <Select.Option key="admin">管理员</Select.Option>
                         <Select.Option key="zhang3">张三</Select.Option>
@@ -212,7 +212,7 @@ class Designer extends Component {
                     </div>
                     <div className={styles.panelRow}>
                       <div style={{display: 'inline-block', marginRight: 5}}>是否为会签：</div>
-                      <Switch defaultChecked onChange={(e) => this.onItemCfgChange('isSequential', e)}/>
+                      <Switch defaultChecked onChange={(e) => this.onItemCfgChange('isSequential', e)} disabled={readOnly}/>
                     </div>
                   </div>
                 </div>
@@ -226,7 +226,9 @@ class Designer extends Component {
                            value={this.state.selectedModel.label}
                            onChange={(e) => {
                              this.onItemCfgChange('label', e.target.value)
-                           }}/>
+                           }}
+                           disabled={readOnly}
+                    />
                   </div>
                 </div>
               </div>
@@ -240,7 +242,9 @@ class Designer extends Component {
                            value={this.state.selectedModel.label}
                            onChange={(e) => {
                              this.onItemCfgChange('label', e.target.value)
-                           }}/>
+                           }}
+                           disabled={readOnly}
+                    />
                   </div>
                   <div className={styles.panelRow}>
                     <div>条件表达式：</div>
@@ -249,7 +253,9 @@ class Designer extends Component {
                                     value={this.state.selectedModel.conditionExpression}
                                     onChange={(e) => {
                                       this.onItemCfgChange('conditionExpression', e.target.value)
-                                    }}/>
+                                    }}
+                                    disabled={readOnly}
+                    />
                   </div>
                 </div>
               </div>

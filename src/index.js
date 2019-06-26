@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Switch,Input,Select} from 'antd'
+import React, {Component,Fragment} from 'react';
+import {Input,Select,Checkbox} from 'antd'
 import 'antd/lib/input/style/css';
 import 'antd/lib/select/style/css';
 import 'antd/lib/switch/style/css';
@@ -20,6 +20,90 @@ import registerBehavior from './behavior'
 registerItem(G6);
 registerBehavior(G6);
 
+const DetailPanel = ({model,onChange,readOnly = false,})=>{
+  let title;
+  if(model.clazz === 'userTask')
+    title = "审批节点属性";
+  else if(model.clazz === 'exclusiveGateway')
+    title = "判断节点属性";
+  else if(model.clazz === 'sequenceFlow')
+    title = "连接线属性";
+  return (
+    model.clazz ? <div data-clazz={model.clazz}>
+        <div className={styles.panelTitle}>{title}</div>
+        <div className={styles.panelBody}>
+          <div className={styles.panelRow}>
+            <div>标题：</div>
+            <Input style={{width: '100%', fontSize: 12}}
+                   value={model.label}
+                   onChange={(e) => onChange('label', e.target.value)}
+                   disabled={readOnly}
+            />
+          </div>
+          {
+            model.clazz === 'userTask' &&
+            <Fragment>
+              <div className={styles.panelRow}>
+                <div>审批人：</div>
+                <Select
+                  mode="multiple"
+                  showSearch
+                  style={{width: '100%', fontSize: 12}}
+                  placeholder="Select a assignee"
+                  optionFilterProp="children"
+                  defaultValue={model.assignee}
+                  onChange={(e) => onChange('assignee', e)}
+                  filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                  disabled={readOnly}
+                >
+                  <Select.Option key="admin">管理员</Select.Option>
+                  <Select.Option key="zhang3">张三</Select.Option>
+                  <Select.Option key="li4">李四</Select.Option>
+                </Select>
+              </div>
+              <div className={styles.panelRow}>
+                <Checkbox onChange={(e) => onChange('isSequential', e.target.checked)}
+                          disabled={readOnly}
+                          checked={!!model.isSequential}>会签?</Checkbox>
+              </div>
+            </Fragment>
+          }
+          {
+            model.clazz === 'sequenceFlow' &&
+            <Fragment>
+              <div className={styles.panelRow}>
+                <div>条件表达式：</div>
+                <Input.TextArea style={{width: '100%', fontSize: 12}}
+                                rows={4}
+                                value={model.conditionExpression}
+                                onChange={(e) => {
+                                  onChange('conditionExpression', e.target.value)
+                                }}
+                                disabled={readOnly}
+                />
+              </div>
+              <div className={styles.panelRow}>
+                <div>序号：</div>
+                <Input style={{width: '100%', fontSize: 12}}
+                       value={model.seq}
+                       onChange={(e) => {
+                         onChange('seq', e.target.value)
+                       }}
+                       disabled={readOnly}
+                />
+              </div>
+              <div className={styles.panelRow}>
+                <Checkbox onChange={(e) => onChange('reverse', e.target.checked)}
+                          disabled={readOnly}
+                          checked={!!model.reverse}>反向?</Checkbox>
+              </div>
+            </Fragment>
+          }
+        </div>
+      </div> : <Fragment />
+  )
+};
+
 class Designer extends Component {
   static defaultProps = {
     height: 500,
@@ -34,18 +118,7 @@ class Designer extends Component {
     this.detailPanelRef = React.createRef();
     this.resizeFunc = ()=>{};
     this.state = {
-      selectedModel: {
-        clazz: '',
-        label: '',
-        assignee: '',
-        isSequential: false,
-        conditionExpression: '',
-      },
-      curZoom: 1,
-      minZoom: 0.5,
-      maxZoom: 2,
-      graph: null,
-      loaded: false,
+      selectedModel: {},
     };
   }
 
@@ -55,6 +128,9 @@ class Designer extends Component {
         this.graph.changeData(this.props.data);
         this.graph.setMode(this.props.mode);
         this.graph.emit('canvas:click');
+        if(this.cmdPlugin){
+          this.cmdPlugin.initPlugin(this.graph);
+        }
         if(this.props.isView){
           this.graph.fitView(5)
         }
@@ -64,20 +140,20 @@ class Designer extends Component {
 
   componentDidMount() {
     const { isView,mode } = this.props;
-    const height = this.props.height-48;
+    const height = this.props.height-1;
     const width = this.pageRef.current.offsetWidth;
     let plugins = [];
     if(!isView){
-      const cmd = new Command();
+      this.cmdPlugin = new Command();
       const toolbar = new Toolbar({container:this.toolbarRef.current});
       const addItemPanel = new AddItemPanel({container:this.itemPanelRef.current});
       const canvasPanel = new CanvasPanel({container:this.pageRef.current});
-      plugins = [ cmd,toolbar,addItemPanel,canvasPanel ];
+      plugins = [ this.cmdPlugin,toolbar,addItemPanel,canvasPanel ];
     }
     this.graph = new G6.Graph({
       plugins: plugins,
       container: this.pageRef.current,
-      height: height < 500 ? 500 : height,
+      height: height,
       width: width,
       modes: {
         default: ['drag-canvas', 'clickSelected'],
@@ -100,7 +176,6 @@ class Designer extends Component {
       this.graph.fitView(5)
     }
     this.initEvents();
-    this.setState({graph:this.graph})
   }
 
   initEvents(){
@@ -114,7 +189,7 @@ class Designer extends Component {
     });
     const page = this.pageRef.current;
     const graph = this.graph;
-    const height = this.props.height;
+    const height = this.props.height-1;
     this.resizeFunc = ()=>{
       graph.changeSize(page.offsetWidth,height);
     };
@@ -142,7 +217,7 @@ class Designer extends Component {
   }
 
   render() {
-    const height = this.props.height-47;
+    const height = this.props.height;
     const { isView,mode } = this.props;
     const readOnly = mode !== "edit";
     return (
@@ -181,86 +256,7 @@ class Designer extends Component {
           <div ref={this.pageRef} className={styles.canvasPanel} style={{width:isView?'100%':'70%',borderBottom:isView?0:null}}/>
           { !isView &&
             <div ref={this.detailPanelRef} className={styles.detailPanel} style={{height:height}}>
-              {this.state.selectedModel.clazz === 'userTask' &&
-                <div data-clazz="userTask" className={styles.detailCard}>
-                  <div className={styles.panelTitle}>审批节点属性</div>
-                  <div className={styles.panelBody}>
-                    <div className={styles.panelRow}>
-                      <div>标题：</div>
-                      <Input style={{width: 200, fontSize: 12}}
-                             value={this.state.selectedModel.label}
-                             onChange={(e) => this.onItemCfgChange('label', e.target.value)}
-                             disabled={readOnly}
-                      />
-                    </div>
-                    <div className={styles.panelRow}>
-                      <div>审批人：</div>
-                      <Select
-                        mode="multiple"
-                        showSearch
-                        style={{width: 200, fontSize: 12}}
-                        placeholder="Select a assignee"
-                        optionFilterProp="children"
-                        defaultValue={this.state.selectedModel.assignee}
-                        onChange={(e) => this.onItemCfgChange('assignee', e)}
-                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                        disabled={readOnly}
-                      >
-                        <Select.Option key="admin">管理员</Select.Option>
-                        <Select.Option key="zhang3">张三</Select.Option>
-                        <Select.Option key="li4">李四</Select.Option>
-                      </Select>
-                    </div>
-                    <div className={styles.panelRow}>
-                      <div style={{display: 'inline-block', marginRight: 5}}>是否为会签：</div>
-                      <Switch defaultChecked onChange={(e) => this.onItemCfgChange('isSequential', e)} disabled={readOnly}/>
-                    </div>
-                  </div>
-                </div>
-              }
-              {this.state.selectedModel.clazz === 'exclusiveGateway' && <div data-clazz="exclusiveGateway">
-                <div className={styles.panelTitle}>判断节点属性</div>
-                <div className={styles.panelBody}>
-                  <div className={styles.panelRow}>
-                    <div>标题：</div>
-                    <Input style={{width: 200, fontSize: 12}}
-                           value={this.state.selectedModel.label}
-                           onChange={(e) => {
-                             this.onItemCfgChange('label', e.target.value)
-                           }}
-                           disabled={readOnly}
-                    />
-                  </div>
-                </div>
-              </div>
-              }
-              {this.state.selectedModel.clazz === 'sequenceFlow' && <div data-clazz="sequenceFlow">
-                <div className={styles.panelTitle}>连接线属性</div>
-                <div className={styles.panelBody}>
-                  <div className={styles.panelRow}>
-                    <div>标题：</div>
-                    <Input style={{width: 200, fontSize: 12}}
-                           value={this.state.selectedModel.label}
-                           onChange={(e) => {
-                             this.onItemCfgChange('label', e.target.value)
-                           }}
-                           disabled={readOnly}
-                    />
-                  </div>
-                  <div className={styles.panelRow}>
-                    <div>条件表达式：</div>
-                    <Input.TextArea style={{width: 200, fontSize: 12}}
-                                    rows={4}
-                                    value={this.state.selectedModel.conditionExpression}
-                                    onChange={(e) => {
-                                      this.onItemCfgChange('conditionExpression', e.target.value)
-                                    }}
-                                    disabled={readOnly}
-                    />
-                  </div>
-                </div>
-              </div>
-              }
+              <DetailPanel model={this.state.selectedModel} onChange={this.onItemCfgChange} readOnly={readOnly} />
             </div>
           }
         </div>

@@ -73,7 +73,7 @@ class Toolbar {
     })
   }
 
-  destroy() {
+  destroyPlugin() {
     this.get('canvas').destroy();
     const container = this.get('container');
     container.parentNode.removeChild(container);

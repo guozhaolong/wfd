@@ -58,9 +58,14 @@ export default function(G6){
       }
       points.push(endPoint);
       const path = this.getPath(points);
+      let style = editorStyle.edgeStyle;
+      if(cfg.reverse)
+        style = {...style,lineDash:[1, 3]};
+      else
+        style = {...style,lineDash:null};
       return {
         path,
-        ...editorStyle.edgeStyle,
+        ...style,
         endArrow: {
           path: 'M 0,0 L -10,-4 S -8 0,-10 4 Z',
         }

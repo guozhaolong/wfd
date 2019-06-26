@@ -24,7 +24,7 @@ const faUndo = {
   prefix: 'fas',
   iconName: 'undo',
   icon: [
-    800,
+    1000,
     800,
     [],
     '',

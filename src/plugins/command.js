@@ -2,8 +2,8 @@ const Util = require('@antv/g6/src/util');
 
 class Command{
 
-  constructor(cfgs) {
-    this._cfgs = Util.deepMix(this.getDefaultCfg(), cfgs);
+  constructor() {
+
   }
 
   getDefaultCfg() {
@@ -18,7 +18,8 @@ class Command{
   }
 
   initPlugin(graph) {
-    this.list = [];
+    this._cfgs = this.getDefaultCfg();
+      this.list = [];
     this.queue = [];
     this.initCommands();
     graph.getCommands = () => { return this.get('_command').queue };
@@ -76,6 +77,14 @@ class Command{
     return this[name].enable(graph);
   }
 
+  destroyPlugin() {
+    this._events = null;
+    this._cfgs = null;
+    this.list = [];
+    this.queue = [];
+    this.destroyed = true;
+  }
+
   initCommands(){
     const cmdPlugin = this;
     cmdPlugin.registerCommand('add',{
@@ -113,8 +122,9 @@ class Command{
     });
     cmdPlugin.registerCommand('delete', {
       enable: function(graph) {
+        const mode = graph.getCurrentMode();
         const selectedItems = graph.get('selectedItems');
-        return selectedItems && selectedItems.length > 0;
+        return mode === 'edit' && selectedItems && selectedItems.length > 0;
       },
       method: function(graph) {
         const selectedItems = graph.get('selectedItems');
@@ -129,8 +139,9 @@ class Command{
     cmdPlugin.registerCommand('redo', {
       queue: false,
       enable: function(graph) {
+        const mode = graph.getCurrentMode();
         const manager = cmdPlugin.get('_command');
-        return manager.current < manager.queue.length;
+        return mode === 'edit' && manager.current < manager.queue.length;
       },
       execute: function(graph) {
         const manager = cmdPlugin.get('_command');
@@ -143,7 +154,8 @@ class Command{
     cmdPlugin.registerCommand('undo', {
       queue: false,
       enable: function(graph) {
-        return cmdPlugin.get('_command').current > 0;
+        const mode = graph.getCurrentMode();
+        return mode === 'edit' && cmdPlugin.get('_command').current > 0;
       },
       execute: function(graph) {
         const manager = cmdPlugin.get('_command');
@@ -159,8 +171,9 @@ class Command{
     cmdPlugin.registerCommand('copy', {
       queue: false,
       enable: function(graph){
+        const mode = graph.getCurrentMode();
         const items = graph.get('selectedItems');
-        return items && items.length > 0;
+        return mode === 'edit' && items && items.length > 0;
       },
       method: function(graph) {
         const manager = cmdPlugin.get('_command');
@@ -176,7 +189,8 @@ class Command{
     });
     cmdPlugin.registerCommand('paste', {
       enable: function(graph) {
-        return cmdPlugin.get('_command').clipboard.length > 0;
+        const mode = graph.getCurrentMode();
+        return mode === 'edit' && cmdPlugin.get('_command').clipboard.length > 0;
       },
       method: function(graph) {
         const manager = cmdPlugin.get('_command');

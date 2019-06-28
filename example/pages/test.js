@@ -21,7 +21,7 @@ export default () => {
   };
   return (
     <div >
-      <Designer data={data} onSave={(d)=>{console.log(d)}}/>
+      <Designer data={data} height={600} mode={"edit"} />
     </div>
   );
 }

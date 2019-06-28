@@ -27,6 +27,7 @@ const data = {
       { source: 'decisionNode', target: 'endNode', sourceAnchor:1, targetAnchor:2, clazz: 'sequenceFlow'},
       { source: 'taskNode3', target: 'endNode', sourceAnchor:1, targetAnchor:1, clazz: 'sequenceFlow' },
       { source: 'taskNode3', target: 'taskNode1', sourceAnchor:3, targetAnchor:2, clazz: 'sequenceFlow'},
+
 class WFDemo extends Component {
     constructor(props) {
         super(props);
@@ -35,7 +36,6 @@ class WFDemo extends Component {
     
     handleSave = () => {
         const bpm = this.wfDef.current.graph.save();
-        
     }
       
     render(){

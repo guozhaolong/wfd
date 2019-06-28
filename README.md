@@ -42,7 +42,7 @@ class WFDemo extends Component {
         return (
             <Fragment>
                 <a onClick={this.handleSave}>Save</a>
-                <Designer data={data} ref={this.wfRef}/>
+                <Designer data={data} ref={this.wfDef} height={600} mode={"edit"} />
             </Fragment>
         )
     }

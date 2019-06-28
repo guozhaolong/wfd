@@ -34,7 +34,7 @@
     "lodash": "^4.17.11"
   },
   "devDependencies": {
-    "umi-library": "^1.1.1",
+    "umi-library": "^1.6.0",
     "antd": "^3.16.3",
     "lodash": "^4.17.11"
   },

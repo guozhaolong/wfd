@@ -38,6 +38,7 @@ export default function(G6){
         }
         delegateShape.attr({ x: x - width / 2, y: y - height / 2 });
         this.graph.paint();
+        this.graph.emit('afternodedrag',delegateShape);
       }
     },
     onMouseUp(e){
@@ -50,6 +51,7 @@ export default function(G6){
     onMouseLeave(e){
       if(this.graph.get('onDragAddNode')) {
         this._clearDelegate();
+        this.graph.emit('afternodedragend');
       }
     },
     _clearDelegate(){

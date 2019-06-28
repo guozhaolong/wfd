@@ -14,7 +14,9 @@ export default function(G6){
       }
     },
     onNodeEnter(e){
-      this.graph.setItemState(e.item, 'show-anchor', true);
+      const clazz = e.item.getModel().clazz;
+      if(clazz !== 'endEvent' && !this.graph.get('onDragEdge'))
+        this.graph.setItemState(e.item, 'show-anchor', true);
     },
     onNodeLeave(e){
       if(e.target.type !== 'marker' && !this.graph.get('onDragEdge')) {

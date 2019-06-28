@@ -79,6 +79,8 @@ export default function(G6){
     },
     dragEdgeBeforeShowAnchor(e) {
       this.graph.getNodes().forEach(node => {
+        if(node.getModel().clazz === 'startEvent')
+          return;
         const group = node.getContainer();
         group.showAnchor(group);
         group.anchorShapes.forEach(a => a.get('item').showHotpot())

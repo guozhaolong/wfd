@@ -19,7 +19,7 @@ class Command{
 
   initPlugin(graph) {
     this._cfgs = this.getDefaultCfg();
-      this.list = [];
+    this.list = [];
     this.queue = [];
     this.initCommands();
     graph.getCommands = () => { return this.get('_command').queue };

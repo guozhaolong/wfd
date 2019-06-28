@@ -159,7 +159,7 @@ class Designer extends Component {
         default: ['drag-canvas', 'clickSelected'],
         view: [ ],
         edit: ['drag-canvas', 'hoverNodeActived','hoverAnchorActived','dragNode','dragEdge',
-          'dragPanelItemAddNode','clickSelected','deleteItem'],
+          'dragPanelItemAddNode','clickSelected','deleteItem','itemAlign'],
       },
       defaultEdge: {
         shape: 'flow-polyline-round',
@@ -256,7 +256,7 @@ class Designer extends Component {
           <div ref={this.pageRef} className={styles.canvasPanel} style={{width:isView?'100%':'70%',borderBottom:isView?0:null}}/>
           { !isView &&
             <div ref={this.detailPanelRef} className={styles.detailPanel} style={{height:height}}>
-              <DetailPanel model={this.state.selectedModel} onChange={this.onItemCfgChange} readOnly={readOnly} />
+              <DetailPanel model={this.state.selectedModel} onChange={(key,val)=>{this.onItemCfgChange(key,val)}} readOnly={readOnly} />
             </div>
           }
         </div>

@@ -248,8 +248,16 @@ class Designer extends Component {
             <div ref={this.itemPanelRef} className={styles.itemPanel} style={{height: height}}>
               <img data-item="{shape:'start-node',clazz:'startEvent',size:'40*40',label:'开始'}"
                    src={require('../assets/start.svg')} style={{width: 58, height: 58}}/>
-              <img data-item="{shape:'task-node',clazz:'userTask',size:'80*48',label:'任务节点'}"
-                   src={require('../assets/task.svg')} style={{width: 80, height: 48}}/>
+              <img data-item="{shape:'user-task-node',clazz:'userTask',size:'80*48',label:'任务节点'}"
+                   src={require('../assets/user-task.svg')} style={{width: 80, height: 48}}/>
+              <img data-item="{shape:'script-task-node',clazz:'scriptTask',size:'80*48',label:'脚本节点'}"
+                   src={require('../assets/script-task.svg')} style={{width: 80, height: 48}}/>
+              <img data-item="{shape:'java-task-node',clazz:'javaTask',size:'80*48',label:'Java节点'}"
+                   src={require('../assets/java-task.svg')} style={{width: 80, height: 48}}/>
+              <img data-item="{shape:'mail-task-node',clazz:'mailTask',size:'80*48',label:'邮件节点'}"
+                   src={require('../assets/mail-task.svg')} style={{width: 80, height: 48}}/>
+              <img data-item="{shape:'receive-task-node',clazz:'receiveTask',size:'80*48',label:'接收节点'}"
+                   src={require('../assets/receive-task.svg')} style={{width: 80, height: 48}}/>
               <img data-item="{shape:'decision-node',clazz:'exclusiveGateway',size:'60*60',label:'判断节点'}"
                    src={require('../assets/decision.svg')} style={{width: 68, height: 68}}/>
               <img data-item="{shape:'end-node',clazz:'endEvent',size:'40*40',label:'结束'}"

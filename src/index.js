@@ -1,5 +1,5 @@
 import React, {Component,Fragment} from 'react';
-import {Input,Select,Checkbox} from 'antd'
+import {Input,Select,Checkbox,Collapse} from 'antd'
 import 'antd/lib/input/style/css';
 import 'antd/lib/select/style/css';
 import 'antd/lib/switch/style/css';
@@ -7,7 +7,6 @@ import styles from './index.less';
 import G6 from '@antv/g6/src';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-const classNames = require('classnames');
 import { faShare,faCopy, faPaste,faTrashAlt,faSearchPlus,faSearchMinus,faCompress,faExpand,faLayerGroup } from '@fortawesome/free-solid-svg-icons'
 import { faLayerUp, faLayerDown,faUndo,faRedo } from './util/faIcons';
 library.add(faShare,faCopy,faPaste,faTrashAlt,faSearchPlus,faSearchMinus,faCompress,faExpand,faLayerGroup,faLayerUp,faLayerDown,faUndo,faRedo);
@@ -19,7 +18,7 @@ import registerItem from './item'
 import registerBehavior from './behavior'
 registerItem(G6);
 registerBehavior(G6);
-
+const { Panel } = Collapse;
 const DetailPanel = ({model,onChange,readOnly = false,})=>{
   let title;
   if(model.clazz === 'userTask')
@@ -39,6 +38,11 @@ const DetailPanel = ({model,onChange,readOnly = false,})=>{
                    onChange={(e) => onChange('label', e.target.value)}
                    disabled={readOnly}
             />
+          </div>
+          <div className={styles.panelRow}>
+            <Checkbox onChange={(e) => onChange('hideIcon', e.target.checked)}
+                      disabled={readOnly}
+                      checked={!!model.hideIcon}>隐藏图标</Checkbox>
           </div>
           {
             model.clazz === 'userTask' &&
@@ -64,7 +68,7 @@ const DetailPanel = ({model,onChange,readOnly = false,})=>{
               <div className={styles.panelRow}>
                 <Checkbox onChange={(e) => onChange('isSequential', e.target.checked)}
                           disabled={readOnly}
-                          checked={!!model.isSequential}>会签?</Checkbox>
+                          checked={!!model.isSequential}>会签</Checkbox>
               </div>
             </Fragment>
           }
@@ -246,22 +250,38 @@ class Designer extends Component {
         <div>
           { !isView &&
             <div ref={this.itemPanelRef} className={styles.itemPanel} style={{height: height}}>
-              <img data-item="{shape:'start-node',clazz:'startEvent',size:'40*40',label:'开始'}"
-                   src={require('../assets/start.svg')} style={{width: 58, height: 58}}/>
-              <img data-item="{shape:'user-task-node',clazz:'userTask',size:'80*48',label:'任务节点'}"
-                   src={require('../assets/user-task.svg')} style={{width: 80, height: 48}}/>
-              <img data-item="{shape:'script-task-node',clazz:'scriptTask',size:'80*48',label:'脚本节点'}"
-                   src={require('../assets/script-task.svg')} style={{width: 80, height: 48}}/>
-              <img data-item="{shape:'java-task-node',clazz:'javaTask',size:'80*48',label:'Java节点'}"
-                   src={require('../assets/java-task.svg')} style={{width: 80, height: 48}}/>
-              <img data-item="{shape:'mail-task-node',clazz:'mailTask',size:'80*48',label:'邮件节点'}"
-                   src={require('../assets/mail-task.svg')} style={{width: 80, height: 48}}/>
-              <img data-item="{shape:'receive-task-node',clazz:'receiveTask',size:'80*48',label:'接收节点'}"
-                   src={require('../assets/receive-task.svg')} style={{width: 80, height: 48}}/>
-              <img data-item="{shape:'decision-node',clazz:'exclusiveGateway',size:'60*60',label:'判断节点'}"
-                   src={require('../assets/decision.svg')} style={{width: 68, height: 68}}/>
-              <img data-item="{shape:'end-node',clazz:'endEvent',size:'40*40',label:'结束'}"
-                   src={require('../assets/end.svg')} style={{width: 58, height: 58}}/>
+              <Collapse accordion bordered={false}>
+                <Panel header="开始事件" key="1" forceRender>
+                  <img data-item="{shape:'start-node',clazz:'startEvent',size:'40*40',label:'开始'}"
+                       src={require('../assets/start.svg')} style={{width: 58, height: 58}}/>
+                  <img data-item="{shape:'timer-start-node',clazz:'timerStartEvent',size:'40*40',label:'定时器'}"
+                       src={require('../assets/timer-start.svg')} style={{width: 58, height: 58}}/>
+                  <img data-item="{shape:'message-start-node',clazz:'messageStartEvent',size:'40*40',label:'消息启动'}"
+                       src={require('../assets/message-start.svg')} style={{width: 58, height: 58}}/>
+                  <img data-item="{shape:'signal-start-node',clazz:'messageStartEvent',size:'40*40',label:'信号启动'}"
+                       src={require('../assets/signal-start.svg')} style={{width: 58, height: 58}}/>
+                </Panel>
+                <Panel header="活动" key="2" forceRender>
+                  <img data-item="{shape:'user-task-node',clazz:'userTask',size:'80*48',label:'审批节点'}"
+                       src={require('../assets/user-task.svg')} style={{width: 80, height: 48}}/>
+                  <img data-item="{shape:'script-task-node',clazz:'scriptTask',size:'80*48',label:'脚本节点'}"
+                       src={require('../assets/script-task.svg')} style={{width: 80, height: 48}}/>
+                  <img data-item="{shape:'java-task-node',clazz:'javaTask',size:'80*48',label:'Java节点'}"
+                       src={require('../assets/java-task.svg')} style={{width: 80, height: 48}}/>
+                  <img data-item="{shape:'mail-task-node',clazz:'mailTask',size:'80*48',label:'邮件节点'}"
+                       src={require('../assets/mail-task.svg')} style={{width: 80, height: 48}}/>
+                  <img data-item="{shape:'receive-task-node',clazz:'receiveTask',size:'80*48',label:'接收节点'}"
+                       src={require('../assets/receive-task.svg')} style={{width: 80, height: 48}}/>
+                </Panel>
+                <Panel header="网关" key="3" forceRender>
+                  <img data-item="{shape:'decision-node',clazz:'exclusiveGateway',size:'60*60',label:'判断节点'}"
+                       src={require('../assets/decision.svg')} style={{width: 68, height: 68}}/>
+                </Panel>
+                <Panel header="结束事件" key="4" forceRender>
+                  <img data-item="{shape:'end-node',clazz:'endEvent',size:'40*40',label:'结束'}"
+                       src={require('../assets/end.svg')} style={{width: 58, height: 58}}/>
+                </Panel>
+              </Collapse>
             </div>
           }
           <div ref={this.pageRef} className={styles.canvasPanel} style={{width:isView?'100%':'70%',borderBottom:isView?0:null}}/>

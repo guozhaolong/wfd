@@ -22,20 +22,19 @@ class AddItemPanel {
   initPlugin(graph) {
     const parentNode = this.get('container');
     const ghost = createDOM('<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"'+' style="opacity:0"/>');
-    each(parentNode.children,(child,i)=>{
-      if(child.hasAttribute('data-item')){
-        const addModel = (new Function("return " + child.getAttribute('data-item')))();
-        child.addEventListener('dragstart', e => {
-          e.dataTransfer.setDragImage(ghost, 0, 0);
-          graph.set('onDragAddNode',true);
-          graph.set('addModel',addModel);
-        });
-        child.addEventListener('dragend', e => {
-          graph.emit('canvas:mouseup',e);
-          graph.set('onDragAddNode',false);
-          graph.set('addModel',null);
-        });
-      }
+    const children = parentNode.querySelectorAll('div > div > .ant-collapse-content > div > img[data-item]');
+    each(children,(child,i)=>{
+      const addModel = (new Function("return " + child.getAttribute('data-item')))();
+      child.addEventListener('dragstart', e => {
+        e.dataTransfer.setDragImage(ghost, 0, 0);
+        graph.set('onDragAddNode',true);
+        graph.set('addModel',addModel);
+      });
+      child.addEventListener('dragend', e => {
+        graph.emit('canvas:mouseup',e);
+        graph.set('onDragAddNode',false);
+        graph.set('addModel',null);
+      });
     })
   }
 

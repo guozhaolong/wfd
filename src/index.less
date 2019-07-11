@@ -44,14 +44,34 @@
 }
 
 .itemPanel {
-  flex: 0 0 auto;
   float: left;
   width: 10%;
-  padding-top: 8px;
-  background: #f0f2f5;
-  text-align: center;
   border-left: 1px solid #E9E9E9;
   border-bottom: 1px solid #E9E9E9;
+  :global(.ant-collapse){
+    border: 0;
+    :global(.ant-collapse-item){
+      border-bottom: 0;
+      :global(.ant-collapse-header){
+        text-align: left;
+        border: 1px solid #d9d9d9;
+        &[aria-expanded=false]{
+          border-bottom: 0;
+        }
+      }
+      &:last-child{
+        :global(.ant-collapse-header) {
+          border-bottom: 1px solid #d9d9d9;
+        }
+      }
+      :global(.ant-collapse-content){
+        border-top: 0;
+        background: #f0f2f5;
+        text-align: center;
+      }
+    }
+
+  }
   img{
     width: 92px;
     height: 96px;

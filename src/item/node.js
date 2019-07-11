@@ -15,6 +15,10 @@ const interval = 9;
 const lineDash = [4, 2, 1, 2];
 export default function(G6) {
   G6.registerNode('flow-node', {
+    icon: null,
+    selectedColor: '#eee',
+    unSelectedColor: '#f9f9f9',
+    borderColor: '#bbb',
     drawAnchor(group) {
       const bbox = group.get('children')[0].getBBox();
       this.getAnchorPoints().forEach((p, i) => {
@@ -81,13 +85,24 @@ export default function(G6) {
         }
       });
       if(cfg.icon){
-        const icon = group.addShape('image', {
+        let attrs = {
+          x: style.x+2,
+          y: style.y+2,
+          width: 14,
+          height: 14,
+        };
+        if(shapeType === 'circle'){
+          attrs = {
+            x: style.x-6,
+            y: style.y - style.r + 2,
+            width: 12,
+            height: 12,
+          }
+        }
+        group.icon = group.addShape('image', {
           attrs: {
             img:cfg.icon,
-            x: style.x+2,
-            y: style.y+2,
-            width: 14,
-            height: 14,
+            ...attrs,
           }
         });
       }
@@ -158,21 +173,32 @@ export default function(G6) {
         [0.5, 1], // bottom
         [0, 0.5], // left
       ]
-    }
+    },
+    afterUpdate(cfg, group) {
+      const icon = group.get('group').icon;
+      if(cfg.hideIcon && icon && icon.get('visible')){
+        icon.hide();
+      }else if(icon && !icon.get('visible')){
+        icon.show();
+      }
+    },
+    initStyle(cfg){
+      cfg.selectedColor = this.selectedColor;
+      cfg.unSelectedColor = this.unSelectedColor;
+      cfg.icon = this.icon;
+      return cfg;
+    },
   }, 'single-shape');
 
   G6.registerNode('task-node', {
     shapeType: 'rect',
-    icon: null,
     selectedColor: '#95D6FB',
     unSelectedColor: '#E7F7FE',
     borderColor: '#1890FF',
     getShapeStyle(cfg) {
       cfg.size = [80, 44];
       cfg.label = cfg.label || '任务节点';
-      cfg.selectedColor = this.selectedColor;
-      cfg.unSelectedColor = this.unSelectedColor;
-      cfg.icon = this.icon;
+      cfg = this.initStyle(cfg);
       const width = cfg.size[0];
       const height = cfg.size[1];
       const style = {
@@ -195,8 +221,7 @@ export default function(G6) {
     getShapeStyle(cfg) {
       cfg.size = [60, 60];
       cfg.label = cfg.label || '判断节点';
-      cfg.selectedColor = this.selectedColor;
-      cfg.unSelectedColor = this.unSelectedColor;
+      cfg = this.initStyle(cfg);
       const width = cfg.size[0];
       const height = cfg.size[1];
       const gap = 4;
@@ -227,8 +252,7 @@ export default function(G6) {
     getShapeStyle(cfg) {
       cfg.size = [40, 40];
       cfg.label = cfg.label || '开始';
-      cfg.selectedColor = this.selectedColor;
-      cfg.unSelectedColor = this.unSelectedColor;
+      cfg = this.initStyle(cfg);
       const width = cfg.size[0];
       const style = {
         x: 0,
@@ -256,8 +280,7 @@ export default function(G6) {
     getShapeStyle(cfg) {
       cfg.size = [40, 40];
       cfg.label = cfg.label || '结束';
-      cfg.selectedColor = this.selectedColor;
-      cfg.unSelectedColor = this.unSelectedColor;
+      cfg = this.initStyle(cfg);
       const width = cfg.size[0];
       const style = {
         x: 0,
@@ -307,4 +330,13 @@ export default function(G6) {
     unSelectedColor: '#fff0f6',
     borderColor: '#ff85c0',
   }, 'task-node');
+  G6.registerNode('timer-start-node', {
+    icon: require('../assets/icon_timer.svg'),
+  }, 'start-node');
+  G6.registerNode('message-start-node', {
+    icon: require('../assets/icon_message.svg'),
+  }, 'start-node');
+  G6.registerNode('signal-start-node', {
+    icon: require('../assets/icon_signal.svg'),
+  }, 'start-node');
 }

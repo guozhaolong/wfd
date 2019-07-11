@@ -89,8 +89,8 @@ export default function(G6){
       });
     },
     _updateEdge(item, e, force) {
-      const x = e.canvasX;
-      const y = e.canvasY;
+      const x = e.x;
+      const y = e.y;
       if (this.delegate && !force) {
         this._updateEdgeDelegate(item, x, y);
         return;

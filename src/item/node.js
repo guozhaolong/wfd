@@ -98,6 +98,13 @@ export default function(G6) {
             width: 12,
             height: 12,
           }
+        }else if(shapeType === 'path'){
+          attrs = {
+            x: -10,
+            y: -10,
+            width: 20,
+            height: 20,
+          }
         }
         group.icon = group.addShape('image', {
           attrs: {
@@ -105,23 +112,6 @@ export default function(G6) {
             ...attrs,
           }
         });
-      }
-      if(cfg.active){
-        let totalArray = [];
-        let index = 0;
-        shape.animate({
-          onFrame(ratio) {
-            for (let i = 0; i < 9; i += interval) {
-              totalArray = totalArray.concat(lineDash);
-            }
-            const cfg = {
-              lineDash: dashArray[index].concat(totalArray)
-            };
-            index = (index + 1) % interval;
-            return cfg;
-          },
-          repeat: true
-        }, 5000);
       }
       group.anchorShapes = [];
       group.showAnchor = (group) => {
@@ -174,6 +164,26 @@ export default function(G6) {
         [0, 0.5], // left
       ]
     },
+    afterDraw(cfg, group) {
+      const shape = group.getFirst();
+      if(cfg.active){
+        let totalArray = [];
+        let index = 0;
+        shape.animate({
+          onFrame(ratio) {
+            for (let i = 0; i < 9; i += interval) {
+              totalArray = totalArray.concat(lineDash);
+            }
+            const cfg = {
+              lineDash: dashArray[index].concat(totalArray)
+            };
+            index = (index + 1) % interval;
+            return cfg;
+          },
+          repeat: true
+        }, 5000);
+      }
+    },
     afterUpdate(cfg, group) {
       const icon = group.get('group').icon;
       if(cfg.hideIcon && icon && icon.get('visible')){
@@ -197,7 +207,6 @@ export default function(G6) {
     borderColor: '#1890FF',
     getShapeStyle(cfg) {
       cfg.size = [80, 44];
-      cfg.label = cfg.label || '任务节点';
       cfg = this.initStyle(cfg);
       const width = cfg.size[0];
       const height = cfg.size[1];
@@ -213,14 +222,13 @@ export default function(G6) {
       return style;
     }
   }, 'flow-node');
-  G6.registerNode('decision-node', {
+  G6.registerNode('gateway-node', {
     shapeType: 'path',
     selectedColor: '#8CE8DE',
     unSelectedColor: '#E8FEFA',
     borderColor: '#13C2C2',
     getShapeStyle(cfg) {
       cfg.size = [60, 60];
-      cfg.label = cfg.label || '判断节点';
       cfg = this.initStyle(cfg);
       const width = cfg.size[0];
       const height = cfg.size[1];
@@ -251,7 +259,6 @@ export default function(G6) {
     borderColor: '#FA8C16',
     getShapeStyle(cfg) {
       cfg.size = [40, 40];
-      cfg.label = cfg.label || '开始';
       cfg = this.initStyle(cfg);
       const width = cfg.size[0];
       const style = {
@@ -279,7 +286,6 @@ export default function(G6) {
     borderColor: '#F5222D',
     getShapeStyle(cfg) {
       cfg.size = [40, 40];
-      cfg.label = cfg.label || '结束';
       cfg = this.initStyle(cfg);
       const width = cfg.size[0];
       const style = {
@@ -297,6 +303,39 @@ export default function(G6) {
         [0.5, 0], // top
         [0.5, 1], // bottom
         [0, 0.5], // left
+      ]
+    }
+  }, 'flow-node');
+  G6.registerNode('catch-node', {
+    shapeType: 'path',
+    selectedColor: '#FCD49A',
+    unSelectedColor: '#FEF7E8',
+    borderColor: '#FA8C16',
+    getShapeStyle(cfg) {
+      cfg.size = [60, 40];
+      cfg = this.initStyle(cfg);
+      const width = cfg.size[0];
+      const height = cfg.size[1];
+      const style = {
+        path: [
+          ['M', 0 , -height/3],
+          ['L', width/2, -height/3],
+          ['L', 0, height/3*2],
+          ['L', -width/2, -height/3],
+          ['Z'] // close
+        ],
+        ...editorStyle.nodeStyle,
+        fill: cfg.unSelectedColor,
+        stroke: this.borderColor,
+      };
+      return style;
+    },
+    getAnchorPoints() {
+      return [
+        [0.5, 0], // top
+        [0.8, 0.38], // right
+        [0.5, 1], // bottom
+        [0.2, 0.38], // left
       ]
     }
   }, 'flow-node');
@@ -339,4 +378,13 @@ export default function(G6) {
   G6.registerNode('signal-start-node', {
     icon: require('../assets/icon_signal.svg'),
   }, 'start-node');
+  G6.registerNode('timer-catch-node', {
+    icon: require('../assets/icon_timer.svg'),
+  }, 'catch-node');
+  G6.registerNode('signal-catch-node', {
+    icon: require('../assets/icon_signal.svg'),
+  }, 'catch-node');
+  G6.registerNode('message-catch-node', {
+    icon: require('../assets/icon_message.svg'),
+  }, 'catch-node');
 }

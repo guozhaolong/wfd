@@ -250,34 +250,42 @@ class Designer extends Component {
         <div>
           { !isView &&
             <div ref={this.itemPanelRef} className={styles.itemPanel} style={{height: height}}>
-              <Collapse accordion bordered={false}>
+              <Collapse bordered={false} defaultActiveKey={['1']}>
                 <Panel header="开始事件" key="1" forceRender>
                   <img data-item="{shape:'start-node',clazz:'startEvent',size:'40*40',label:'开始'}"
-                       src={require('../assets/start.svg')} style={{width: 58, height: 58}}/>
-                  <img data-item="{shape:'timer-start-node',clazz:'timerStartEvent',size:'40*40',label:'定时器'}"
-                       src={require('../assets/timer-start.svg')} style={{width: 58, height: 58}}/>
+                       src={require('../assets/start.svg')} style={{width: 60, height: 60}}/>
+                  <img data-item="{shape:'timer-start-node',clazz:'timerStartEvent',size:'40*40',label:'定时启动'}"
+                       src={require('../assets/timer-start.svg')} style={{width: 60, height: 60}}/>
                   <img data-item="{shape:'message-start-node',clazz:'messageStartEvent',size:'40*40',label:'消息启动'}"
-                       src={require('../assets/message-start.svg')} style={{width: 58, height: 58}}/>
+                       src={require('../assets/message-start.svg')} style={{width: 60, height: 60}}/>
                   <img data-item="{shape:'signal-start-node',clazz:'messageStartEvent',size:'40*40',label:'信号启动'}"
-                       src={require('../assets/signal-start.svg')} style={{width: 58, height: 58}}/>
+                       src={require('../assets/signal-start.svg')} style={{width: 60, height: 60}}/>
                 </Panel>
                 <Panel header="活动" key="2" forceRender>
-                  <img data-item="{shape:'user-task-node',clazz:'userTask',size:'80*48',label:'审批节点'}"
-                       src={require('../assets/user-task.svg')} style={{width: 80, height: 48}}/>
-                  <img data-item="{shape:'script-task-node',clazz:'scriptTask',size:'80*48',label:'脚本节点'}"
-                       src={require('../assets/script-task.svg')} style={{width: 80, height: 48}}/>
-                  <img data-item="{shape:'java-task-node',clazz:'javaTask',size:'80*48',label:'Java节点'}"
-                       src={require('../assets/java-task.svg')} style={{width: 80, height: 48}}/>
-                  <img data-item="{shape:'mail-task-node',clazz:'mailTask',size:'80*48',label:'邮件节点'}"
-                       src={require('../assets/mail-task.svg')} style={{width: 80, height: 48}}/>
-                  <img data-item="{shape:'receive-task-node',clazz:'receiveTask',size:'80*48',label:'接收节点'}"
-                       src={require('../assets/receive-task.svg')} style={{width: 80, height: 48}}/>
+                  <img data-item="{shape:'user-task-node',clazz:'userTask',size:'80*44',label:'审批节点'}"
+                       src={require('../assets/user-task.svg')} style={{width: 80, height: 44}}/>
+                  <img data-item="{shape:'script-task-node',clazz:'scriptTask',size:'80*44',label:'脚本节点'}"
+                       src={require('../assets/script-task.svg')} style={{width: 80, height: 44}}/>
+                  <img data-item="{shape:'java-task-node',clazz:'javaTask',size:'80*44',label:'Java节点'}"
+                       src={require('../assets/java-task.svg')} style={{width: 80, height: 44}}/>
+                  <img data-item="{shape:'mail-task-node',clazz:'mailTask',size:'80*44',label:'邮件节点'}"
+                       src={require('../assets/mail-task.svg')} style={{width: 80, height: 44}}/>
+                  <img data-item="{shape:'receive-task-node',clazz:'receiveTask',size:'80*44',label:'接收节点'}"
+                       src={require('../assets/receive-task.svg')} style={{width: 80, height: 44}}/>
                 </Panel>
                 <Panel header="网关" key="3" forceRender>
-                  <img data-item="{shape:'decision-node',clazz:'exclusiveGateway',size:'60*60',label:'判断节点'}"
-                       src={require('../assets/decision.svg')} style={{width: 68, height: 68}}/>
+                  <img data-item="{shape:'gateway-node',clazz:'exclusiveGateway',size:'60*60',label:'判断节点'}"
+                       src={require('../assets/gateway.svg')} style={{width: 68, height: 68}}/>
                 </Panel>
-                <Panel header="结束事件" key="4" forceRender>
+                <Panel header="捕获事件" key="4" forceRender>
+                  <img data-item="{shape:'timer-catch-node',clazz:'timerCatch',size:'60*40',label:''}"
+                       src={require('../assets/timer-catch.svg')} style={{width: 68, height: 68}}/>
+                  <img data-item="{shape:'message-catch-node',clazz:'messageCatch',size:'60*40',label:''}"
+                       src={require('../assets/message-catch.svg')} style={{width: 68, height: 68}}/>
+                  <img data-item="{shape:'signal-catch-node',clazz:'signalCatch',size:'60*40',label:''}"
+                       src={require('../assets/signal-catch.svg')} style={{width: 68, height: 68}}/>
+                </Panel>
+                <Panel header="结束事件" key="5" forceRender>
                   <img data-item="{shape:'end-node',clazz:'endEvent',size:'40*40',label:'结束'}"
                        src={require('../assets/end.svg')} style={{width: 58, height: 58}}/>
                 </Panel>

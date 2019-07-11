@@ -20,14 +20,15 @@ export default function(G6){
         const addModel = this.graph.get('addModel');
         const width = parseInt(addModel.size.split('*')[0]);
         const height = parseInt(addModel.size.split('*')[1]);
-        const x = e.offsetX;
-        const y = e.offsetY;
+        const point = this.graph.getPointByClient(e.x,e.y);
+        const x = point.x;
+        const y = point.y;
         if (!delegateShape) {
           const parent = this.graph.get('group');
           delegateShape = parent.addShape('rect', {
             attrs: {
-              width: width,
-              height: height,
+              width,
+              height,
               x: x - width / 2,
               y: y - height / 2,
               ...editorStyle.nodeDelegationStyle,

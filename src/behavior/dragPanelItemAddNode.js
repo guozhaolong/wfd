@@ -79,14 +79,15 @@ export default function(G6){
               ...addModel,
               x: x,
               y: y,
+              id: id,
             },
-            addId: id,
           });
         }else {
           this.graph.add('node', {
             ...addModel,
             x: x,
             y: y,
+            id: id,
           });
         }
       }

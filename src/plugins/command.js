@@ -92,9 +92,6 @@ class Command{
         return this.type && this.addModel;
       },
       execute: function(graph) {
-        if(this.executeTimes > 1){
-          this.addModel = { ...this.addModel, id: this.addId };
-        }
         const item = graph.add(this.type, this.addModel);
         if(this.executeTimes === 1)
           this.addId = item.get('id');

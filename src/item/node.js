@@ -93,15 +93,15 @@ export default function(G6) {
         };
         if(shapeType === 'circle'){
           attrs = {
-            x: style.x-6,
-            y: style.y - style.r + 2,
-            width: 12,
-            height: 12,
+            x: style.x- style.r + 6,
+            y: style.y - style.r + 6,
+            width: 18,
+            height: 18,
           }
         }else if(shapeType === 'path'){
           attrs = {
             x: -10,
-            y: -10,
+            y: -8,
             width: 20,
             height: 20,
           }
@@ -149,10 +149,12 @@ export default function(G6) {
         const text = group.getChildByIndex(1);
         if (value) {
           rect.attr('cursor', editorStyle.cursor.hoverNode);
-          text.attr('cursor', editorStyle.cursor.hoverNode);
+          if(text)
+            text.attr('cursor', editorStyle.cursor.hoverNode);
         } else {
           rect.attr('cursor', 'default');
-          text.attr('cursor', 'default');
+          if(text)
+            text.attr('cursor', 'default');
         }
       }
     },
@@ -164,11 +166,11 @@ export default function(G6) {
         [0, 0.5], // left
       ]
     },
-    afterDraw(cfg, group) {
-      const shape = group.getFirst();
+    runAnimate(cfg, group){
       if(cfg.active){
         let totalArray = [];
         let index = 0;
+        const shape = group.getFirst();
         shape.animate({
           onFrame(ratio) {
             for (let i = 0; i < 9; i += interval) {
@@ -183,6 +185,9 @@ export default function(G6) {
           repeat: true
         }, 5000);
       }
+    },
+    afterDraw(cfg, group) {
+      this.runAnimate(cfg,group);
     },
     afterUpdate(cfg, group) {
       const icon = group.get('group').icon;
@@ -227,8 +232,9 @@ export default function(G6) {
     selectedColor: '#8CE8DE',
     unSelectedColor: '#E8FEFA',
     borderColor: '#13C2C2',
+    labelPosition: 'bottom',
     getShapeStyle(cfg) {
-      cfg.size = [60, 60];
+      cfg.size = [40, 40];
       cfg = this.initStyle(cfg);
       const width = cfg.size[0];
       const height = cfg.size[1];
@@ -251,14 +257,33 @@ export default function(G6) {
       };
       return style;
     },
+    afterDraw(cfg, group) {
+      group.icon = group.addShape('path', {
+        attrs: {
+          path: [
+            ['M', -6, -6],
+            ['L', 6, 6],
+            ['Z'],
+            ['M', 6, -6],
+            ['L', -6, 6],
+            ['Z'] // close
+          ],
+          lineWidth: 2,
+          fill: this.borderColor,
+          stroke: this.borderColor,
+        }
+      });
+      this.runAnimate(cfg,group);
+    },
   }, 'flow-node');
   G6.registerNode('start-node', {
     shapeType: 'circle',
     selectedColor: '#FCD49A',
     unSelectedColor: '#FEF7E8',
     borderColor: '#FA8C16',
+    labelPosition: 'bottom',
     getShapeStyle(cfg) {
-      cfg.size = [40, 40];
+      cfg.size = [30, 30];
       cfg = this.initStyle(cfg);
       const width = cfg.size[0];
       const style = {
@@ -270,6 +295,20 @@ export default function(G6) {
         stroke: this.borderColor,
       };
       return style;
+    },
+    afterDraw(cfg, group) {
+      group.icon = group.addShape('path', {
+        attrs: {
+          path: [
+            ['M', -4 , -6],
+            ['L', 6, 0],
+            ['L', -4, 6],
+            ['Z'] // close
+          ],
+          fill: this.borderColor,
+          stroke: this.borderColor,
+        }
+      });
     },
     getAnchorPoints() {
       return [
@@ -284,8 +323,9 @@ export default function(G6) {
     selectedColor: '#CFD49A',
     unSelectedColor: '#EFF7E8',
     borderColor: '#F5222D',
+    labelPosition: 'bottom',
     getShapeStyle(cfg) {
-      cfg.size = [40, 40];
+      cfg.size = [30, 30];
       cfg = this.initStyle(cfg);
       const width = cfg.size[0];
       const style = {
@@ -297,6 +337,21 @@ export default function(G6) {
         stroke: this.borderColor,
       };
       return style;
+    },
+    afterDraw(cfg, group) {
+      group.icon = group.addShape('path', {
+        attrs: {
+          path: [
+            ['M', -4 , -4],
+            ['L', 4, -4],
+            ['L', 4, 4],
+            ['L', -4, 4],
+            ['Z'] // close
+          ],
+          fill: this.borderColor,
+          stroke: this.borderColor,
+        }
+      });
     },
     getAnchorPoints() {
       return [
@@ -311,8 +366,9 @@ export default function(G6) {
     selectedColor: '#FCD49A',
     unSelectedColor: '#FEF7E8',
     borderColor: '#FA8C16',
+    labelPosition: 'bottom',
     getShapeStyle(cfg) {
-      cfg.size = [60, 40];
+      cfg.size = [50, 30];
       cfg = this.initStyle(cfg);
       const width = cfg.size[0];
       const height = cfg.size[1];
@@ -371,12 +427,15 @@ export default function(G6) {
   }, 'task-node');
   G6.registerNode('timer-start-node', {
     icon: require('../assets/icon_timer.svg'),
+    afterDraw(cfg, group) { this.runAnimate(cfg,group) },
   }, 'start-node');
   G6.registerNode('message-start-node', {
     icon: require('../assets/icon_message.svg'),
+    afterDraw(cfg, group) { this.runAnimate(cfg,group) },
   }, 'start-node');
   G6.registerNode('signal-start-node', {
     icon: require('../assets/icon_signal.svg'),
+    afterDraw(cfg, group) { this.runAnimate(cfg,group) },
   }, 'start-node');
   G6.registerNode('timer-catch-node', {
     icon: require('../assets/icon_timer.svg'),

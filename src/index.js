@@ -252,13 +252,13 @@ class Designer extends Component {
             <div ref={this.itemPanelRef} className={styles.itemPanel} style={{height: height}}>
               <Collapse bordered={false} defaultActiveKey={['1']}>
                 <Panel header="开始事件" key="1" forceRender>
-                  <img data-item="{shape:'start-node',clazz:'startEvent',size:'40*40',label:'开始'}"
+                  <img data-item="{shape:'start-node',clazz:'startEvent',size:'40*40',label:''}"
                        src={require('../assets/start.svg')} style={{width: 60, height: 60}}/>
-                  <img data-item="{shape:'timer-start-node',clazz:'timerStartEvent',size:'40*40',label:'定时启动'}"
+                  <img data-item="{shape:'timer-start-node',clazz:'timerStartEvent',size:'40*40',label:''}"
                        src={require('../assets/timer-start.svg')} style={{width: 60, height: 60}}/>
-                  <img data-item="{shape:'message-start-node',clazz:'messageStartEvent',size:'40*40',label:'消息启动'}"
+                  <img data-item="{shape:'message-start-node',clazz:'messageStartEvent',size:'40*40',label:''}"
                        src={require('../assets/message-start.svg')} style={{width: 60, height: 60}}/>
-                  <img data-item="{shape:'signal-start-node',clazz:'messageStartEvent',size:'40*40',label:'信号启动'}"
+                  <img data-item="{shape:'signal-start-node',clazz:'messageStartEvent',size:'40*40',label:''}"
                        src={require('../assets/signal-start.svg')} style={{width: 60, height: 60}}/>
                 </Panel>
                 <Panel header="活动" key="2" forceRender>
@@ -274,7 +274,7 @@ class Designer extends Component {
                        src={require('../assets/receive-task.svg')} style={{width: 80, height: 44}}/>
                 </Panel>
                 <Panel header="网关" key="3" forceRender>
-                  <img data-item="{shape:'gateway-node',clazz:'exclusiveGateway',size:'60*60',label:'判断节点'}"
+                  <img data-item="{shape:'gateway-node',clazz:'exclusiveGateway',size:'60*60',label:''}"
                        src={require('../assets/gateway.svg')} style={{width: 68, height: 68}}/>
                 </Panel>
                 <Panel header="捕获事件" key="4" forceRender>
@@ -286,7 +286,7 @@ class Designer extends Component {
                        src={require('../assets/signal-catch.svg')} style={{width: 68, height: 68}}/>
                 </Panel>
                 <Panel header="结束事件" key="5" forceRender>
-                  <img data-item="{shape:'end-node',clazz:'endEvent',size:'40*40',label:'结束'}"
+                  <img data-item="{shape:'end-node',clazz:'endEvent',size:'40*40',label:''}"
                        src={require('../assets/end.svg')} style={{width: 58, height: 58}}/>
                 </Panel>
               </Collapse>

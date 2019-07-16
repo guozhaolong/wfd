@@ -1,10 +1,11 @@
 import React, {Component,Fragment} from 'react';
-import {Input,Select,Checkbox,Collapse,TimePicker} from 'antd'
+import {Input,Select,Checkbox,Collapse,DatePicker,TimePicker} from 'antd'
 import 'antd/lib/input/style/css';
 import 'antd/lib/select/style/css';
 import 'antd/lib/switch/style/css';
 import styles from './index.less';
 import G6 from '@antv/g6/src';
+import moment from 'moment';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShare,faCopy, faPaste,faTrashAlt,faSearchPlus,faSearchMinus,faCompress,faExpand,faLayerGroup } from '@fortawesome/free-solid-svg-icons'
@@ -64,22 +65,82 @@ const DetailPanel = ({model,onChange,readOnly = false,})=>{
             model.clazz === 'userTask' &&
             <Fragment>
               <div className={styles.panelRow}>
-                <div>审批人：</div>
+                <div>指派类型：</div>
                 <Select
-                  mode="multiple"
-                  showSearch
                   style={{width: '100%', fontSize: 12}}
-                  placeholder="Select a assignee"
-                  optionFilterProp="children"
-                  defaultValue={model.assignee}
-                  onChange={(e) => onChange('assignee', e)}
-                  filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                  placeholder="选择一个类型"
+                  defaultValue={"person"}
+                  value={model.assignType}
+                  onChange={(e) => onChange('assignType', e)}
                   disabled={readOnly}
                 >
-                  <Select.Option key="admin">管理员</Select.Option>
-                  <Select.Option key="zhang3">张三</Select.Option>
-                  <Select.Option key="li4">李四</Select.Option>
+                  <Select.Option key="person">人员</Select.Option>
+                  <Select.Option key="persongroup">人员组</Select.Option>
+                  <Select.Option key="custom">自定义类</Select.Option>
                 </Select>
+              </div>
+              {
+                model.assignType === 'person' &&
+                <div className={styles.panelRow}>
+                  <div>审批人：</div>
+                  <Select
+                    mode="multiple"
+                    showSearch
+                    style={{width: '100%', fontSize: 12}}
+                    placeholder="选择审批人"
+                    optionFilterProp="children"
+                    defaultValue={model.candidateUsers}
+                    onChange={(e) => onChange('candidateUsers', e)}
+                    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                    disabled={readOnly}
+                  >
+                    <Select.Option key="admin">管理员</Select.Option>
+                    <Select.Option key="zhang3">张三</Select.Option>
+                    <Select.Option key="li4">李四</Select.Option>
+                  </Select>
+                </div>
+              }
+              {
+                model.assignType === 'persongroup' &&
+                <div className={styles.panelRow}>
+                  <div>审批组：</div>
+                  <Select
+                    mode="multiple"
+                    showSearch
+                    style={{width: '100%', fontSize: 12}}
+                    placeholder="选择审批组"
+                    optionFilterProp="children"
+                    defaultValue={model.candidateGroups}
+                    onChange={(e) => onChange('candidateGroups', e)}
+                    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                    disabled={readOnly}
+                  >
+                    <Select.Option key="manager">经理组</Select.Option>
+                    <Select.Option key="test">IT人员</Select.Option>
+                    <Select.Option key="oa">安全组</Select.Option>
+                  </Select>
+                </div>
+              }
+              {
+                model.assignType === 'custom' &&
+                <div className={styles.panelRow}>
+                  <div>类名：</div>
+                  <Input style={{width: '100%', fontSize: 12}}
+                         value={model.javaClass}
+                         onChange={(e) => {
+                           onChange('javaClass', e.target.value)
+                         }}
+                         disabled={readOnly}
+                  />
+                </div>
+              }
+              <div className={styles.panelRow}>
+                <div style={{display:'inline'}}>到期时间：</div>
+                <DatePicker defaultValue={model.dueDate ? moment(model.dueDate) : null}
+                            disabled={readOnly}
+                            showTime
+                            onChange={(value,dateString) => onChange('dueDate', value) }
+                />
               </div>
               <div className={styles.panelRow}>
                 <Checkbox onChange={(e) => onChange('isSequential', e.target.checked)}

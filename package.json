@@ -31,7 +31,8 @@
   "peerDependencies": {
     "react": "16.x",
     "antd": "^3.16.3",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0"
   },
   "devDependencies": {
     "antd": "^3.16.3",

@@ -1,5 +1,5 @@
 import React, {Component,Fragment} from 'react';
-import {Input,Select,Checkbox,Collapse} from 'antd'
+import {Input,Select,Checkbox,Collapse,TimePicker} from 'antd'
 import 'antd/lib/input/style/css';
 import 'antd/lib/select/style/css';
 import 'antd/lib/switch/style/css';
@@ -23,10 +23,26 @@ const DetailPanel = ({model,onChange,readOnly = false,})=>{
   let title;
   if(model.clazz === 'userTask')
     title = "审批节点属性";
+  else if(model.clazz === 'javaTask')
+    title = "定制类节点属性";
+  else if(model.clazz === 'scriptTask')
+    title = "脚本节点属性";
+  else if(model.clazz === 'mailTask')
+    title = "邮件节点属性";
+  else if(model.clazz === 'receiveTask')
+    title = "接收节点属性";
   else if(model.clazz === 'exclusiveGateway')
-    title = "判断节点属性";
+    title = "网关属性";
   else if(model.clazz === 'sequenceFlow')
     title = "连接线属性";
+  else if(model.clazz === 'startEvent')
+    title = "开始节点属性";
+  else if(model.clazz === 'timerStart' || model.clazz === 'timerCatch')
+    title = "定时节点属性";
+  else if(model.clazz === 'messageStart' || model.clazz === 'messageCatch')
+    title = "消息节点属性";
+  else if(model.clazz === 'signalStart' || model.clazz === 'signalCatch')
+    title = "信号节点属性";
   return (
     model.clazz ? <div data-clazz={model.clazz}>
         <div className={styles.panelTitle}>{title}</div>
@@ -69,6 +85,149 @@ const DetailPanel = ({model,onChange,readOnly = false,})=>{
                 <Checkbox onChange={(e) => onChange('isSequential', e.target.checked)}
                           disabled={readOnly}
                           checked={!!model.isSequential}>会签</Checkbox>
+              </div>
+            </Fragment>
+          }
+          {
+            model.clazz === 'scriptTask' &&
+            <Fragment>
+              <div className={styles.panelRow}>
+                <div style={{display:'inline'}}>脚本：</div>
+                <Input.TextArea style={{width: '100%', fontSize: 12}}
+                                rows={4}
+                                value={model.script}
+                                onChange={(e) => {
+                                  onChange('script', e.target.value)
+                                }}
+                                disabled={readOnly}
+                />
+              </div>
+            </Fragment>
+          }
+          {
+            model.clazz === 'javaTask' &&
+            <Fragment>
+              <div className={styles.panelRow}>
+                <div style={{display:'inline'}}>类名：</div>
+                <Input style={{width: '100%', fontSize: 12}}
+                       value={model.javaClass}
+                       onChange={(e) => {
+                         onChange('javaClass', e.target.value)
+                       }}
+                       disabled={readOnly}
+                />
+              </div>
+            </Fragment>
+          }
+          {
+            model.clazz === 'receiveTask' &&
+            <Fragment>
+              <div className={styles.panelRow}>
+                <div style={{display:'inline'}}>等待属性：</div>
+                <Input style={{width: '100%', fontSize: 12}}
+                       value={model.waitField}
+                       onChange={(e) => {
+                         onChange('waitField', e.target.value)
+                       }}
+                       disabled={readOnly}
+                />
+              </div>
+              <div className={styles.panelRow}>
+                <div style={{display:'inline'}}>等待值：</div>
+                <Input style={{width: '100%', fontSize: 12}}
+                       value={model.waitValue}
+                       onChange={(e) => {
+                         onChange('waitValue', e.target.value)
+                       }}
+                       disabled={readOnly}
+                />
+              </div>
+            </Fragment>
+          }
+          {
+            model.clazz === 'mailTask' &&
+            <Fragment>
+              <div className={styles.panelRow}>
+                <div style={{display:'inline'}}>收件地址：</div>
+                <Input style={{width: '100%', fontSize: 12}}
+                       value={model.to}
+                       onChange={(e) => {
+                         onChange('to', e.target.value)
+                       }}
+                       disabled={readOnly}
+                />
+              </div>
+              <div className={styles.panelRow}>
+                <div style={{display:'inline'}}>邮件主题：</div>
+                <Input style={{width: '100%', fontSize: 12}}
+                       value={model.subject}
+                       onChange={(e) => {
+                         onChange('subject', e.target.value)
+                       }}
+                       disabled={readOnly}
+                />
+              </div>
+              <div className={styles.panelRow}>
+                <div style={{display:'inline'}}>邮件内容：</div>
+                <Input.TextArea style={{width: '100%', fontSize: 12}}
+                                rows={4}
+                                value={model.content}
+                                onChange={(e) => {
+                                  onChange('content', e.target.value)
+                                }}
+                                disabled={readOnly}
+                />
+              </div>
+            </Fragment>
+          }
+          {
+            (model.clazz === 'timerStart' || model.clazz === 'timerCatch') &&
+            <Fragment>
+              <div className={styles.panelRow}>
+                <div style={{display:'inline'}}>循环时间：</div>
+                <TimePicker defaultValue={model.cycle}
+                            format="HH:mm"
+                            disabled={readOnly}
+                            onChange={(time) => onChange('cycle', time) }
+                />
+              </div>
+              <div className={styles.panelRow}>
+                <div style={{display:'inline'}}>持续时间：</div>
+                <TimePicker defaultValue={model.duration}
+                            format="HH:mm"
+                            disabled={readOnly}
+                            onChange={(time) => onChange('duration', time) }
+                />
+              </div>
+            </Fragment>
+          }
+          {
+            (model.clazz === 'signalStart' || model.clazz === 'signalCatch') &&
+            <Fragment>
+              <div className={styles.panelRow}>
+                <div style={{display:'inline'}}>信号名：</div>
+                <Input style={{width: '100%', fontSize: 12}}
+                       value={model.signal}
+                       onChange={(e) => {
+                         onChange('signal', e.target.value)
+                       }}
+                       disabled={readOnly}
+                />
+              </div>
+            </Fragment>
+          }
+          {
+            (model.clazz === 'messageStart' || model.clazz === 'messageCatch') &&
+            <Fragment>
+              <div className={styles.panelRow}>
+                <div style={{display:'inline'}}>消息名：</div>
+                <Input style={{width: '100%', fontSize: 12}}
+                       value={model.message}
+                       onChange={(e) => {
+                         onChange('message', e.target.value)
+                       }}
+                       disabled={readOnly}
+                />
               </div>
             </Fragment>
           }
@@ -252,13 +411,13 @@ class Designer extends Component {
             <div ref={this.itemPanelRef} className={styles.itemPanel} style={{height: height}}>
               <Collapse bordered={false} defaultActiveKey={['1']}>
                 <Panel header="开始事件" key="1" forceRender>
-                  <img data-item="{shape:'start-node',clazz:'startEvent',size:'40*40',label:''}"
+                  <img data-item="{shape:'start-node',clazz:'startEvent',size:'30*30',label:''}"
                        src={require('../assets/start.svg')} style={{width: 60, height: 60}}/>
-                  <img data-item="{shape:'timer-start-node',clazz:'timerStartEvent',size:'40*40',label:''}"
+                  <img data-item="{shape:'timer-start-node',clazz:'timerStart',size:'30*30',label:''}"
                        src={require('../assets/timer-start.svg')} style={{width: 60, height: 60}}/>
-                  <img data-item="{shape:'message-start-node',clazz:'messageStartEvent',size:'40*40',label:''}"
+                  <img data-item="{shape:'message-start-node',clazz:'messageStart',size:'30*30',label:''}"
                        src={require('../assets/message-start.svg')} style={{width: 60, height: 60}}/>
-                  <img data-item="{shape:'signal-start-node',clazz:'messageStartEvent',size:'40*40',label:''}"
+                  <img data-item="{shape:'signal-start-node',clazz:'signalStart',size:'30*30',label:''}"
                        src={require('../assets/signal-start.svg')} style={{width: 60, height: 60}}/>
                 </Panel>
                 <Panel header="活动" key="2" forceRender>
@@ -274,19 +433,19 @@ class Designer extends Component {
                        src={require('../assets/receive-task.svg')} style={{width: 80, height: 44}}/>
                 </Panel>
                 <Panel header="网关" key="3" forceRender>
-                  <img data-item="{shape:'gateway-node',clazz:'exclusiveGateway',size:'60*60',label:''}"
+                  <img data-item="{shape:'gateway-node',clazz:'exclusiveGateway',size:'40*40',label:''}"
                        src={require('../assets/gateway.svg')} style={{width: 68, height: 68}}/>
                 </Panel>
                 <Panel header="捕获事件" key="4" forceRender>
-                  <img data-item="{shape:'timer-catch-node',clazz:'timerCatch',size:'60*40',label:''}"
+                  <img data-item="{shape:'timer-catch-node',clazz:'timerCatch',size:'50*30',label:''}"
                        src={require('../assets/timer-catch.svg')} style={{width: 68, height: 68}}/>
-                  <img data-item="{shape:'message-catch-node',clazz:'messageCatch',size:'60*40',label:''}"
+                  <img data-item="{shape:'message-catch-node',clazz:'messageCatch',size:'50*30',label:''}"
                        src={require('../assets/message-catch.svg')} style={{width: 68, height: 68}}/>
-                  <img data-item="{shape:'signal-catch-node',clazz:'signalCatch',size:'60*40',label:''}"
+                  <img data-item="{shape:'signal-catch-node',clazz:'signalCatch',size:'50*30',label:''}"
                        src={require('../assets/signal-catch.svg')} style={{width: 68, height: 68}}/>
                 </Panel>
                 <Panel header="结束事件" key="5" forceRender>
-                  <img data-item="{shape:'end-node',clazz:'endEvent',size:'40*40',label:''}"
+                  <img data-item="{shape:'end-node',clazz:'endEvent',size:'30*30',label:''}"
                        src={require('../assets/end.svg')} style={{width: 58, height: 58}}/>
                 </Panel>
               </Collapse>

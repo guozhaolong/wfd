@@ -1,5 +1,6 @@
 import Designer from "../../dist";
 import React from "react";
+import 'antd/dist/antd.less'
 export default () => {
   const data = {
     nodes: [{ id: 'startNode1', x: 50, y: 200, label: '', clazz: 'start', },

@@ -1,4 +1,5 @@
 import editorStyle from "../util/defaultStyle";
+import { getShapeName } from '../util/clazz';
 
 export default function(G6){
   G6.registerBehavior('dragPanelItemAddNode', {
@@ -69,6 +70,7 @@ export default function(G6){
       if(this.graph.get('onDragAddNode')) {
         const addModel = this.graph.get('addModel');
         const { clazz = 'userTask' } = addModel;
+        addModel.shape = getShapeName(clazz);
         const timestamp = new Date().getTime();
         const id = clazz + timestamp;
         const x = p.x;

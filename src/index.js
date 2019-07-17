@@ -5,6 +5,7 @@ import 'antd/lib/select/style/css';
 import 'antd/lib/switch/style/css';
 import styles from './index.less';
 import G6 from '@antv/g6/src';
+import { getShapeName } from './util/clazz'
 import moment from 'moment';
 import locale from './locales/index';
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -38,13 +39,13 @@ const DetailPanel = ({model,users,groups,onChange,readOnly = false,})=>{
             title = i18n['mailTask'];
           else if(model.clazz === 'receiveTask')
             title = i18n['receiveTask'];
-          else if(model.clazz === 'exclusiveGateway')
+          else if(model.clazz === 'gateway')
             title = i18n['exclusiveGateway'];
-          else if(model.clazz === 'sequenceFlow')
+          else if(model.clazz === 'flow')
             title = i18n['sequenceFlow'];
-          else if(model.clazz === 'startEvent')
+          else if(model.clazz === 'start')
             title = i18n['startEvent'];
-          else if(model.clazz === 'endEvent')
+          else if(model.clazz === 'end')
             title = i18n['endEvent'];
           else if(model.clazz === 'timerStart' || model.clazz === 'timerCatch')
             title = i18n['timerEvent'];
@@ -301,7 +302,7 @@ const DetailPanel = ({model,users,groups,onChange,readOnly = false,})=>{
                   </Fragment>
                 }
                 {
-                  model.clazz === 'sequenceFlow' &&
+                  model.clazz === 'flow' &&
                   <Fragment>
                     <div className={styles.panelRow}>
                       <div>{i18n['sequenceFlow.expression']}：</div>
@@ -362,7 +363,7 @@ class Designer extends Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     if(prevProps.data !== this.props.data){
       if(this.graph){
-        this.graph.changeData(this.props.data);
+        this.graph.changeData(this.initShape(this.props.data));
         this.graph.setMode(this.props.mode);
         this.graph.emit('canvas:click');
         if(this.cmdPlugin){
@@ -407,12 +408,27 @@ class Designer extends Component {
     }else{
       this.graph.setMode(mode);
     }
-    this.graph.data(this.props.data?this.props.data:{nodes:[],edges:[]});
+    this.graph.data(this.props.data?this.initShape(this.props.data):{nodes:[],edges:[]});
     this.graph.render();
     if(isView && this.props.data && this.props.data.nodes){
       this.graph.fitView(5)
     }
     this.initEvents();
+  }
+
+  initShape(data){
+    if(data && data.nodes){
+      return {
+        nodes: data.nodes.map(node => {
+          return {
+            shape: getShapeName(node.clazz),
+            ...node,
+          }
+        }),
+        edges: data.edges
+      }
+    }
+    return data;
   }
 
   initEvents(){
@@ -487,54 +503,54 @@ class Designer extends Component {
               <div ref={this.itemPanelRef} className={styles.itemPanel} style={{height: height}}>
                 <Collapse bordered={false} defaultActiveKey={['1']}>
                   <Panel header={i18n['start']} key="1" forceRender>
-                    <img data-item={"{shape:'start-node',clazz:'startEvent',size:'30*30',label:''}"}
+                    <img data-item={"{clazz:'start',size:'30*30',label:''}"}
                          src={require('../assets/start.svg')} style={{width: 42, height: 42}}/>
                     <div>{i18n['startEvent']}</div>
-                    <img data-item={"{shape:'timer-start-node',clazz:'timerStart',size:'30*30',label:''}"}
+                    <img data-item={"{clazz:'timerStart',size:'30*30',label:''}"}
                          src={require('../assets/timer-start.svg')} style={{width: 42, height: 42}}/>
                     <div>{i18n['timerEvent']}</div>
-                    <img data-item={"{shape:'message-start-node',clazz:'messageStart',size:'30*30',label:''}"}
+                    <img data-item={"{clazz:'messageStart',size:'30*30',label:''}"}
                          src={require('../assets/message-start.svg')} style={{width: 42, height: 42}}/>
                     <div>{i18n['messageEvent']}</div>
-                    <img data-item={"{shape:'signal-start-node',clazz:'signalStart',size:'30*30',label:''}"}
+                    <img data-item={"{clazz:'signalStart',size:'30*30',label:''}"}
                          src={require('../assets/signal-start.svg')} style={{width: 42, height: 42}}/>
                     <div>{i18n['signalEvent']}</div>
                   </Panel>
                   <Panel header={i18n['task']} key="2" forceRender>
-                    <img data-item={"{shape:'user-task-node',clazz:'userTask',size:'80*44',label:'"+i18n['userTask']+"'}"}
+                    <img data-item={"{clazz:'userTask',size:'80*44',label:'"+i18n['userTask']+"'}"}
                          src={require('../assets/user-task.svg')} style={{width: 80, height: 44}}/>
                     <div>{i18n['userTask']}</div>
-                    <img data-item={"{shape:'script-task-node',clazz:'scriptTask',size:'80*44',label:'"+i18n['scriptTask']+"'}"}
+                    <img data-item={"{clazz:'scriptTask',size:'80*44',label:'"+i18n['scriptTask']+"'}"}
                          src={require('../assets/script-task.svg')} style={{width: 80, height: 44}}/>
                     <div>{i18n['scriptTask']}</div>
-                    <img data-item={"{shape:'java-task-node',clazz:'javaTask',size:'80*44',label:'"+i18n['javaTask']+"'}"}
+                    <img data-item={"{clazz:'javaTask',size:'80*44',label:'"+i18n['javaTask']+"'}"}
                          src={require('../assets/java-task.svg')} style={{width: 80, height: 44}}/>
                     <div>{i18n['javaTask']}</div>
-                    <img data-item={"{shape:'mail-task-node',clazz:'mailTask',size:'80*44',label:'"+i18n['mailTask']+"'}"}
+                    <img data-item={"{clazz:'mailTask',size:'80*44',label:'"+i18n['mailTask']+"'}"}
                          src={require('../assets/mail-task.svg')} style={{width: 80, height: 44}}/>
                     <div>{i18n['mailTask']}</div>
-                    <img data-item={"{shape:'receive-task-node',clazz:'receiveTask',size:'80*44',label:'"+i18n['receiveTask']+"'}"}
+                    <img data-item={"{clazz:'receiveTask',size:'80*44',label:'"+i18n['receiveTask']+"'}"}
                          src={require('../assets/receive-task.svg')} style={{width: 80, height: 44}}/>
                     <div>{i18n['receiveTask']}</div>
                   </Panel>
                   <Panel header={i18n['gateway']} key="3" forceRender>
-                    <img data-item="{shape:'gateway-node',clazz:'exclusiveGateway',size:'40*40',label:''}"
+                    <img data-item="{clazz:'gateway',size:'40*40',label:''}"
                          src={require('../assets/gateway.svg')} style={{width: 48, height: 48}}/>
                     <div>{i18n['exclusiveGateway']}</div>
                   </Panel>
                   <Panel header={i18n['catch']} key="4" forceRender>
-                    <img data-item={"{shape:'timer-catch-node',clazz:'timerCatch',size:'50*30',label:''}"}
+                    <img data-item={"{clazz:'timerCatch',size:'50*30',label:''}"}
                          src={require('../assets/timer-catch.svg')} style={{width: 58, height: 38}}/>
                     <div>{i18n['timerEvent']}</div>
-                    <img data-item={"{shape:'message-catch-node',clazz:'messageCatch',size:'50*30',label:''}"}
+                    <img data-item={"{clazz:'messageCatch',size:'50*30',label:''}"}
                          src={require('../assets/message-catch.svg')} style={{width: 58, height: 38}}/>
                     <div>{i18n['messageEvent']}</div>
-                    <img data-item={"{shape:'signal-catch-node',clazz:'signalCatch',size:'50*30',label:''}"}
+                    <img data-item={"{clazz:'signalCatch',size:'50*30',label:''}"}
                          src={require('../assets/signal-catch.svg')} style={{width: 58, height: 38}}/>
                     <div>{i18n['signalEvent']}</div>
                   </Panel>
                   <Panel header={i18n['end']} key="5" forceRender>
-                    <img data-item={"{shape:'end-node',clazz:'endEvent',size:'30*30',label:''}"}
+                    <img data-item={"{clazz:'end',size:'30*30',label:''}"}
                          src={require('../assets/end.svg')} style={{width: 42, height: 42}}/>
                     <div>{i18n['endEvent']}</div>
                   </Panel>

@@ -12,21 +12,21 @@ import React, { Component,Fragment } from 'react';
 import Designer from 'wfd';
 
 const data = {
-    nodes: [{ id: 'startNode', x: 50, y: 200, label: '开始', clazz: 'startEvent', shape: 'start-node', },
-      { id: 'taskNode1', x: 200, y: 200, label: '主任审批', assignee: 'admin', isSequential:false, clazz: 'userTask', shape: 'task-node', },
-      { id: 'taskNode2', x: 400, y: 200, label: '经理审批', assignee: 'admin', isSequential:false, clazz: 'userTask', shape: 'task-node', },
-      { id: 'decisionNode', x: 400, y: 320, label: '金额大于1000', clazz: 'exclusiveGateway', shape: 'decision-node', },
-      { id: 'taskNode3', x: 400, y: 450, label: '董事长审批', assignee: 'admin', isSequential:false, clazz: 'userTask', shape: 'task-node', },
-      { id: 'endNode', x: 600, y: 320, label: '结束', clazz: 'endEvent', shape: 'end-node', }],
-    edges: [{ source: 'startNode', target: 'taskNode1', sourceAnchor:1, targetAnchor:3, clazz: 'sequenceFlow' },
-      { source: 'taskNode1', target: 'endNode', sourceAnchor:0, targetAnchor:0, clazz: 'sequenceFlow' },
-      { source: 'taskNode1', target: 'taskNode2', sourceAnchor:1, targetAnchor:3, clazz: 'sequenceFlow' },
-      { source: 'taskNode2', target: 'decisionNode', sourceAnchor:1, targetAnchor:0, clazz: 'sequenceFlow' },
-      { source: 'taskNode2', target: 'taskNode1', sourceAnchor:2, targetAnchor:2, clazz: 'sequenceFlow' },
-      { source: 'decisionNode', target: 'taskNode3', sourceAnchor:2, targetAnchor:0, clazz: 'sequenceFlow' },
-      { source: 'decisionNode', target: 'endNode', sourceAnchor:1, targetAnchor:2, clazz: 'sequenceFlow'},
-      { source: 'taskNode3', target: 'endNode', sourceAnchor:1, targetAnchor:1, clazz: 'sequenceFlow' },
-      { source: 'taskNode3', target: 'taskNode1', sourceAnchor:3, targetAnchor:2, clazz: 'sequenceFlow'},
+    nodes: [{ id: 'startNode', x: 50, y: 200, label: 'Start', clazz: 'start' },
+      { id: 'taskNode1', x: 200, y: 200, label: 'Supervisor', assignee: 'admin', isSequential:false, clazz: 'userTask' },
+      { id: 'taskNode2', x: 400, y: 200, label: 'Manager', assignee: 'admin', isSequential:false, clazz: 'userTask' },
+      { id: 'decisionNode', x: 400, y: 320, label: 'Cost > 1000', clazz: 'gateway' },
+      { id: 'taskNode3', x: 400, y: 450, label: 'CEO', clazz: 'userTask' },
+      { id: 'endNode', x: 600, y: 320, label: 'End', clazz: 'end' }],
+    edges: [{ source: 'startNode', target: 'taskNode1', sourceAnchor:1, targetAnchor:3, clazz: 'flow' },
+      { source: 'taskNode1', target: 'endNode', sourceAnchor:0, targetAnchor:0, clazz: 'flow' },
+      { source: 'taskNode1', target: 'taskNode2', sourceAnchor:1, targetAnchor:3, clazz: 'flow' },
+      { source: 'taskNode2', target: 'decisionNode', sourceAnchor:1, targetAnchor:0, clazz: 'flow' },
+      { source: 'taskNode2', target: 'taskNode1', sourceAnchor:2, targetAnchor:2, clazz: 'flow' },
+      { source: 'decisionNode', target: 'taskNode3', sourceAnchor:2, targetAnchor:0, clazz: 'flow' },
+      { source: 'decisionNode', target: 'endNode', sourceAnchor:1, targetAnchor:2, clazz: 'flow'},
+      { source: 'taskNode3', target: 'endNode', sourceAnchor:1, targetAnchor:1, clazz: 'flow' },
+      { source: 'taskNode3', target: 'taskNode1', sourceAnchor:3, targetAnchor:2, clazz: 'flow'},
 
 class WFDemo extends Component {
     constructor(props) {
@@ -39,15 +39,53 @@ class WFDemo extends Component {
     }
       
     render(){
+        const candidateUsers = [{id:'1',name:'Tom'},{id:'2',name:'Steven'},{id:'3',name:'Andy'}];
+        const candidateGroups = [{id:'1',name:'Manager'},{id:'2',name:'Security'},{id:'3',name:'OA'}];
         return (
             <Fragment>
                 <a onClick={this.handleSave}>Save</a>
-                <Designer data={data} ref={this.wfDef} height={600} mode={"edit"} />
+                <Designer data={data} ref={this.wfDef} height={600} mode={"edit"} lang="zh" users={candidateUsers} groups={candidateGroups}/>
             </Fragment>
         )
     }
 }
 ```
+## API
+##### Designer
+###### 属性
+* data: 初始化数据
+* height: 画布高度
+* mode: view为只读，edit为可编辑
+* lang: zh为中文，en为英文
+* users: 选择审批人时对应的数据，数组内对象以id为键，name为值
+* groups: 选择审批组时对应的数据，数组内对象以id为键，name为值
+
+###### 方法
+* save(): 调用graph.save()生成json
+
+##### Node
+###### 属性
+* id: 唯一标识
+* x: x点
+* y: y点
+* label: 节点标题
+* hideIcon: 是否隐藏图标  
+* clazz: 类，对应节点展示图形
+    + start
+    + timerStart
+    + messageStart
+    + signalStart
+    + gateway
+    + userTask
+    + scriptTask
+    + mailTask
+    + javaTask
+    + receiveTask
+    + timerCatch
+    + messageCatch
+    + signalCatch
+    + end
+
 ## Run Example
 ```
 > cd example

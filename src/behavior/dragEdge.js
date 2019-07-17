@@ -128,7 +128,7 @@ export default function(G6){
     _addEdge(){
       if(this.origin.targetNode) {
         const addModel = {
-          clazz: 'sequenceFlow',
+          clazz: 'flow',
           source: this.origin.sourceNode.get('id'),
           target: this.origin.targetNode.get('id'),
           sourceAnchor: this.origin.sourceAnchor,

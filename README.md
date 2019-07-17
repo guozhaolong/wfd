@@ -70,21 +70,56 @@ class WFDemo extends Component {
 * y: y点
 * label: 节点标题
 * hideIcon: 是否隐藏图标  
-* clazz: 类，对应节点展示图形
-    + start
-    + timerStart
-    + messageStart
-    + signalStart
-    + gateway
-    + userTask
-    + scriptTask
-    + mailTask
-    + javaTask
-    + receiveTask
-    + timerCatch
-    + messageCatch
-    + signalCatch
-    + end
+* clazz: 类，对应flowable节点，支持类型如下:
+    * start 开始节点
+    * timerStart 定时启动节点
+    * messageStart 消息启动节点
+    * signalStart 信号启动节点
+    * gateway 排他网关
+    * userTask 用户审批节点
+    * scriptTask 脚本节点
+    * mailTask 邮件节点
+    * javaTask 自定义类节点
+    * receiveTask 接收状态节点
+    * timerCatch 定时捕获节点
+    * messageCatch 消息捕获节点
+    * signalCatch 信号捕获节点
+    * end 结束节点
+    
+##### Edge
+###### 属性
+* source: 源节点ID
+* target: 目标节点ID
+* sourceAnchor: 源节点锚点，0上、1右、2下、3左
+* targetAnchor: 目标节点锚点
+* clazz: 类，目前只有flow一种
+
+##### UserTask
+###### 属性
+* assignType 审批类型，包含人员、人员组、自定义类
+* assignValue 关联审批人或组
+* javaClass 自定义类名
+* dueDate 持续时间
+* isSequential 是否会签
+
+##### ScriptTask
+###### 属性
+* script 脚本内容
+
+##### JavaTask
+###### 属性
+* javaClass 自定义类名
+
+##### ReceiveTask
+###### 属性
+* waitState 等待状态字段名
+* stateValue 等待状态值
+
+##### MailTask
+###### 属性
+* to 收件人
+* subject 邮件主题
+* content 邮件内容
 
 ## Run Example
 ```

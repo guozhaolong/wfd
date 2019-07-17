@@ -80,7 +80,10 @@ const DetailPanel = ({model,users,groups,onChange,readOnly = false,})=>{
                         placeholder={i18n['userTask.assignType.placeholder']}
                         defaultValue={"person"}
                         value={model.assignType}
-                        onChange={(e) => onChange('assignType', e)}
+                        onChange={(e) => {
+                          onChange('assignValue', []);
+                          onChange('assignType', e);
+                        }}
                         disabled={readOnly}
                       >
                         <Select.Option key="person">{i18n['userTask.assignType.person']}</Select.Option>
@@ -98,8 +101,8 @@ const DetailPanel = ({model,users,groups,onChange,readOnly = false,})=>{
                           style={{width: '100%', fontSize: 12}}
                           placeholder={i18n['userTask.assignType.person.placeholder']}
                           optionFilterProp="children"
-                          defaultValue={model.candidateUsers}
-                          onChange={(e) => onChange('candidateUsers', e)}
+                          defaultValue={model.assignValue}
+                          onChange={(e) => onChange('assignValue', e)}
                           filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                           disabled={readOnly}
                         >
@@ -117,8 +120,8 @@ const DetailPanel = ({model,users,groups,onChange,readOnly = false,})=>{
                           style={{width: '100%', fontSize: 12}}
                           placeholder={i18n['userTask.assignType.persongroup.placeholder']}
                           optionFilterProp="children"
-                          defaultValue={model.candidateGroups}
-                          onChange={(e) => onChange('candidateGroups', e)}
+                          defaultValue={model.assignValue}
+                          onChange={(e) => onChange('assignValue', e)}
                           filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                           disabled={readOnly}
                         >
@@ -145,7 +148,7 @@ const DetailPanel = ({model,users,groups,onChange,readOnly = false,})=>{
                                   disabled={readOnly}
                                   placeholder={i18n['userTask.dueDate.placeholder']}
                                   showTime
-                                  style={{width: '100%'}}
+                                  style={{width: '100%',minWidth:null}}
                                   onChange={(value, dateString) => onChange('dueDate', value)}
                       />
                     </div>

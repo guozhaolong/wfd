@@ -37,7 +37,8 @@
   "devDependencies": {
     "antd": "^3.16.3",
     "lodash": "^4.17.11",
-    "umi-library": "^1.6.0"
+    "umi-library": "^1.6.0",
+    "umi": "^2.8.11"
   },
   "license": "MIT",
   "bugs": {

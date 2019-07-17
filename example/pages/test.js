@@ -2,26 +2,30 @@ import Designer from "../../dist";
 import React from "react";
 export default () => {
   const data = {
-    nodes: [{ id: 'startNode', x: 50, y: 200, label: '开始', clazz: 'startEvent', shape: 'start-node', },
-      { id: 'taskNode1', x: 200, y: 200, label: '主任审批', assignee: ['admin'], isSequential:false, clazz: 'userTask', shape: 'task-node', },
-      { id: 'taskNode2', x: 400, y: 200, label: '经理审批', assignee: ['admin'], isSequential:false, clazz: 'userTask', shape: 'task-node', },
-      { id: 'decisionNode', x: 400, y: 320, label: '总金额', clazz: 'exclusiveGateway', shape: 'decision-node', },
-      { id: 'taskNode3', x: 400, y: 450, label: '董事长审批', assignee: ['admin','zhang3'], isSequential:false, clazz: 'userTask', shape: 'task-node', },
-      { id: 'endNode', x: 600, y: 320, label: '结束', clazz: 'endEvent', shape: 'end-node', }],
-    edges: [{ source: 'startNode', target: 'taskNode1', sourceAnchor:1, targetAnchor:3, clazz: 'sequenceFlow' },
-      { source: 'taskNode1', target: 'endNode', sourceAnchor:0, targetAnchor:0, clazz: 'sequenceFlow' },
-      { source: 'taskNode1', target: 'taskNode2', sourceAnchor:1, targetAnchor:3, clazz: 'sequenceFlow' },
-      { source: 'taskNode2', target: 'decisionNode', sourceAnchor:1, targetAnchor:0, clazz: 'sequenceFlow' },
-      { source: 'taskNode2', target: 'taskNode1', sourceAnchor:2, targetAnchor:2, clazz: 'sequenceFlow' },
-      { source: 'decisionNode', target: 'taskNode3', label:'大于1000', sourceAnchor:2, targetAnchor:0, clazz: 'sequenceFlow' },
-      { source: 'decisionNode', target: 'endNode', label:'小于1000', sourceAnchor:1, targetAnchor:2, clazz: 'sequenceFlow'},
-      { source: 'taskNode3', target: 'endNode', sourceAnchor:1, targetAnchor:1, clazz: 'sequenceFlow' },
-      { source: 'taskNode3', target: 'taskNode1', sourceAnchor:3, targetAnchor:2, clazz: 'sequenceFlow'},
-    ]
+    nodes: [{ id: 'startNode1', x: 50, y: 200, label: '', clazz: 'start', },
+      { id: 'startNode2', x: 50, y: 320, label: '', clazz: 'timerStart', },
+      { id: 'taskNode1', x: 200, y: 200, label: '主任审批', clazz: 'userTask',  },
+      { id: 'taskNode2', x: 400, y: 200, label: '经理审批', clazz: 'scriptTask',  },
+      { id: 'gatewayNode', x: 400, y: 320, label: '金额大于1000', clazz: 'gateway',  },
+      { id: 'taskNode3', x: 400, y: 450, label: '董事长审批', clazz: 'receiveTask', },
+      { id: 'catchNode1', x: 600, y: 200, label: '等待结束', clazz: 'signalCatch', },
+      { id: 'endNode', x: 600, y: 320, label: '', clazz: 'end', }],
+    edges: [{ source: 'startNode1', target: 'taskNode1', sourceAnchor:1, targetAnchor:3, clazz: 'flow' },
+      { source: 'startNode2', target: 'gatewayNode', sourceAnchor:1, targetAnchor:3, clazz: 'flow' },
+      { source: 'taskNode1', target: 'catchNode1', sourceAnchor:0, targetAnchor:0, clazz: 'flow' },
+      { source: 'taskNode1', target: 'taskNode2', sourceAnchor:1, targetAnchor:3, clazz: 'flow' },
+      { source: 'taskNode2', target: 'gatewayNode', sourceAnchor:1, targetAnchor:0, clazz: 'flow' },
+      { source: 'taskNode2', target: 'taskNode1', sourceAnchor:2, targetAnchor:2, clazz: 'flow' },
+      { source: 'gatewayNode', target: 'taskNode3', sourceAnchor:2, targetAnchor:0, clazz: 'flow' },
+      { source: 'gatewayNode', target: 'endNode', sourceAnchor:1, targetAnchor:2, clazz: 'flow'},
+      { source: 'taskNode3', target: 'endNode', sourceAnchor:1, targetAnchor:1, clazz: 'flow' },
+      { source: 'catchNode1', target: 'endNode', sourceAnchor:1, targetAnchor:0, clazz: 'flow' }]
   };
+  const candidateUsers = [{id:'1',name:'Tom'},{id:'2',name:'Steven'},{id:'3',name:'Andy'}];
+  const candidateGroups = [{id:'1',name:'Manager'},{id:'2',name:'Security'},{id:'3',name:'OA'}];
   return (
     <div >
-      <Designer data={data} height={600} mode={"edit"} />
+      <Designer data={data} height={600} mode={"edit"} users={candidateUsers} groups={candidateGroups}/>
     </div>
   );
 }

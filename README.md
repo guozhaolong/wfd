@@ -73,6 +73,7 @@ class WFDemo extends Component {
 * y: y点
 * label: 节点标题
 * hideIcon: 是否隐藏图标  
+* active: 是否显示节点状态（节点边将显示运动动画）
 * clazz: 类，对应flowable节点，支持类型如下:
     * start 开始节点
     * timerStart 定时启动节点

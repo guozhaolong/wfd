@@ -25,7 +25,7 @@ export default () => {
   const candidateUsers = [{id:'1',name:'Tom'},{id:'2',name:'Steven'},{id:'3',name:'Andy'}];
   const candidateGroups = [{id:'1',name:'Manager'},{id:'2',name:'Security'},{id:'3',name:'OA'}];
   return (
-    <div >
+    <div>
       <Designer data={data} height={600} mode={"edit"} users={candidateUsers} groups={candidateGroups}/>
     </div>
   );

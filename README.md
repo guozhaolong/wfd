@@ -6,6 +6,9 @@
 
 ![image](https://github.com/guozhaolong/wfd/raw/master/example/snapshots/1.jpg)
 
+## Online Demo
+https://guozhaolong.github.io/wfd/
+
 ## Usage
 ```
 import React, { Component,Fragment } from 'react';

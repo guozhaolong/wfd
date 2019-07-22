@@ -1,3 +1,4 @@
 export default {
-  base: '/docs'
+  base: '/wfd',
+  publicPath: '/wfd/',
 }

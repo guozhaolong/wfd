@@ -15330,9 +15330,9 @@ var _history = _interopRequireDefault(__webpack_require__(/*! @tmp/history */ ".
 
 var Router = _reactRouterDom.Router;
 var routes = [{
-  "path": "/test",
+  "path": "/",
   "exact": true,
-  "component": __webpack_require__(/*! ../test.js */ "./pages/test.js").default
+  "component": __webpack_require__(/*! ../index.js */ "./pages/index.js").default
 }];
 exports.routes = routes;
 window.g_routes = routes;
@@ -15517,10 +15517,10 @@ if (false) {}
 
 /***/ }),
 
-/***/ "./pages/test.js":
-/*!***********************!*\
-  !*** ./pages/test.js ***!
-  \***********************/
+/***/ "./pages/index.js":
+/*!************************!*\
+  !*** ./pages/index.js ***!
+  \************************/
 /*! no static exports found */
 /*! all exports used */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */

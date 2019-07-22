@@ -560,7 +560,7 @@ class Designer extends Component {
                 </Collapse>
               </div>
             }
-            <div ref={this.pageRef} className={styles.canvasPanel} style={{width:isView?'100%':'70%',borderBottom:isView?0:null}}/>
+            <div ref={this.pageRef} className={styles.canvasPanel} style={{height:height,width:isView?'100%':'70%',borderBottom:isView?0:null}}/>
             { !isView &&
               <div ref={this.detailPanelRef} className={styles.detailPanel} style={{height:height}}>
                 <DetailPanel model={this.state.selectedModel}

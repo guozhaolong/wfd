@@ -60,6 +60,7 @@ class WFDemo extends Component {
 * height: 画布高度
 * mode: view为只读，edit为可编辑
 * lang: zh为中文，en为英文
+* isView: 是否为预览模式（隐藏工具栏和属性栏）
 * users: 选择审批人时对应的数据，数组内对象以id为键，name为值
 * groups: 选择审批组时对应的数据，数组内对象以id为键，name为值
 

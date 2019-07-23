@@ -193,7 +193,7 @@ export default function(G6) {
       const icon = group.get('group').icon;
       if(cfg.hideIcon && icon && icon.get('visible')){
         icon.hide();
-      }else if(icon && !icon.get('visible')){
+      }else if(!cfg.hideIcon && icon && !icon.get('visible')){
         icon.show();
       }
     },

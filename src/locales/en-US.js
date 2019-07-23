@@ -46,5 +46,15 @@ export default {
   'gateway': 'Gateway',
   'task': 'Task',
   'catch': 'Catching Event',
-
+  'tooltip.undo': 'Undo',
+  'tooltip.redo': 'Redo',
+  'tooltip.copy': 'Copy',
+  'tooltip.paste': 'Paste',
+  'tooltip.delete': 'Delete',
+  'tooltip.zoomIn': 'Zoom In',
+  'tooltip.zoomOut': 'Zoom Out',
+  'tooltip.zoomReset': 'Zoom Reset',
+  'tooltip.autoFit': 'Auto Fit',
+  'tooltip.toFront': 'To Front Layer',
+  'tooltip.toBack': 'To Back Layer',
 };

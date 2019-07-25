@@ -16,8 +16,8 @@ import Designer from 'wfd';
 
 const data = {
     nodes: [{ id: 'startNode', x: 50, y: 200, label: 'Start', clazz: 'start' },
-      { id: 'taskNode1', x: 200, y: 200, label: 'Supervisor', assignee: 'admin', isSequential:false, clazz: 'userTask' },
-      { id: 'taskNode2', x: 400, y: 200, label: 'Manager', assignee: 'admin', isSequential:false, clazz: 'userTask' },
+      { id: 'taskNode1', x: 200, y: 200, label: 'Supervisor', assigneType: 'person', assigneValue: 'admin', isSequential:false, clazz: 'userTask' },
+      { id: 'taskNode2', x: 400, y: 200, label: 'Manager', assigneType: 'person', assigneValue: 'admin', isSequential:false, clazz: 'userTask' },
       { id: 'decisionNode', x: 400, y: 320, label: 'Cost > 1000', clazz: 'gateway' },
       { id: 'taskNode3', x: 400, y: 450, label: 'CEO', clazz: 'userTask' },
       { id: 'endNode', x: 600, y: 320, label: 'End', clazz: 'end' }],

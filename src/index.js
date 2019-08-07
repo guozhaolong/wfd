@@ -1,8 +1,9 @@
 import React, {Component,Fragment} from 'react';
 import {Input,Select,Checkbox,Collapse,DatePicker,TimePicker,Tooltip} from 'antd'
-import 'antd/lib/input/style/css';
-import 'antd/lib/select/style/css';
-import 'antd/lib/switch/style/css';
+import 'antd/lib/input/style/index.less';
+import 'antd/lib/select/style/index.less';
+import 'antd/lib/switch/style/index.less';
+import 'antd/lib/collapse/style/index.less';
 import styles from './index.less';
 import G6 from '@antv/g6/src';
 import { getShapeName } from './util/clazz'

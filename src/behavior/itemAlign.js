@@ -134,6 +134,7 @@ export default function(G6){
         line.remove();
       });
       this._alignLines = [];
+      this.graph.paint();
     },
 
   });

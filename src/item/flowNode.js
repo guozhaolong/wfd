@@ -192,54 +192,54 @@ export default function(G6) {
     }
   }, 'base-node');
   G6.registerNode('user-task-node', {
-    icon: require('../assets/icons/icon_user.svg'),
+    icon: require('../assets/icons/flow/icon_user.svg'),
     selectedColor: '#95D6FB',
     unSelectedColor: '#E7F7FE',
     borderColor: '#1890FF',
   }, 'task-node');
   G6.registerNode('script-task-node', {
-    icon: require('../assets/icons/icon_script.svg'),
+    icon: require('../assets/icons/flow/icon_script.svg'),
     selectedColor: '#FFE7BA',
     unSelectedColor: '#FFF7E6',
     borderColor: '#FFA940',
   }, 'task-node');
   G6.registerNode('java-task-node', {
-    icon: require('../assets/icons/icon_java.svg'),
+    icon: require('../assets/icons/flow/icon_java.svg'),
     selectedColor: '#FFCCC7',
     unSelectedColor: '#FFF1F0',
     borderColor: '#FF4D4F',
   }, 'task-node');
   G6.registerNode('mail-task-node', {
-    icon: require('../assets/icons/icon_mail.svg'),
+    icon: require('../assets/icons/flow/icon_mail.svg'),
     selectedColor: '#D9F7BE',
     unSelectedColor: '#F6FFED',
     borderColor: '#73D13D',
   }, 'task-node');
   G6.registerNode('receive-task-node', {
-    icon: require('../assets/icons/icon_receive.svg'),
+    icon: require('../assets/icons/flow/icon_receive.svg'),
     selectedColor: '#ffd6e7',
     unSelectedColor: '#fff0f6',
     borderColor: '#ff85c0',
   }, 'task-node');
   G6.registerNode('timer-start-node', {
-    icon: require('../assets/icons/icon_timer.svg'),
+    icon: require('../assets/icons/flow/icon_timer.svg'),
     afterDraw(cfg, group) { this.runAnimate(cfg,group) },
   }, 'start-node');
   G6.registerNode('message-start-node', {
-    icon: require('../assets/icons/icon_message.svg'),
+    icon: require('../assets/icons/flow/icon_message.svg'),
     afterDraw(cfg, group) { this.runAnimate(cfg,group) },
   }, 'start-node');
   G6.registerNode('signal-start-node', {
-    icon: require('../assets/icons/icon_signal.svg'),
+    icon: require('../assets/icons/flow/icon_signal.svg'),
     afterDraw(cfg, group) { this.runAnimate(cfg,group) },
   }, 'start-node');
   G6.registerNode('timer-catch-node', {
-    icon: require('../assets/icons/icon_timer.svg'),
+    icon: require('../assets/icons/flow/icon_timer.svg'),
   }, 'catch-node');
   G6.registerNode('signal-catch-node', {
-    icon: require('../assets/icons/icon_signal.svg'),
+    icon: require('../assets/icons/flow/icon_signal.svg'),
   }, 'catch-node');
   G6.registerNode('message-catch-node', {
-    icon: require('../assets/icons/icon_message.svg'),
+    icon: require('../assets/icons/flow/icon_message.svg'),
   }, 'catch-node');
 }

@@ -6,6 +6,10 @@ export default function(G6) {
     selectedColor: '#95D6FB',
     unSelectedColor: '#E7F7FE',
     borderColor: '#1890FF',
+    iconWidth: 12,
+    iconHeight: 12,
+    iconPaddingLeft: 2,
+    iconPaddingTop: 2,
     getShapeStyle(cfg) {
       cfg.size = [80, 44];
       cfg = this.initStyle(cfg);
@@ -29,6 +33,10 @@ export default function(G6) {
     unSelectedColor: '#E8FEFA',
     borderColor: '#13C2C2',
     labelPosition: 'bottom',
+    iconWidth: 20,
+    iconHeight: 20,
+    iconPaddingLeft: 2,
+    iconPaddingTop: 2,
     getShapeStyle(cfg) {
       cfg.size = [40, 40];
       cfg = this.initStyle(cfg);
@@ -78,6 +86,10 @@ export default function(G6) {
     unSelectedColor: '#FEF7E8',
     borderColor: '#FA8C16',
     labelPosition: 'bottom',
+    iconWidth: 18,
+    iconHeight: 18,
+    iconPaddingLeft: 6,
+    iconPaddingTop: 6,
     getShapeStyle(cfg) {
       cfg.size = [30, 30];
       cfg = this.initStyle(cfg);
@@ -120,6 +132,10 @@ export default function(G6) {
     unSelectedColor: '#EFF7E8',
     borderColor: '#F5222D',
     labelPosition: 'bottom',
+    iconWidth: 18,
+    iconHeight: 18,
+    iconPaddingLeft: 6,
+    iconPaddingTop: 6,
     getShapeStyle(cfg) {
       cfg.size = [30, 30];
       cfg = this.initStyle(cfg);
@@ -163,6 +179,10 @@ export default function(G6) {
     unSelectedColor: '#FEF7E8',
     borderColor: '#FA8C16',
     labelPosition: 'bottom',
+    iconWidth: 20,
+    iconHeight: 20,
+    iconPaddingLeft: -10,
+    iconPaddingTop: -8,
     getShapeStyle(cfg) {
       cfg.size = [50, 30];
       cfg = this.initStyle(cfg);
@@ -242,4 +262,10 @@ export default function(G6) {
   G6.registerNode('message-catch-node', {
     icon: require('../assets/icons/flow/icon_message.svg'),
   }, 'catch-node');
+  G6.registerNode('meeting-task-node', {
+    icon: require('../assets/icons/flow/icon_meeting.svg'),
+    selectedColor: '#95de64',
+    unSelectedColor: '#d9f7be',
+    borderColor: '#237804',
+  }, 'task-node');
 }

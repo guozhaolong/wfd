@@ -4,16 +4,12 @@ import 'antd/lib/input/style/index.less';
 import 'antd/lib/select/style/index.less';
 import 'antd/lib/switch/style/index.less';
 import 'antd/lib/collapse/style/index.less';
+import './iconfont.css';
 import styles from './index.less';
 import G6 from '@antv/g6/src';
 import { getShapeName } from './util/clazz'
 import moment from 'moment';
 import locale from './locales/index';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faShare,faCopy, faPaste,faTrashAlt,faSearchPlus,faSearchMinus,faCompress,faExpand,faLayerGroup } from '@fortawesome/free-solid-svg-icons'
-import { faLayerUp, faLayerDown,faUndo,faRedo } from './util/faIcons';
-library.add(faShare,faCopy,faPaste,faTrashAlt,faSearchPlus,faSearchMinus,faCompress,faExpand,faLayerGroup,faLayerUp,faLayerDown,faUndo,faRedo);
 import Command from './plugins/command'
 import Toolbar from './plugins/toolbar'
 import AddItemPanel from './plugins/addItemPanel'
@@ -488,60 +484,60 @@ class Designer extends Component {
             <div className={styles.toolbar} ref={this.toolbarRef}>
               <Tooltip title={i18n['tooltip.undo']}>
                 <span className={styles.command} data-command="undo">
-                  <FontAwesomeIcon icon="undo" color="#666" />
+                  <span className="iconfont icon-undo" />
                 </span>
               </Tooltip>
               <Tooltip title={i18n['tooltip.redo']}>
                 <span className={styles.command} data-command="redo">
-                  <FontAwesomeIcon icon="redo" color="#666" />
+                  <span className="iconfont icon-redo" />
                 </span>
               </Tooltip>
               <span className={styles.separator} />
               <Tooltip title={i18n['tooltip.copy']}>
                 <span className={styles.command} data-command="copy">
-                  <FontAwesomeIcon icon="copy" color="#666" />
+                  <span className="iconfont icon-copy-o" />
                 </span>
               </Tooltip>
               <Tooltip title={i18n['tooltip.paste']}>
                 <span className={styles.command} data-command="paste">
-                  <FontAwesomeIcon icon="paste" color="#666" />
+                  <span className="iconfont icon-paster-o" />
                 </span>
               </Tooltip>
               <Tooltip title={i18n['tooltip.delete']}>
                 <span className={styles.command} data-command="delete">
-                  <FontAwesomeIcon icon="trash-alt" color="#666" />
+                  <span className="iconfont icon-delete-o" />
                 </span>
               </Tooltip>
               <span className={styles.separator} />
               <Tooltip title={i18n['tooltip.zoomIn']}>
                 <span className={styles.command} data-command="zoomIn">
-                  <FontAwesomeIcon icon="search-plus" color="#666" />
+                  <span className="iconfont icon-zoom-in-o" />
                 </span>
               </Tooltip>
               <Tooltip title={i18n['tooltip.zoomOut']}>
                 <span className={styles.command} data-command="zoomOut">
-                  <FontAwesomeIcon icon="search-minus" color="#666" />
+                  <span className="iconfont icon-zoom-out-o" />
                 </span>
               </Tooltip>
               <Tooltip title={i18n['tooltip.zoomReset']}>
                 <span className={styles.command} data-command="resetZoom">
-                  <FontAwesomeIcon icon="compress" color="#666" />
+                  <span className="iconfont icon-actual-size-o" />
                 </span>
               </Tooltip>
               <Tooltip title={i18n['tooltip.autoFit']}>
                 <span className={styles.command} onClick={()=>this.graph.fitView(5)}>
-                  <FontAwesomeIcon icon="expand" color="#666" />
+                  <span className="iconfont icon-fit" />
                 </span>
               </Tooltip>
               <span className={styles.separator} />
               <Tooltip title={i18n['tooltip.toFront']}>
                 <span className={styles.command} data-command="toFront">
-                  <FontAwesomeIcon icon="layer-up" color="#666" />
+                  <span className="iconfont icon-to-front" />
                 </span>
               </Tooltip>
               <Tooltip title={i18n['tooltip.toBack']}>
                 <span className={styles.command} data-command="toBack">
-                  <FontAwesomeIcon icon="layer-down" color="#666" />
+                  <span className="iconfont icon-to-back" />
                 </span>
               </Tooltip>
             </div>

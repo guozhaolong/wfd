@@ -61,10 +61,16 @@ class Toolbar {
         modifyCSS(child,{
           cursor:'pointer',
         });
+        modifyCSS(child.children[0],{
+          color:'#666',
+        });
         child.children[0].setAttribute('color','#666');
       }else{
         modifyCSS(child,{
           cursor:'default',
+        });
+        modifyCSS(child.children[0],{
+          color:'#bfbfbf',
         });
         child.children[0].setAttribute('color','#bfbfbf');
       }

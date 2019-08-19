@@ -16,6 +16,7 @@ const lineDash = [4, 2, 1, 2];
 export default function(G6) {
   G6.registerNode('base-node', {
     icon: null,
+    iconWidth: 14,
     selectedColor: '#eee',
     unSelectedColor: '#f9f9f9',
     borderColor: '#bbb',
@@ -86,24 +87,24 @@ export default function(G6) {
       });
       if(cfg.icon){
         let attrs = {
-          x: style.x+2,
-          y: style.y+2,
-          width: 14,
-          height: 14,
+          x: style.x + cfg.iconPaddingLeft,
+          y: style.y + cfg.iconPaddingTop,
+          width: cfg.iconWidth,
+          height: cfg.iconHeight,
         };
         if(shapeType === 'circle'){
           attrs = {
-            x: style.x- style.r + 6,
-            y: style.y - style.r + 6,
-            width: 18,
-            height: 18,
+            x: style.x- style.r + cfg.iconPaddingLeft,
+            y: style.y - style.r + cfg.iconPaddingTop,
+            width: cfg.iconWidth,
+            height: cfg.iconHeight,
           }
         }else if(shapeType === 'path'){
           attrs = {
-            x: -10,
-            y: -8,
-            width: 20,
-            height: 20,
+            x: cfg.iconPaddingLeft,
+            y: cfg.iconPaddingTop,
+            width: cfg.iconWidth,
+            height: cfg.iconHeight,
           }
         }
         group.icon = group.addShape('image', {
@@ -112,6 +113,9 @@ export default function(G6) {
             ...attrs,
           }
         });
+        if(cfg.hideIcon){
+          group.icon.hide();
+        }
       }
       group.anchorShapes = [];
       group.showAnchor = (group) => {
@@ -201,6 +205,10 @@ export default function(G6) {
       cfg.selectedColor = this.selectedColor;
       cfg.unSelectedColor = this.unSelectedColor;
       cfg.icon = this.icon;
+      cfg.iconWidth = this.iconWidth;
+      cfg.iconHeight = this.iconHeight;
+      cfg.iconPaddingTop = this.iconPaddingTop;
+      cfg.iconPaddingLeft = this.iconPaddingLeft;
       return cfg;
     },
   }, 'single-shape');

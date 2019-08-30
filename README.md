@@ -128,8 +128,8 @@ class WFDemo extends Component {
 
 ## Run Example
 ```
-> cd example
-> umi dev
+wfd> npm run build 
+wfd/example> umi dev
 ```
 
 ## React Version

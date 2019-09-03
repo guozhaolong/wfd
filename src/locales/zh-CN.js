@@ -57,4 +57,5 @@ export default {
   'tooltip.autoFit': '适应屏幕',
   'tooltip.toFront': '移到上一层',
   'tooltip.toBack': '移到下一层',
+  'process': '流程',
 };

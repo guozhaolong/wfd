@@ -257,6 +257,17 @@ class Command{
         graph.zoomTo(this.originZoom);
       },
     });
+    cmdPlugin.registerCommand('autoFit', {
+      queue: false,
+      execute: function(graph) {
+        const zoom = graph.getZoom();
+        this.originZoom = zoom;
+        graph.fitView(5);
+      },
+      back: function(graph) {
+        graph.zoomTo(this.originZoom);
+      },
+    });
     cmdPlugin.registerCommand('toFront', {
       queue: false,
       enable: function(graph) {

@@ -57,4 +57,5 @@ export default {
   'tooltip.autoFit': 'Auto Fit',
   'tooltip.toFront': 'To Front Layer',
   'tooltip.toBack': 'To Back Layer',
+  'process': 'Workflow',
 };

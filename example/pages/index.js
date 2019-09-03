@@ -3,6 +3,10 @@ import React, {Component} from "react";
 import {Button,Icon,Modal,Dropdown,Menu} from 'antd'
 import 'antd/dist/antd.less'
 class Demo extends Component {
+  constructor(props){
+    super(props);
+    this.wfdRef = React.createRef();
+  }
 
   state = {
     modalVisible: false,
@@ -83,11 +87,12 @@ class Demo extends Component {
     const { modalVisible,selectedLang } = this.state;
     return (
       <div>
+        <Button style={{float:'right',marginTop:6,marginRight:6}} onClick={()=>this.wfdRef.current.graph.saveXML()}>导出XML</Button>
         <Button style={{float:'right',marginTop:6,marginRight:6}} onClick={()=>this.handleModalVisible(true)}>查看流程图</Button>
         <Dropdown overlay={this.langMenu} trigger={['click']}>
           <Icon type="global" style={{fontSize:18,float:'right',marginTop:12,marginRight:20}} />
         </Dropdown>
-        <Designer data={data} height={height} mode={"edit"} users={candidateUsers} groups={candidateGroups} lang={selectedLang}/>
+        <Designer ref={this.wfdRef} data={data} height={height} mode={"edit"} users={candidateUsers} groups={candidateGroups} lang={selectedLang}/>
         <Modal title="查看流程图" visible={modalVisible} onCancel={()=>this.handleModalVisible(false)} width={800} maskClosable={false} footer={null} destroyOnClose bodyStyle={{height}} >
           <Designer data={data1} height={height-40} isView />
         </Modal>

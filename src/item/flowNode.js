@@ -262,10 +262,4 @@ export default function(G6) {
   G6.registerNode('message-catch-node', {
     icon: require('../assets/icons/flow/icon_message.svg'),
   }, 'catch-node');
-  G6.registerNode('meeting-task-node', {
-    icon: require('../assets/icons/flow/icon_meeting.svg'),
-    selectedColor: '#95de64',
-    unSelectedColor: '#d9f7be',
-    borderColor: '#237804',
-  }, 'task-node');
 }

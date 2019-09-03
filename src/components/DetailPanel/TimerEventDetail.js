@@ -1,5 +1,5 @@
 import styles from "./index.less";
-import {TimePicker,} from "antd";
+import {Input, TimePicker,} from "antd";
 import React, {useContext} from "react";
 import DefaultDetail from "./DefaultDetail";
 import LangContext from "../../util/context";
@@ -13,8 +13,9 @@ const TimerEventDetail = ({model,onChange,readOnly = false,}) => {
       <div className={styles.panelBody}>
         <DefaultDetail i18n={i18n} model={model} onChange={onChange} readOnly={readOnly} />
         <div className={styles.panelRow}>
-          <div style={{display: 'inline'}}>{i18n['timerEvent.cycle']}：</div>
+          <div>{i18n['timerEvent.cycle']}：</div>
           <TimePicker defaultValue={model.cycle}
+                      style={{width: '100%', fontSize: 12}}
                       placeholder={i18n['timerEvent.cycle.placeholder']}
                       format="HH:mm"
                       disabled={readOnly}
@@ -22,8 +23,9 @@ const TimerEventDetail = ({model,onChange,readOnly = false,}) => {
           />
         </div>
         <div className={styles.panelRow}>
-          <div style={{display: 'inline'}}>{i18n['timerEvent.duration']}：</div>
+          <div>{i18n['timerEvent.duration']}：</div>
           <TimePicker defaultValue={model.duration}
+                      style={{width: '100%', fontSize: 12}}
                       placeholder={i18n['timerEvent.cycle.placeholder']}
                       format="HH:mm"
                       disabled={readOnly}

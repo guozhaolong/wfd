@@ -58,4 +58,9 @@ export default {
   'tooltip.toFront': 'To Front Layer',
   'tooltip.toBack': 'To Back Layer',
   'process': 'Workflow',
+  'process.id': 'Workflow ID',
+  'process.name': 'Workflow Name',
+  'process.dataObjs': 'Data Objects',
+  'process.signalDefs': 'Signal Defs',
+  'process.messageDefs': 'Message Defs',
 };

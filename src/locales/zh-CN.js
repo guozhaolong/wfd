@@ -58,4 +58,9 @@ export default {
   'tooltip.toFront': '移到上一层',
   'tooltip.toBack': '移到下一层',
   'process': '流程',
+  'process.id': '流程标识',
+  'process.name': '流程名称',
+  'process.dataObjs': '数据对象',
+  'process.signalDefs': '信号定义',
+  'process.messageDefs': '消息定义',
 };

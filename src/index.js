@@ -7,13 +7,13 @@ import Command from './plugins/command'
 import Toolbar from './plugins/toolbar'
 import AddItemPanel from './plugins/addItemPanel'
 import CanvasPanel from './plugins/canvasPanel'
-import registerItem from './item'
-import registerBehavior from './behavior'
 import {exportXML} from "./util/bpmn";
 import LangContext from "./util/context";
 import DetailPanel from "./components/DetailPanel";
 import ItemPanel from "./components/ItemPanel";
 import ToolbarPanel from "./components/ToolbarPanel";
+import registerItem from './item'
+import registerBehavior from './behavior'
 registerItem(G6);
 registerBehavior(G6);
 
@@ -122,7 +122,7 @@ class Designer extends Component {
         const item = this.graph.findById(items[0]);
         this.setState({selectedModel: {...item.getModel()}});
       } else {
-        this.setState({selectedModel: { }});
+        this.setState({selectedModel: this.state.processModel});
       }
     });
     const page = this.pageRef.current;
@@ -154,12 +154,16 @@ class Designer extends Component {
         this.graph.updateItem(item, {[key]: value});
       }
       this.setState({selectedModel:{  ...item.getModel() }});
+    } else {
+      this.setState({processModel: {...this.state.processModel,[key]: value} });
     }
   }
 
   render() {
     const height = this.props.height;
     const { isView,mode,users,groups,lang } = this.props;
+    const { selectedModel } = this.state;
+    const { signalDefs, messageDefs } = selectedModel;
     const i18n = locale[lang.toLowerCase()];
     const readOnly = mode !== "edit";
     return (
@@ -168,13 +172,15 @@ class Designer extends Component {
           { !isView && <ToolbarPanel ref={this.toolbarRef} /> }
           <div>
             { !isView && <ItemPanel ref={this.itemPanelRef} height={height}/> }
-            <div ref={this.pageRef} className={styles.canvasPanel} style={{height:height,width:isView?'100%':'70%',borderBottom:isView?0:null}}/>
+            <div ref={this.pageRef} className={styles.canvasPanel} style={{height,width:isView?'100%':'70%',borderBottom:isView?0:null}}/>
             { !isView && <DetailPanel ref={this.detailPanelRef}
                                       height={height}
-                                      model={this.state.selectedModel}
+                                      model={selectedModel}
                                       readOnly={readOnly}
                                       users={users}
                                       groups={groups}
+                                      signalDefs={signalDefs}
+                                      messageDefs={messageDefs}
                                       onChange={(key,val)=>{this.onItemCfgChange(key,val)}} />
             }
           </div>

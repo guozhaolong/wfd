@@ -13,7 +13,7 @@ const ReceiveTaskDetail = ({model,onChange,readOnly = false,}) => {
       <div className={styles.panelBody}>
         <DefaultDetail i18n={i18n} model={model} onChange={onChange} readOnly={readOnly} />
         <div className={styles.panelRow}>
-          <div style={{display: 'inline'}}>{i18n['receiveTask.waitState']}：</div>
+          <div>{i18n['receiveTask.waitState']}：</div>
           <Input style={{width: '100%', fontSize: 12}}
                  value={model.waitState}
                  onChange={(e) => {
@@ -23,7 +23,7 @@ const ReceiveTaskDetail = ({model,onChange,readOnly = false,}) => {
           />
         </div>
         <div className={styles.panelRow}>
-          <div style={{display: 'inline'}}>{i18n['receiveTask.stateValue']}：</div>
+          <div>{i18n['receiveTask.stateValue']}：</div>
           <Input style={{width: '100%', fontSize: 12}}
                  value={model.stateValue}
                  onChange={(e) => {

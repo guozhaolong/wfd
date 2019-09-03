@@ -13,7 +13,7 @@ const ScriptTaskDetail = ({model,onChange,readOnly = false,}) => {
       <div className={styles.panelBody}>
         <DefaultDetail i18n={i18n} model={model} onChange={onChange} readOnly={readOnly} />
         <div className={styles.panelRow}>
-          <div style={{display: 'inline'}}>{i18n['scriptTask.script']}：</div>
+          <div>{i18n['scriptTask.script']}：</div>
           <Input.TextArea style={{width: '100%', fontSize: 12}}
                           rows={4}
                           value={model.script}

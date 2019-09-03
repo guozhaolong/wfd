@@ -13,7 +13,7 @@ const MailTaskDetail = ({model,onChange,readOnly = false,}) => {
       <div className={styles.panelBody}>
         <DefaultDetail i18n={i18n} model={model} onChange={onChange} readOnly={readOnly} />
         <div className={styles.panelRow}>
-          <div style={{display: 'inline'}}>{i18n['mailTask.to']}：</div>
+          <div>{i18n['mailTask.to']}：</div>
           <Input style={{width: '100%', fontSize: 12}}
                  value={model.to}
                  onChange={(e) => {
@@ -23,7 +23,7 @@ const MailTaskDetail = ({model,onChange,readOnly = false,}) => {
           />
         </div>
         <div className={styles.panelRow}>
-          <div style={{display: 'inline'}}>{i18n['mailTask.subject']}：</div>
+          <div>{i18n['mailTask.subject']}：</div>
           <Input style={{width: '100%', fontSize: 12}}
                  value={model.subject}
                  onChange={(e) => {
@@ -33,7 +33,7 @@ const MailTaskDetail = ({model,onChange,readOnly = false,}) => {
           />
         </div>
         <div className={styles.panelRow}>
-          <div style={{display: 'inline'}}>{i18n['mailTask.content']}：</div>
+          <div>{i18n['mailTask.content']}：</div>
           <Input.TextArea style={{width: '100%', fontSize: 12}}
                           rows={4}
                           value={model.content}

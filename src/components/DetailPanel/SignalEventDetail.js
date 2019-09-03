@@ -13,7 +13,7 @@ const SignalEventDetail = ({model,onChange,readOnly = false,signalDefs = []}) =>
       <div className={styles.panelBody}>
         <DefaultDetail i18n={i18n} model={model} onChange={onChange} readOnly={readOnly} />
         <div className={styles.panelRow}>
-          <div style={{display: 'inline'}}>{i18n['signalEvent.signal']}：</div>
+          <div>{i18n['signalEvent.signal']}：</div>
           <Select
             style={{width: '100%', fontSize: 12}}
             placeholder={i18n['signalEvent.signal']}

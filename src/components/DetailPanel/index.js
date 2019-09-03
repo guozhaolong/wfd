@@ -9,6 +9,9 @@ import SignalEventDetail from "./SignalEventDetail";
 import MessageEventDetail from "./MessageEventDetail";
 import GatewayDetail from "./GatewayDetail";
 import FlowDetail from "./FlowDetail";
+import StartEventDetail from "./StartEventDetail";
+import EndEventDetail from "./EndEventDetail";
+import ProcessDetail from "./ProcessDetail";
 import 'antd/lib/input/style';
 import 'antd/lib/select/style';
 import 'antd/lib/switch/style';
@@ -27,6 +30,9 @@ const DetailPanel = forwardRef(({height,model,users,groups,messageDefs,signalDef
       { (model.clazz === 'messageStart' || model.clazz === 'messageCatch') && <MessageEventDetail model={model} onChange={onChange} readOnly={readOnly}/>}
       { model.clazz === 'gateway' && <GatewayDetail model={model} onChange={onChange} readOnly={readOnly} /> }
       { model.clazz === 'flow' && <FlowDetail model={model} onChange={onChange} readOnly={readOnly} /> }
+      { model.clazz === 'start' && <StartEventDetail model={model} onChange={onChange} readOnly={readOnly} /> }
+      { model.clazz === 'end' && <EndEventDetail model={model} onChange={onChange} readOnly={readOnly} /> }
+      { model.clazz === 'process' && <ProcessDetail model={model} onChange={onChange} readOnly={readOnly} /> }
     </div>
   )
 });

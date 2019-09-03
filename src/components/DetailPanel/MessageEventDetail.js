@@ -13,7 +13,7 @@ const MessageEventDetail = ({model,onChange,readOnly = false,messageDefs = []}) 
       <div className={styles.panelBody}>
         <DefaultDetail i18n={i18n} model={model} onChange={onChange} readOnly={readOnly} />
         <div className={styles.panelRow}>
-          <div style={{display: 'inline'}}>{i18n['messageEvent.message']}：</div>
+          <div>{i18n['messageEvent.message']}：</div>
           <Select
             style={{width: '100%', fontSize: 12}}
             placeholder={i18n['messageEvent.message']}

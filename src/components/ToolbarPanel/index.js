@@ -6,7 +6,7 @@ import 'antd/lib/tooltip/style';
 import LangContext from "../../util/context";
 
 const ToolbarPanel = forwardRef((props,ref) => {
-  const i18n = useContext(LangContext);
+  const { i18n } = useContext(LangContext);
   return (
     <div className={styles.toolbar} ref={ref}>
       <Tooltip title={i18n['tooltip.undo']}>

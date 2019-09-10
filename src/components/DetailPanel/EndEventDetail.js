@@ -4,13 +4,13 @@ import DefaultDetail from "./DefaultDetail";
 import LangContext from "../../util/context";
 
 const EndEventDetail = ({model,onChange,readOnly = false,}) => {
-  const i18n = useContext(LangContext);
+  const { i18n } = useContext(LangContext);
   const title = i18n['endEvent'];
   return (
     <div data-clazz={model.clazz}>
       <div className={styles.panelTitle}>{title}</div>
       <div className={styles.panelBody}>
-        <DefaultDetail i18n={i18n} model={model} onChange={onChange} readOnly={readOnly}/>
+        <DefaultDetail model={model} onChange={onChange} readOnly={readOnly}/>
       </div>
     </div>
   )

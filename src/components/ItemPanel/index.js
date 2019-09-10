@@ -6,7 +6,7 @@ import LangContext from "../../util/context";
 const { Panel } = Collapse;
 
 const ItemPanel = forwardRef(({height},ref) => {
-  const i18n = useContext(LangContext);
+  const { i18n } = useContext(LangContext);
   return (
     <div ref={ref} className={styles.itemPanel} style={{ height }}>
       <Collapse bordered={false} defaultActiveKey={['1']}>

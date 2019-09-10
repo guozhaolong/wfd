@@ -1,10 +1,10 @@
 import styles from "./index.less";
-import {Checkbox, Input, Select, TimePicker,} from "antd";
+import { Checkbox, Input } from "antd";
 import React, {useContext} from "react";
 import LangContext from "../../util/context";
 
 const DefaultDetail = ({model,onChange,readOnly = false,}) => {
-  const i18n = useContext(LangContext);
+  const { i18n } = useContext(LangContext);
   return (
     <>
       <div className={styles.panelRow}>

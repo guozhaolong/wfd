@@ -87,13 +87,13 @@ class Designer extends Component {
         shape: 'flow-polyline-round',
       },
     });
-    this.graph.saveXML = () => exportXML(this.graph.save());
+    this.graph.saveXML = () => exportXML(this.graph.save(),this.state.processModel);
     if(isView){
-      this.graph.setMode('view');
+      this.graph.setMode("view");
     }else{
       this.graph.setMode(mode);
     }
-    this.graph.data(this.props.data?this.initShape(this.props.data):{nodes:[],edges:[]});
+    this.graph.data(this.props.data ? this.initShape(this.props.data) : {nodes:[],edges:[]});
     this.graph.render();
     if(isView && this.props.data && this.props.data.nodes){
       this.graph.fitView(5)
@@ -153,21 +153,23 @@ class Designer extends Component {
       }else {
         this.graph.updateItem(item, {[key]: value});
       }
-      this.setState({selectedModel:{  ...item.getModel() }});
+      this.setState({selectedModel: {  ...item.getModel() }});
     } else {
-      this.setState({processModel: {...this.state.processModel,[key]: value} });
+      const canvasModel = { ...this.state.processModel, [key]: value};
+      this.setState({selectedModel: canvasModel});
+      this.setState({processModel: canvasModel });
     }
   }
 
   render() {
     const height = this.props.height;
     const { isView,mode,users,groups,lang } = this.props;
-    const { selectedModel } = this.state;
-    const { signalDefs, messageDefs } = selectedModel;
+    const { selectedModel,processModel } = this.state;
+    const { signalDefs, messageDefs } = processModel;
     const i18n = locale[lang.toLowerCase()];
     const readOnly = mode !== "edit";
     return (
-      <LangContext.Provider value={i18n}>
+      <LangContext.Provider value={{i18n,lang}}>
         <div className={styles.root}>
           { !isView && <ToolbarPanel ref={this.toolbarRef} /> }
           <div>

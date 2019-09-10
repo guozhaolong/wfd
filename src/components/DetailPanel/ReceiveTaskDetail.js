@@ -5,13 +5,13 @@ import DefaultDetail from "./DefaultDetail";
 import LangContext from "../../util/context";
 
 const ReceiveTaskDetail = ({model,onChange,readOnly = false,}) => {
-  const i18n = useContext(LangContext);
+  const { i18n } = useContext(LangContext);
   const title = i18n['receiveTask'];
   return (
     <div data-clazz={model.clazz}>
       <div className={styles.panelTitle}>{title}</div>
       <div className={styles.panelBody}>
-        <DefaultDetail i18n={i18n} model={model} onChange={onChange} readOnly={readOnly} />
+        <DefaultDetail model={model} onChange={onChange} readOnly={readOnly} />
         <div className={styles.panelRow}>
           <div>{i18n['receiveTask.waitState']}：</div>
           <Input style={{width: '100%', fontSize: 12}}

@@ -11,7 +11,7 @@ https://guozhaolong.github.io/wfd/
 
 ## Usage
 ```
-import React, { Component,Fragment } from 'react';
+import React, { Component } from 'react';
 import Designer from 'wfd';
 
 const data = {
@@ -45,10 +45,10 @@ class WFDemo extends Component {
         const candidateUsers = [{id:'1',name:'Tom'},{id:'2',name:'Steven'},{id:'3',name:'Andy'}];
         const candidateGroups = [{id:'1',name:'Manager'},{id:'2',name:'Security'},{id:'3',name:'OA'}];
         return (
-            <Fragment>
+            <>
                 <a onClick={this.handleSave}>Save</a>
                 <Designer data={data} ref={this.wfDef} height={600} mode={"edit"} lang="zh" users={candidateUsers} groups={candidateGroups}/>
-            </Fragment>
+            </>
         )
     }
 }
@@ -81,11 +81,11 @@ class WFDemo extends Component {
     * messageStart 消息启动节点
     * signalStart 信号启动节点
     * gateway 排他网关
-    * userTask 用户审批节点
-    * scriptTask 脚本节点
-    * mailTask 邮件节点
-    * javaTask 自定义类节点
-    * receiveTask 接收状态节点
+    * [userTask](#UserTask) 用户审批节点
+    * [scriptTask](#ScriptTask) 脚本节点
+    * [mailTask](#MailTask) 邮件节点
+    * [javaTask](#JavaTask) 自定义类节点
+    * [receiveTask](#ReceiveTask) 接收状态节点
     * timerCatch 定时捕获节点
     * messageCatch 消息捕获节点
     * signalCatch 信号捕获节点

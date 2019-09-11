@@ -66,6 +66,7 @@ class WFDemo extends Component {
 
 ###### 方法
 * save(): 调用graph.save()生成json
+* saveXML(): 调用graph.saveXML(createFile)生成Flowable XML，createFile参数是否同时生成xml文件，默认为true
 
 ##### Node
 ###### 属性

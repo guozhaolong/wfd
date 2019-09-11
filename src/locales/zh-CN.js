@@ -68,4 +68,5 @@ export default {
   'process.dataObjs.name': '名称',
   'process.dataObjs.type': '类型',
   'process.dataObjs.defaultValue': '默认值',
+  'process.signalDef.scope': '作用域',
 };

@@ -68,4 +68,5 @@ export default {
   'process.dataObjs.name': 'Name',
   'process.dataObjs.type': 'Type',
   'process.dataObjs.defaultValue': 'DefaultValue',
+  'process.signalDef.scope': 'Scope',
 };

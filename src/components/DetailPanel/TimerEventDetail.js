@@ -19,7 +19,7 @@ const TimerEventDetail = ({model,onChange,readOnly = false,}) => {
                       placeholder={i18n['timerEvent.cycle.placeholder']}
                       format="HH:mm"
                       disabled={readOnly}
-                      onChange={(time) => onChange('cycle', time)}
+                      onChange={(time,timeString) => onChange('cycle', timeString)}
           />
         </div>
         <div className={styles.panelRow}>
@@ -29,7 +29,7 @@ const TimerEventDetail = ({model,onChange,readOnly = false,}) => {
                       placeholder={i18n['timerEvent.cycle.placeholder']}
                       format="HH:mm"
                       disabled={readOnly}
-                      onChange={(time) => onChange('duration', time)}
+                      onChange={(time,timeString) => onChange('duration', timeString)}
           />
         </div>
       </div>

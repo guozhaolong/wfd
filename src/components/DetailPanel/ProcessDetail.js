@@ -12,8 +12,25 @@ const ProcessDetail = ({model,onChange,readOnly = false,}) => {
   const dataObjCols = [
     { title: i18n['process.dataObjs.id'], dataIndex: 'id', editable:false },
     { title: i18n['process.dataObjs.name'], dataIndex: 'name', editable:true },
-    { title: i18n['process.dataObjs.type'], dataIndex: 'type', editable:true },
+    { title: i18n['process.dataObjs.type'], dataIndex: 'type', editable:true,
+      editor: { type: 'select',
+        options: [{key: 'string',value:'string'},{key: 'boolean',value:'boolean'},{key: 'datetime',value:'datetime'},
+                  {key: 'double',value:'double'},{key: 'int',value:'int'},{key: 'long',value:'long'},
+        ]}},
     { title: i18n['process.dataObjs.defaultValue'], dataIndex: 'defaultValue', editable:true },
+  ];
+  const signalCols = [
+    { title: i18n['process.dataObjs.id'], dataIndex: 'id', editable:false },
+    { title: i18n['process.dataObjs.name'], dataIndex: 'name', editable:true },
+    { title: i18n['process.signalDef.scope'], dataIndex: 'scope', editable:true,
+      editor: { type: 'select',
+        options: [{key: 'global',value:'global'},
+                  {key: 'processInstance',value:'processInstance'}
+                  ]}},
+  ];
+  const messageCols = [
+    { title: i18n['process.dataObjs.id'], dataIndex: 'id', editable:false },
+    { title: i18n['process.dataObjs.name'], dataIndex: 'name', editable:true },
   ];
   return (
     <>
@@ -70,7 +87,7 @@ const ProcessDetail = ({model,onChange,readOnly = false,}) => {
       <DataTableModal title={i18n['process.signalDefs']}
                       lang={lang}
                       newRowKeyPrefix="signal"
-                      cols={dataObjCols}
+                      cols={signalCols}
                       data={model.signalDefs}
                       visible={signalDefsModalVisible}
                       onOk={(d)=> {
@@ -81,7 +98,7 @@ const ProcessDetail = ({model,onChange,readOnly = false,}) => {
       <DataTableModal title={i18n['process.messageDefs']}
                       lang={lang}
                       newRowKeyPrefix="message"
-                      cols={dataObjCols}
+                      cols={messageCols}
                       data={model.messageDefs}
                       visible={messageDefsModalVisible}
                       onOk={(d)=> {

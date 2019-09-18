@@ -16,10 +16,15 @@ export function exportXML(json,canvas,createFile = true) {
   canvas.messageDefs.forEach(s => {
     messages += `${tab(2)}<message id="${s.id}" name="${s.name}"></message>\n`;
   });
+  let BPMNShape = ``;
+  let BPMNEdge = ``;
 
-  let processXML = `${tab(2)}<progress id="${id}" name="${name}">\n`;
+  let processXML = `${tab(2)}<process id="${id}" name="${name}">\n`;
   processXML += dataObjs;
   json.nodes.forEach(node => {
+    BPMNShape += `${tab(6)}<bpmndi:BPMNShape bpmnElement="${node.id}" id="BPMNShape_${node.id}">\n`+
+      `${tab(8)}<omgdc:Bounds width="${node.size[0]}" height="${node.size[1]}" x="${node.x}" y="${node.y}"></omgdc:Bounds>\n`+
+      `${tab(6)}</bpmndi:BPMNShape>\n`;
     switch (node.clazz) {
       case 'start':
         processXML += `${tab(4)}<startEvent id="${node.id}"></startEvent>\n`;
@@ -110,6 +115,10 @@ export function exportXML(json,canvas,createFile = true) {
     }
   });
   json.edges.forEach(edge => {
+    BPMNEdge += `${tab(6)}<bpmndi:BPMNEdge bpmnElement="${edge.source}_${edge.sourceAnchor}-${edge.target}_${edge.targetAnchor}" id="BPMNEdge_${edge.source}_${edge.sourceAnchor}-${edge.target}_${edge.targetAnchor}">\n`+
+        `${tab(8)}<omgdi:waypoint x="${edge.startPoint.x}" y="${edge.startPoint.y}"></omgdi:waypoint>\n`+
+        `${tab(8)}<omgdi:waypoint x="${edge.endPoint.x}" y="${edge.endPoint.y}"></omgdi:waypoint>\n`+
+      `${tab(6)}</bpmndi:BPMNEdge>\n`;
     let condition = "";
     if(edge.coditionExpression){
       condition = `${tab(6)}<conditionExpression xsi:type="tFormalExpression"><![CDATA[${edge.coditionExpression}]]></conditionExpression>\n`;
@@ -118,18 +127,23 @@ export function exportXML(json,canvas,createFile = true) {
   });
   processXML += `${tab(2)}</process>\n`;
 
+  let BPMNDiagram = `${tab(2)}<bpmndi:BPMNDiagram id="BPMNDiagram_${id}">\n`+
+      `${tab(4)}<bpmndi:BPMNPlane bpmnElement="${id}" id="BPMNPlane_${id}">\n${BPMNShape}${BPMNEdge}${tab(4)}</bpmndi:BPMNPlane>\n`+
+      `${tab(2)}</bpmndi:BPMNDiagram>\n`;
+
   let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
   xml += `<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef">\n`;
   xml += signals;
   xml += messages;
   xml += processXML;
+  xml += BPMNDiagram;
   xml += `</definitions>`;
   if(createFile){
-    const blob = new Blob(["\ufeff"+xml], { type: 'application/xml;charset=utf-8;' });
-    const filename = `${name}.xml`;
+    const blob = new Blob([xml], { type: 'application/xml;charset=utf-8;' });
+    const filename = `${name}.bpmn20.xml`;
     let link = document.createElement('a');
     if (link.download !== undefined) {
-      var url = URL.createObjectURL(blob);
+      let url = URL.createObjectURL(blob);
       link.setAttribute('href', url);
       link.setAttribute('download', filename);
       link.style.visibility = 'hidden';

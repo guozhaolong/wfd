@@ -1,5 +1,5 @@
 import styles from "./index.less";
-import {Input, TimePicker,} from "antd";
+import {Input,} from "antd";
 import React, {useContext} from "react";
 import DefaultDetail from "./DefaultDetail";
 import LangContext from "../../util/context";
@@ -14,22 +14,22 @@ const TimerEventDetail = ({model,onChange,readOnly = false,}) => {
         <DefaultDetail model={model} onChange={onChange} readOnly={readOnly} />
         <div className={styles.panelRow}>
           <div>{i18n['timerEvent.cycle']}：</div>
-          <TimePicker defaultValue={model.cycle}
-                      style={{width: '100%', fontSize: 12}}
-                      placeholder={i18n['timerEvent.cycle.placeholder']}
-                      format="HH:mm"
-                      disabled={readOnly}
-                      onChange={(time,timeString) => onChange('cycle', timeString)}
+          <Input style={{width: '100%', fontSize: 12}}
+                 value={model.cycle}
+                 onChange={(e) => {
+                   onChange('cycle', e.target.value)
+                 }}
+                 disabled={readOnly}
           />
         </div>
         <div className={styles.panelRow}>
           <div>{i18n['timerEvent.duration']}：</div>
-          <TimePicker defaultValue={model.duration}
-                      style={{width: '100%', fontSize: 12}}
-                      placeholder={i18n['timerEvent.cycle.placeholder']}
-                      format="HH:mm"
-                      disabled={readOnly}
-                      onChange={(time,timeString) => onChange('duration', timeString)}
+          <Input style={{width: '100%', fontSize: 12}}
+                 value={model.duration}
+                 onChange={(e) => {
+                   onChange('duration', e.target.value)
+                 }}
+                 disabled={readOnly}
           />
         </div>
       </div>

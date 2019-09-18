@@ -53,7 +53,7 @@ export default function(G6) {
           ['Q', 0, height / 2, 0 - gap, height / 2 - gap],
           ['L', -width / 2 + gap, gap],
           ['Q', -width / 2, 0, -width / 2 + gap, 0 - gap],
-          ['Z'] // close
+          ['Z']
         ],
         ...editorStyle.nodeStyle,
         fill: cfg.unSelectedColor,
@@ -61,6 +61,8 @@ export default function(G6) {
       };
       return style;
     },
+  }, 'base-node');
+  G6.registerNode('exclusive-gateway-node', {
     afterDraw(cfg, group) {
       group.icon = group.addShape('path', {
         attrs: {
@@ -70,7 +72,7 @@ export default function(G6) {
             ['Z'],
             ['M', 6, -6],
             ['L', -6, 6],
-            ['Z'] // close
+            ['Z']
           ],
           lineWidth: 2,
           fill: this.borderColor,
@@ -79,7 +81,41 @@ export default function(G6) {
       });
       this.runAnimate(cfg,group);
     },
-  }, 'base-node');
+  }, 'gateway-node');
+  G6.registerNode('parallel-gateway-node', {
+    afterDraw(cfg, group) {
+      group.icon = group.addShape('path', {
+        attrs: {
+          path: [
+            ['M', 0, -6],
+            ['L', 0, 6],
+            ['Z'],
+            ['M', -6, 0],
+            ['L', 6, 0],
+            ['Z']
+          ],
+          lineWidth: 2,
+          fill: this.borderColor,
+          stroke: this.borderColor,
+        }
+      });
+      this.runAnimate(cfg,group);
+    },
+  }, 'gateway-node');
+  G6.registerNode('inclusive-gateway-node', {
+    afterDraw(cfg, group) {
+      group.icon = group.addShape('circle', {
+        attrs: {
+          x: 0,
+          y: 0,
+          r: 8,
+          lineWidth: 2,
+          stroke: this.borderColor,
+        }
+      });
+      this.runAnimate(cfg,group);
+    },
+  }, 'gateway-node');
   G6.registerNode('start-node', {
     shapeType: 'circle',
     selectedColor: '#FCD49A',

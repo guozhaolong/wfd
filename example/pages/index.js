@@ -44,7 +44,7 @@ class Demo extends Component {
         { id: 'startNode2', x: 50, y: 320, label: '', clazz: 'timerStart', },
         { id: 'taskNode1', x: 200, y: 200, label: '主任审批', clazz: 'userTask',  },
         { id: 'taskNode2', x: 400, y: 200, label: '经理审批', clazz: 'scriptTask',  },
-        { id: 'gatewayNode', x: 400, y: 320, label: '金额大于1000', clazz: 'gateway',  },
+        { id: 'gatewayNode', x: 400, y: 320, label: '金额大于1000', clazz: 'inclusiveGateway',  },
         { id: 'taskNode3', x: 400, y: 450, label: '董事长审批', clazz: 'receiveTask', },
         { id: 'catchNode1', x: 600, y: 200, label: '等待结束', clazz: 'signalCatch', },
         { id: 'endNode', x: 600, y: 320, label: '', clazz: 'end', }],

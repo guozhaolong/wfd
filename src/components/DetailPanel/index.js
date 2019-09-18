@@ -28,7 +28,7 @@ const DetailPanel = forwardRef(({height,model,users,groups,messageDefs,signalDef
       { (model.clazz === 'timerStart' || model.clazz === 'timerCatch') && <TimerEventDetail model={model} onChange={onChange} readOnly={readOnly}/>}
       { (model.clazz === 'signalStart' || model.clazz === 'signalCatch') && <SignalEventDetail model={model} signalDefs={signalDefs} onChange={onChange} readOnly={readOnly}/>}
       { (model.clazz === 'messageStart' || model.clazz === 'messageCatch') && <MessageEventDetail model={model} messageDefs={messageDefs} onChange={onChange} readOnly={readOnly}/>}
-      { model.clazz === 'gateway' && <GatewayDetail model={model} onChange={onChange} readOnly={readOnly} /> }
+      { (model.clazz === 'gateway' || model.clazz === 'exclusiveGateway' || model.clazz === 'parallelGateway' || model.clazz === 'inclusiveGateway') && <GatewayDetail model={model} onChange={onChange} readOnly={readOnly} /> }
       { model.clazz === 'flow' && <FlowDetail model={model} onChange={onChange} readOnly={readOnly} /> }
       { model.clazz === 'start' && <StartEventDetail model={model} onChange={onChange} readOnly={readOnly} /> }
       { model.clazz === 'end' && <EndEventDetail model={model} onChange={onChange} readOnly={readOnly} /> }

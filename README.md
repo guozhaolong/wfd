@@ -82,6 +82,9 @@ class WFDemo extends Component {
     * messageStart 消息启动节点
     * signalStart 信号启动节点
     * gateway 排他网关
+    * exclusiveGateway 排他网关
+    * parallelGateway 并行网关
+    * inclusiveGateway 包容网关
     * [userTask](#UserTask) 用户审批节点
     * [scriptTask](#ScriptTask) 脚本节点
     * [mailTask](#MailTask) 邮件节点

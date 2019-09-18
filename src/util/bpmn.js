@@ -110,6 +110,15 @@ export function exportXML(json,canvas,createFile = true) {
       case 'gateway':
         processXML += `${tab(4)}<exclusiveGateway id="${node.id}" name="${node.label}"></exclusiveGateway>\n`;
         break;
+      case 'exclusiveGateway':
+        processXML += `${tab(4)}<exclusiveGateway id="${node.id}" name="${node.label}"></exclusiveGateway>\n`;
+        break;
+      case 'parallelGateway':
+        processXML += `${tab(4)}<parallelGateway id="${node.id}" name="${node.label}"></parallelGateway>\n`;
+        break;
+      case 'inclusiveGateway':
+        processXML += `${tab(4)}<inclusiveGateway id="${node.id}" name="${node.label}"></inclusiveGateway>\n`;
+        break;
       default:
         break;
     }

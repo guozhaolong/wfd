@@ -115,7 +115,8 @@ export function exportXML(json,canvas,createFile = true) {
     }
   });
   json.edges.forEach(edge => {
-    BPMNEdge += `${tab(6)}<bpmndi:BPMNEdge bpmnElement="${edge.source}_${edge.sourceAnchor}-${edge.target}_${edge.targetAnchor}" id="BPMNEdge_${edge.source}_${edge.sourceAnchor}-${edge.target}_${edge.targetAnchor}">\n`+
+    BPMNEdge += `${tab(6)}<bpmndi:BPMNEdge bpmnElement="${edge.source}_${edge.sourceAnchor}-${edge.target}_${edge.targetAnchor}" `+
+      `id="BPMNEdge_${edge.source}_${edge.sourceAnchor}-${edge.target}_${edge.targetAnchor}">\n`+
         `${tab(8)}<omgdi:waypoint x="${edge.startPoint.x}" y="${edge.startPoint.y}"></omgdi:waypoint>\n`+
         `${tab(8)}<omgdi:waypoint x="${edge.endPoint.x}" y="${edge.endPoint.y}"></omgdi:waypoint>\n`+
       `${tab(6)}</bpmndi:BPMNEdge>\n`;
@@ -132,7 +133,16 @@ export function exportXML(json,canvas,createFile = true) {
       `${tab(2)}</bpmndi:BPMNDiagram>\n`;
 
   let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
-  xml += `<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef">\n`;
+  xml += `<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" `+
+    `xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" `+
+    `xmlns:xsd="http://www.w3.org/2001/XMLSchema" `+
+    `xmlns:flowable="http://flowable.org/bpmn" `+
+    `xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" `+
+    `xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" `+
+    `xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" `+
+    `typeLanguage="http://www.w3.org/2001/XMLSchema" `+
+    `expressionLanguage="http://www.w3.org/1999/XPath" `+
+    `targetNamespace="http://www.flowable.org/processdef">\n`;
   xml += signals;
   xml += messages;
   xml += processXML;

@@ -42,9 +42,15 @@ const ItemPanel = forwardRef(({height},ref) => {
           <div>{i18n['receiveTask']}</div>
         </Panel>
         <Panel header={i18n['gateway']} key="3" forceRender>
-          <img data-item="{clazz:'gateway',size:'40*40',label:''}"
-               src={require('../assets/flow/gateway.svg')} style={{width: 48, height: 48}}/>
+          <img data-item="{clazz:'exclusiveGateway',size:'40*40',label:''}"
+               src={require('../assets/flow/exclusive-gateway.svg')} style={{width: 48, height: 48}}/>
           <div>{i18n['exclusiveGateway']}</div>
+          <img data-item="{clazz:'parallelGateway',size:'40*40',label:''}"
+               src={require('../assets/flow/parallel-gateway.svg')} style={{width: 48, height: 48}}/>
+          <div>{i18n['parallelGateway']}</div>
+          <img data-item="{clazz:'inclusiveGateway',size:'40*40',label:''}"
+               src={require('../assets/flow/inclusive-gateway.svg')} style={{width: 48, height: 48}}/>
+          <div>{i18n['inclusiveGateway']}</div>
         </Panel>
         <Panel header={i18n['catch']} key="4" forceRender>
           <img data-item={"{clazz:'timerCatch',size:'50*30',label:''}"}

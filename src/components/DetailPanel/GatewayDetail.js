@@ -5,7 +5,8 @@ import LangContext from "../../util/context";
 
 const GatewayDetail = ({model,onChange,readOnly = false,}) => {
   const { i18n } = useContext(LangContext);
-  const title = i18n['exclusiveGateway'];
+  const title = model.clazz === 'exclusiveGateway' || model.clazz === 'gateway' ? i18n['exclusiveGateway']
+    : model.clazz === 'parallelGateway' ? i18n['parallelGateway'] : i18n['inclusiveGateway'];
   return (
     <div data-clazz={model.clazz}>
       <div className={styles.panelTitle}>{title}</div>

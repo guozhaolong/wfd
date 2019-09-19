@@ -67,11 +67,11 @@ export default function(G6) {
       group.icon = group.addShape('path', {
         attrs: {
           path: [
-            ['M', -6, -6],
-            ['L', 6, 6],
+            ['M', -8, -8],
+            ['L', 8, 8],
             ['Z'],
-            ['M', 6, -6],
-            ['L', -6, 6],
+            ['M', 8, -8],
+            ['L', -8, 8],
             ['Z']
           ],
           lineWidth: 2,
@@ -87,11 +87,11 @@ export default function(G6) {
       group.icon = group.addShape('path', {
         attrs: {
           path: [
-            ['M', 0, -6],
-            ['L', 0, 6],
+            ['M', 0, -10],
+            ['L', 0, 10],
             ['Z'],
-            ['M', -6, 0],
-            ['L', 6, 0],
+            ['M', -10, 0],
+            ['L', 10, 0],
             ['Z']
           ],
           lineWidth: 2,
@@ -108,7 +108,7 @@ export default function(G6) {
         attrs: {
           x: 0,
           y: 0,
-          r: 8,
+          r: 10,
           lineWidth: 2,
           stroke: this.borderColor,
         }

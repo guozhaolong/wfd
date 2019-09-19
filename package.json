@@ -14,8 +14,8 @@
     "url": "git+https://github.com/guozhaolong/wfd.git"
   },
   "scripts": {
-    "dev": "umi-lib doc dev",
-    "build": "umi-lib build"
+    "dev": "father doc dev",
+    "build": "father build"
   },
   "files": [
     "dist",
@@ -34,7 +34,7 @@
   "devDependencies": {
     "antd": "^3.22.2",
     "lodash": "^4.17.11",
-    "umi-library": "^1.6.0",
+    "father": "^2.16.0",
     "umi": "^2.8.11"
   },
   "license": "MIT",

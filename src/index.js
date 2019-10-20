@@ -12,9 +12,9 @@ import LangContext from "./util/context";
 import DetailPanel from "./components/DetailPanel";
 import ItemPanel from "./components/ItemPanel";
 import ToolbarPanel from "./components/ToolbarPanel";
-import registerItem from './item'
+import registerShape from './shape'
 import registerBehavior from './behavior'
-registerItem(G6);
+registerShape(G6);
 registerBehavior(G6);
 
 class Designer extends Component {

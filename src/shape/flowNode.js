@@ -1,15 +1,132 @@
+import _ from 'lodash';
 import editorStyle from "../util/defaultStyle";
+
+const taskDefaultOptions = {
+  icon: null,
+  iconStyle: {
+    width: 12,
+    height: 12,
+    left: 2,
+    top: 2,
+  },
+  style:{
+    ...editorStyle.nodeStyle,
+    fill: '#E7F7FE',
+    stroke:'#1890FF',
+    cursor: 'default',
+  },
+  stateStyles: {
+    selected: {
+      fill: '#95D6FB',
+    },
+    hover: {
+      cursor: editorStyle.cursor.hoverNode,
+    }
+  }
+};
+
+const gatewayDefaultOptions = {
+  icon: null,
+  iconStyle: {
+    width: 20,
+    height: 20,
+    left: 2,
+    top: 2,
+  },
+  style:{
+    ...editorStyle.nodeStyle,
+    fill: '#E8FEFA',
+    stroke:'#13C2C2',
+    cursor: 'default',
+  },
+  stateStyles: {
+    selected: {
+      fill: '#8CE8DE',
+    },
+    hover: {
+      cursor: editorStyle.cursor.hoverNode,
+    }
+  }
+};
+
+const startDefaultOptions = {
+  icon: null,
+  iconStyle: {
+    width: 18,
+    height: 18,
+    left: 6,
+    top: 6,
+  },
+  style:{
+    ...editorStyle.nodeStyle,
+    fill: '#FEF7E8',
+    stroke:'#FA8C16',
+    cursor: 'default',
+  },
+  stateStyles: {
+    selected: {
+      fill: '#FCD49A',
+    },
+    hover: {
+      cursor: editorStyle.cursor.hoverNode,
+    }
+  }
+};
+
+const endDefaultOptions = {
+  icon: null,
+  iconStyle: {
+    width: 18,
+    height: 18,
+    left: 6,
+    top: 6,
+  },
+  style:{
+    ...editorStyle.nodeStyle,
+    fill: '#EFF7E8',
+    stroke:'#F5222D',
+    cursor: 'default',
+  },
+  stateStyles: {
+    selected: {
+      fill: '#CFD49A',
+    },
+    hover: {
+      cursor: editorStyle.cursor.hoverNode,
+    }
+  }
+};
+
+const catchDefaultOptions = {
+  icon: null,
+  iconStyle: {
+    width: 20,
+    height: 20,
+    left: -10,
+    top: -8,
+  },
+  style:{
+    ...editorStyle.nodeStyle,
+    fill: '#FEF7E8',
+    stroke:'#FA8C16',
+    cursor: 'default',
+  },
+  stateStyles: {
+    selected: {
+      fill: '#FCD49A',
+    },
+    hover: {
+      cursor: editorStyle.cursor.hoverNode,
+    }
+  }
+};
 
 export default function(G6) {
   G6.registerNode('task-node', {
     shapeType: 'rect',
-    selectedColor: '#95D6FB',
-    unSelectedColor: '#E7F7FE',
-    borderColor: '#1890FF',
-    iconWidth: 12,
-    iconHeight: 12,
-    iconPaddingLeft: 2,
-    iconPaddingTop: 2,
+    options:{
+      ...taskDefaultOptions
+    },
     getShapeStyle(cfg) {
       cfg.size = [80, 44];
       cfg = this.initStyle(cfg);
@@ -20,23 +137,17 @@ export default function(G6) {
         y: 0 - height / 2,
         width,
         height,
-        ...editorStyle.nodeStyle,
-        fill: cfg.unSelectedColor,
-        stroke: this.borderColor,
+        ...this.options.style,
       };
       return style;
     }
   }, 'base-node');
   G6.registerNode('gateway-node', {
     shapeType: 'path',
-    selectedColor: '#8CE8DE',
-    unSelectedColor: '#E8FEFA',
-    borderColor: '#13C2C2',
     labelPosition: 'bottom',
-    iconWidth: 20,
-    iconHeight: 20,
-    iconPaddingLeft: 2,
-    iconPaddingTop: 2,
+    options:{
+      ...gatewayDefaultOptions
+    },
     getShapeStyle(cfg) {
       cfg.size = [40, 40];
       cfg = this.initStyle(cfg);
@@ -55,9 +166,7 @@ export default function(G6) {
           ['Q', -width / 2, 0, -width / 2 + gap, 0 - gap],
           ['Z']
         ],
-        ...editorStyle.nodeStyle,
-        fill: cfg.unSelectedColor,
-        stroke: this.borderColor,
+        ...this.options.style,
       };
       return style;
     },
@@ -75,8 +184,7 @@ export default function(G6) {
             ['Z']
           ],
           lineWidth: 2,
-          fill: this.borderColor,
-          stroke: this.borderColor,
+          stroke: this.options.style.stroke,
         }
       });
       this.runAnimate(cfg,group);
@@ -95,8 +203,7 @@ export default function(G6) {
             ['Z']
           ],
           lineWidth: 2,
-          fill: this.borderColor,
-          stroke: this.borderColor,
+          stroke: this.options.style.stroke,
         }
       });
       this.runAnimate(cfg,group);
@@ -110,7 +217,7 @@ export default function(G6) {
           y: 0,
           r: 10,
           lineWidth: 2,
-          stroke: this.borderColor,
+          stroke: this.options.style.stroke,
         }
       });
       this.runAnimate(cfg,group);
@@ -118,14 +225,10 @@ export default function(G6) {
   }, 'gateway-node');
   G6.registerNode('start-node', {
     shapeType: 'circle',
-    selectedColor: '#FCD49A',
-    unSelectedColor: '#FEF7E8',
-    borderColor: '#FA8C16',
     labelPosition: 'bottom',
-    iconWidth: 18,
-    iconHeight: 18,
-    iconPaddingLeft: 6,
-    iconPaddingTop: 6,
+    options: {
+      ...startDefaultOptions
+    },
     getShapeStyle(cfg) {
       cfg.size = [30, 30];
       cfg = this.initStyle(cfg);
@@ -134,9 +237,7 @@ export default function(G6) {
         x: 0,
         y: 0,
         r: width / 2,
-        ...editorStyle.nodeStyle,
-        fill: cfg.unSelectedColor,
-        stroke: this.borderColor,
+        ...this.options.style,
       };
       return style;
     },
@@ -149,8 +250,8 @@ export default function(G6) {
             ['L', -4, 6],
             ['Z'] // close
           ],
-          fill: this.borderColor,
-          stroke: this.borderColor,
+          fill: this.options.style.stroke,
+          stroke: this.options.style.stroke,
         }
       });
     },
@@ -164,14 +265,10 @@ export default function(G6) {
   }, 'base-node');
   G6.registerNode('end-node', {
     shapeType: 'circle',
-    selectedColor: '#CFD49A',
-    unSelectedColor: '#EFF7E8',
-    borderColor: '#F5222D',
     labelPosition: 'bottom',
-    iconWidth: 18,
-    iconHeight: 18,
-    iconPaddingLeft: 6,
-    iconPaddingTop: 6,
+    options: {
+      ...endDefaultOptions
+    },
     getShapeStyle(cfg) {
       cfg.size = [30, 30];
       cfg = this.initStyle(cfg);
@@ -180,9 +277,7 @@ export default function(G6) {
         x: 0,
         y: 0,
         r: width / 2,
-        ...editorStyle.nodeStyle,
-        fill: cfg.unSelectedColor,
-        stroke: this.borderColor,
+        ...this.options.style,
       };
       return style;
     },
@@ -196,8 +291,8 @@ export default function(G6) {
             ['L', -4, 4],
             ['Z'] // close
           ],
-          fill: this.borderColor,
-          stroke: this.borderColor,
+          fill: this.options.style.stroke,
+          stroke: this.options.style.stroke,
         }
       });
     },
@@ -211,14 +306,10 @@ export default function(G6) {
   }, 'base-node');
   G6.registerNode('catch-node', {
     shapeType: 'path',
-    selectedColor: '#FCD49A',
-    unSelectedColor: '#FEF7E8',
-    borderColor: '#FA8C16',
     labelPosition: 'bottom',
-    iconWidth: 20,
-    iconHeight: 20,
-    iconPaddingLeft: -10,
-    iconPaddingTop: -8,
+    options: {
+      ...catchDefaultOptions
+    },
     getShapeStyle(cfg) {
       cfg.size = [50, 30];
       cfg = this.initStyle(cfg);
@@ -232,9 +323,7 @@ export default function(G6) {
           ['L', -width/2, -height/3],
           ['Z'] // close
         ],
-        ...editorStyle.nodeStyle,
-        fill: cfg.unSelectedColor,
-        stroke: this.borderColor,
+        ...this.options.style,
       };
       return style;
     },
@@ -248,54 +337,94 @@ export default function(G6) {
     }
   }, 'base-node');
   G6.registerNode('user-task-node', {
-    icon: require('../assets/icons/flow/icon_user.svg'),
-    selectedColor: '#95D6FB',
-    unSelectedColor: '#E7F7FE',
-    borderColor: '#1890FF',
+    options: _.merge({},taskDefaultOptions,{
+      icon: require('../assets/icons/flow/icon_user.svg'),
+      style: {
+        fill: '#E7F7FE',
+        stroke: '#1890FF',
+      },
+      stateStyles: {
+        selected: {
+          fill: '#95D6FB',
+        },
+      }
+    }),
   }, 'task-node');
   G6.registerNode('script-task-node', {
-    icon: require('../assets/icons/flow/icon_script.svg'),
-    selectedColor: '#FFE7BA',
-    unSelectedColor: '#FFF7E6',
-    borderColor: '#FFA940',
+    options: _.merge({},taskDefaultOptions,{
+      icon: require('../assets/icons/flow/icon_script.svg'),
+      style: {
+        fill: '#FFF7E6',
+        stroke: '#FFA940',
+      },
+      stateStyles: {
+        selected: {
+          fill: '#FFE7BA',
+        },
+      }
+    }),
   }, 'task-node');
   G6.registerNode('java-task-node', {
-    icon: require('../assets/icons/flow/icon_java.svg'),
-    selectedColor: '#FFCCC7',
-    unSelectedColor: '#FFF1F0',
-    borderColor: '#FF4D4F',
+    options: _.merge({},taskDefaultOptions,{
+      icon: require('../assets/icons/flow/icon_java.svg'),
+      style: {
+        fill: '#FFF1F0',
+        stroke: '#FF4D4F',
+      },
+      stateStyles: {
+        selected: {
+          fill: '#FFCCC7',
+        },
+      }
+    }),
   }, 'task-node');
   G6.registerNode('mail-task-node', {
-    icon: require('../assets/icons/flow/icon_mail.svg'),
-    selectedColor: '#D9F7BE',
-    unSelectedColor: '#F6FFED',
-    borderColor: '#73D13D',
+    options: _.merge({},taskDefaultOptions,{
+      icon: require('../assets/icons/flow/icon_mail.svg'),
+      style: {
+        fill: '#F6FFED',
+        stroke: '#73D13D',
+      },
+      stateStyles: {
+        selected: {
+          fill: '#D9F7BE',
+        },
+      }
+    }),
   }, 'task-node');
   G6.registerNode('receive-task-node', {
-    icon: require('../assets/icons/flow/icon_receive.svg'),
-    selectedColor: '#ffd6e7',
-    unSelectedColor: '#fff0f6',
-    borderColor: '#ff85c0',
+    options: _.merge({},taskDefaultOptions,{
+      icon: require('../assets/icons/flow/icon_receive.svg'),
+      style: {
+        fill: '#FFF0F6',
+        stroke: '#FF85C0',
+      },
+      stateStyles: {
+        selected: {
+          fill: '#FFD6E7',
+        },
+      }
+    }),
   }, 'task-node');
   G6.registerNode('timer-start-node', {
-    icon: require('../assets/icons/flow/icon_timer.svg'),
+    options: _.merge({},startDefaultOptions,{icon: require('../assets/icons/flow/icon_timer.svg')}),
     afterDraw(cfg, group) { this.runAnimate(cfg,group) },
   }, 'start-node');
   G6.registerNode('message-start-node', {
-    icon: require('../assets/icons/flow/icon_message.svg'),
+    options: _.merge({},startDefaultOptions,{icon: require('../assets/icons/flow/icon_message.svg')}),
     afterDraw(cfg, group) { this.runAnimate(cfg,group) },
   }, 'start-node');
   G6.registerNode('signal-start-node', {
-    icon: require('../assets/icons/flow/icon_signal.svg'),
+    options: _.merge({},startDefaultOptions,{icon: require('../assets/icons/flow/icon_signal.svg')}),
     afterDraw(cfg, group) { this.runAnimate(cfg,group) },
   }, 'start-node');
   G6.registerNode('timer-catch-node', {
-    icon: require('../assets/icons/flow/icon_timer.svg'),
+    options: _.merge({},catchDefaultOptions,{icon: require('../assets/icons/flow/icon_timer.svg')}),
   }, 'catch-node');
   G6.registerNode('signal-catch-node', {
-    icon: require('../assets/icons/flow/icon_signal.svg'),
+    options: _.merge({},catchDefaultOptions,{icon: require('../assets/icons/flow/icon_signal.svg')}),
   }, 'catch-node');
   G6.registerNode('message-catch-node', {
-    icon: require('../assets/icons/flow/icon_message.svg'),
+    options: _.merge({},catchDefaultOptions,{icon: require('../assets/icons/flow/icon_message.svg')}),
   }, 'catch-node');
 }

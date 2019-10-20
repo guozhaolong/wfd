@@ -3,6 +3,36 @@ import _ from 'lodash';
 
 export default function(G6){
   G6.registerEdge('flow-polyline-round', {
+    options: {
+      style: {
+        ...editorStyle.edgeStyle
+      },
+      stateStyles: {
+        selected: {
+          lineWidth: editorStyle.edgeSelectedStyle.lineWidth,
+        },
+        hover: {
+          stroke: editorStyle.edgeActivedStyle.stroke,
+        }
+      }
+    },
+    setState(name, value, item) {
+      const group = item.getContainer();
+      const path = group.getChildByIndex(0);
+      if(name === 'selected'){
+        if(value) {
+          path.attr('lineWidth', this.options.stateStyles.selected.lineWidth);
+          path.attr('stroke', this.options.style.stroke);
+        }else {
+          path.attr('lineWidth', this.options.style.lineWidth);
+        }
+      }else if(name === 'hover'){
+        if(value)
+          path.attr('stroke', this.options.stateStyles.hover.stroke);
+        else
+          path.attr('stroke',this.options.style.stroke);
+      }
+    },
     drawShape(cfg, group) {
       this.group = group;
       const shapeStyle = this.getShapeStyle(cfg);
@@ -58,7 +88,7 @@ export default function(G6){
       }
       points.push(endPoint);
       const path = this.getPath(points);
-      let style = editorStyle.edgeStyle;
+      let style = this.options.style;
       if(cfg.reverse)
         style = {...style,lineDash:[1, 3]};
       else
@@ -111,23 +141,6 @@ export default function(G6){
         return cfg.controlPoints;
       }
       return this.polylineFinding(cfg.sourceNode,cfg.targetNode,cfg.startPoint,cfg.endPoint,15);
-    },
-    setState(name, value, item) {
-      const group = item.getContainer();
-      const path = group.getChildByIndex(0);
-      if(name === 'selected'){
-        if(value) {
-          path.attr('lineWidth', editorStyle.edgeSelectedStyle.lineWidth);
-          path.attr('stroke', editorStyle.edgeStyle.stroke);
-        }else {
-          path.attr('lineWidth', editorStyle.edgeStyle.lineWidth);
-        }
-      }else if(name === 'hover'){
-        if(value)
-          path.attr('stroke', editorStyle.edgeActivedStyle.stroke);
-        else
-          path.attr('stroke',editorStyle.edgeStyle.stroke);
-      }
     },
     getExpandedBBox(bbox, offset) {
       return 0 === bbox.width && 0 === bbox.height ? bbox : {

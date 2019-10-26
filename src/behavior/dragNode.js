@@ -1,5 +1,4 @@
 import editorStyle from "../util/defaultStyle";
-const each = require('@antv/util/lib/each');
 
 export default function(G6){
   G6.registerBehavior('dragNode', {

@@ -1,11 +1,11 @@
 import editorStyle from "../util/defaultStyle";
 const SingleShapeMixin = require('@antv/g6/src/shape/single-shape-mixin');
-const Util = require('@antv/g6/src/util');
+
 export default function(G6){
   G6.Shape.registerFactory('anchor', {
     defaultShapeType: 'marker'
   });
-  G6.Shape.registerAnchor('single-anchor', Util.mix({}, SingleShapeMixin, {
+  G6.Shape.registerAnchor('single-anchor', G6.Util.mix({}, SingleShapeMixin, {
     itemType: 'anchor',
 
     drawShape(cfg, group) {

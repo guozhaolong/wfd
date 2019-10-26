@@ -1,4 +1,6 @@
-const Util = require('@antv/g6/src/util');
+const mix = require('@antv/util/lib/mix');
+const clone = require('@antv/util/lib/clone');
+const isString = require('@antv/util/lib/type/is-string');
 
 class Command{
 
@@ -33,9 +35,9 @@ class Command{
 
   registerCommand(name,cfg,){
     if (this[name]){
-      Util.mix(this[name], cfg);
+      mix(this[name], cfg);
     }else {
-      const cmd = Util.mix({},{
+      const cmd = mix({},{
         name: name,
         shortcutCodes: [],
         queue: true,
@@ -45,7 +47,7 @@ class Command{
         execute(graph) {
           this.snapShot = graph.save();
           this.selectedItems = graph.get('selectedItems');
-          this.method && (Util.isString(this.method) ? graph[this.method]() : this.method(graph));
+          this.method && (isString(this.method) ? graph[this.method]() : this.method(graph));
         },
         back(graph) {
           graph.read(this.snapShot);
@@ -58,7 +60,7 @@ class Command{
   }
 
   execute(name, graph, cfg) {
-    const cmd = Util.mix({},this[name], cfg);
+    const cmd = mix({},this[name], cfg);
     const manager = this.get('_command');
     if(cmd.enable(graph)){
       cmd.init();
@@ -108,7 +110,7 @@ class Command{
         const item = graph.findById(this.itemId);
         if(item) {
           if(this.executeTimes === 1)
-            this.originModel = Util.mix({}, item.getModel());
+            this.originModel = mix({}, item.getModel());
           graph.update(item, this.updateModel);
         }
       },
@@ -191,7 +193,7 @@ class Command{
       },
       method: function(graph) {
         const manager = cmdPlugin.get('_command');
-        this.pasteData = Util.clone(manager.clipboard[0]);
+        this.pasteData = clone(manager.clipboard[0]);
         const addModel = this.pasteData.model;
         addModel.x && (addModel.x += 10);
         addModel.y && (addModel.y += 10);

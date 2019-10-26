@@ -1,6 +1,6 @@
 {
   "name": "wfd",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "a workflow designer base on @antv/g6",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -14,7 +14,7 @@
     "url": "git+https://github.com/guozhaolong/wfd.git"
   },
   "scripts": {
-    "dev": "father doc dev",
+    "dev": "cd example && umi dev",
     "build": "father build"
   },
   "files": [
@@ -23,19 +23,24 @@
   ],
   "dependencies": {
     "@antv/g6": "^3.1.3",
-    "antd-etable": "^1.0.10",
-    "numericjs": "^1.2.6"
+    "@antv/util": "~1.3.1",
+    "antd": "^3.22.2",
+    "antd-etable": "^1.1.11",
+    "moment": "^2.24.0"
   },
   "peerDependencies": {
-    "react": "16.x",
+    "@antv/g6": "^3.1.3",
+    "@antv/util": "~1.3.1",
     "antd": "^3.22.2",
-    "lodash": "^4.17.11",
-    "moment": "^2.24.0"
+    "antd-etable": "^1.1.11",
+    "moment": "^2.24.0",
+    "react": "16.x"
   },
   "devDependencies": {
     "antd": "^3.22.2",
     "lodash": "^4.17.11",
     "father": "^2.23.1",
+    "numericjs": "^1.2.6",
     "umi": "^2.8.11"
   },
   "license": "MIT",

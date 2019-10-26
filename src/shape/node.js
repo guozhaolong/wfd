@@ -180,16 +180,6 @@ export default function(G6) {
         icon.show();
       }
     },
-    initStyle(cfg){
-      // cfg.selectedColor = this.selectedColor;
-      // cfg.unSelectedColor = this.unSelectedColor;
-      // cfg.icon = this.icon;
-      // cfg.iconWidth = this.iconWidth;
-      // cfg.iconHeight = this.iconHeight;
-      // cfg.iconPaddingTop = this.iconPaddingTop;
-      // cfg.iconPaddingLeft = this.iconPaddingLeft;
-      return cfg;
-    },
   }, 'single-shape');
 
 }

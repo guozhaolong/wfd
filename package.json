@@ -14,7 +14,7 @@
     "url": "git+https://github.com/guozhaolong/wfd.git"
   },
   "scripts": {
-    "dev": "father build && cd example && umi dev",
+    "dev": "cd example && umi dev",
     "build": "father build"
   },
   "files": [
@@ -29,16 +29,9 @@
     "moment": "^2.24.0"
   },
   "peerDependencies": {
-    "@antv/g6": "^3.1.3",
-    "@antv/util": "~1.3.1",
-    "antd": "^3.22.2",
-    "antd-etable": "^1.1.11",
-    "moment": "^2.24.0",
     "react": "16.x"
   },
   "devDependencies": {
-    "antd": "^3.22.2",
-    "lodash": "^4.17.11",
     "father": "^2.23.1",
     "numericjs": "^1.2.6",
     "umi": "^2.8.11"

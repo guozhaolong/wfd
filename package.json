@@ -14,7 +14,7 @@
     "url": "git+https://github.com/guozhaolong/wfd.git"
   },
   "scripts": {
-    "dev": "cd example && umi dev",
+    "dev": "father build && cd example && umi dev",
     "build": "father build"
   },
   "files": [

@@ -4,7 +4,7 @@ export default function(G6){
     getDefaultCfg() {
       return {
         alignLineStyle: { stroke: '#FA8C16', lineWidth: 1 },
-        tolerance: 5,
+        tolerance: 10,
         _alignLines: [],
       };
     },
@@ -28,7 +28,7 @@ export default function(G6){
       const cb = { x: bbox.x + bbox.width / 2, y: bbox.y + bbox.height };
       const lc = { x: bbox.x, y: bbox.y + bbox.height / 2 };
       const rc = { x: bbox.x + bbox.width, y: bbox.y + bbox.height / 2 };
-      const nodes = this.graph.getNodes();
+      const nodes = item._attrs.nodeId ? this.graph.getNodes().filter(n => n.get('id') !== item._attrs.nodeId) : this.graph.getNodes();
       each(nodes, (node) => {
         const horizontalLines = [];
         const verticalLines = [];

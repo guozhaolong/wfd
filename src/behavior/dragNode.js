@@ -98,6 +98,7 @@ export default function(G6){
             height: bbox.height,
             x: x - bbox.width / 2,
             y: y - bbox.height / 2,
+            nodeId:item.get('id'),
             ...attrs
           }
         });

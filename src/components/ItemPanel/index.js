@@ -9,7 +9,7 @@ const ItemPanel = forwardRef(({height},ref) => {
   const { i18n } = useContext(LangContext);
   return (
     <div ref={ref} className={styles.itemPanel} style={{ height }}>
-      <Collapse bordered={false} defaultActiveKey={['1']}>
+      <Collapse bordered={false} defaultActiveKey={[]}>
         <Panel header={i18n['start']} key="1" forceRender>
           <img data-item={"{clazz:'start',size:'30*30',label:''}"}
                src={require('../assets/flow/start.svg')} style={{width: 42, height: 42}}/>

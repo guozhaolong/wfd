@@ -78,10 +78,14 @@ export default function(G6){
       return e.target.type === 'marker' && e.target.getParent() && e.target.getParent().getParent().get('item').get('id') === this.origin.sourceNode.get('id')
     },
     dragEdgeBeforeShowAnchor(e) {
+      const sourceGroupId = this.origin.sourceNode.getModel().groupId;
       this.graph.getNodes().forEach(node => {
-        if(node.getModel().clazz === 'startEvent'
-          || node.getModel().clazz === 'timerStartEvent'
-          || node.getModel().clazz === 'messageStartEvent')
+        if(node.getModel().clazz === 'start'
+          || node.getModel().clazz === 'timerStart'
+          || node.getModel().clazz === 'messageStart')
+          return;
+        const targetGroupId = node.getModel().groupId;
+        if(!sourceGroupId && targetGroupId || sourceGroupId && !targetGroupId || sourceGroupId !== targetGroupId)
           return;
         const group = node.getContainer();
         group.showAnchor(group);
@@ -133,7 +137,7 @@ export default function(G6){
           target: this.origin.targetNode.get('id'),
           sourceAnchor: this.origin.sourceAnchor,
           targetAnchor: this.origin.targetAnchor,
-        }
+        };
         if(this.graph.executeCommand){
           this.graph.executeCommand('add', {
             type: 'edge',

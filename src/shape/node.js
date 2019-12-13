@@ -56,14 +56,8 @@ export default function(G6) {
         }
       });
     },
-    drawShape(cfg, group) {
-      const shapeType = this.shapeType;
+    drawIcon(cfg,group){
       let style = this.getShapeStyle(cfg);
-      const shape = group.addShape(shapeType, {
-        attrs: {
-          ...style,
-        }
-      });
       if(this.options.icon){
         let attrs = {
           x: style.x + this.options.iconStyle.left,
@@ -71,14 +65,14 @@ export default function(G6) {
           width: this.options.iconStyle.width,
           height: this.options.iconStyle.height,
         };
-        if(shapeType === 'circle'){
+        if(this.shapeType === 'circle'){
           attrs = {
             x: style.x- style.r + this.options.iconStyle.left,
             y: style.y - style.r + this.options.iconStyle.top,
             width: this.options.iconStyle.width,
             height: this.options.iconStyle.height,
           }
-        }else if(shapeType === 'path'){
+        }else if(this.shapeType === 'path'){
           attrs = {
             x: this.options.iconStyle.left,
             y: this.options.iconStyle.top,
@@ -96,6 +90,8 @@ export default function(G6) {
           group.icon.hide();
         }
       }
+    },
+    initAnchor(group){
       group.anchorShapes = [];
       group.showAnchor = (group) => {
         this.drawAnchor(group);
@@ -110,6 +106,17 @@ export default function(G6) {
             a.setHotspotActived(false);
         });
       };
+    },
+    drawShape(cfg, group) {
+      const shapeType = this.shapeType;
+      let style = this.getShapeStyle(cfg);
+      const shape = group.addShape(shapeType, {
+        attrs: {
+          ...style,
+        }
+      });
+      this.drawIcon(cfg,group);
+      this.initAnchor(group);
       return shape;
     },
     setState(name, value, item) {
@@ -140,6 +147,10 @@ export default function(G6) {
             text.attr('cursor', this.options.style.cursor);
         }
       }
+      this.setCustomState(name, value, item);
+    },
+    setCustomState(name, value, item){
+
     },
     getAnchorPoints() {
       return [

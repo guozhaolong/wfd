@@ -1,6 +1,7 @@
 export default {
   'label': '标题',
   'hideIcon': '隐藏图标',
+  'subProcess': '子流程',
   'userTask': '审批节点',
   'userTask.assignType': '指派类型',
   'userTask.assignType.placeholder': '选择一个类型',

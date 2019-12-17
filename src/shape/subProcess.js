@@ -1,5 +1,5 @@
 import editorStyle from "../util/defaultStyle";
-import {getShapeName} from "@shared/flow-chart/util/clazz";
+import {getShapeName} from "../util/clazz";
 import {Util} from "@antv/g6";
 
 const Item = require('@antv/g6/src/item/item');
@@ -329,7 +329,6 @@ export default function (G6) {
             if (!cfg.size || !Array.isArray(cfg.size)) {
                 cfg.size = [80, 44];
             }
-            cfg = this.initStyle(cfg);
             const width = cfg.size[0];
             const height = cfg.size[1];
             const style = {

@@ -29,7 +29,7 @@ const ItemPanel = forwardRef(({height},ref) => {
                src={require('../assets/flow/user-task.svg')} style={{width: 80, height: 44}}/>
           <div>{i18n['userTask']}</div>
           <img data-item="{clazz:'subProcess',size:'80*44',label:''}"
-                 src="assets/flow/sub-process.svg" style={{width: 80, height: 44}}/>
+                 src={require('../assets/flow/sub-process.svg')} style={{width: 80, height: 44}}/>
           <div>{i18n['subProcess']}</div>
           <img data-item={"{clazz:'scriptTask',size:'80*44',label:'"+i18n['scriptTask']+"'}"}
                src={require('../assets/flow/script-task.svg')} style={{width: 80, height: 44}}/>

@@ -7,6 +7,7 @@ import registerSubProcess from './subProcess'
 
 export default function(G6){
   registerAnchor(G6);
+  registerControlPoint(G6);
   registerNode(G6);
   registerFlowNode(G6);
   registerEdge(G6);

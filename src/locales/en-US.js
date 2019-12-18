@@ -1,6 +1,7 @@
 export default {
   'label': 'Label',
   'hideIcon': 'Hide Icon',
+  'subProcess': 'Sub Process',
   'userTask': 'User Task',
   'userTask.assignType': 'Assign Type',
   'userTask.assignType.placeholder': 'Select a assign type',

@@ -81,7 +81,7 @@ class Designer extends Component {
         default: ['drag-canvas', 'clickSelected'],
         view: [ ],
         edit: ['drag-canvas', 'hoverNodeActived','hoverAnchorActived','dragNode','dragEdge',
-          'dragPanelItemAddNode','clickSelected','deleteItem','itemAlign'],
+          'dragPanelItemAddNode','clickSelected','deleteItem','itemAlign','dragPoint'],
       },
       defaultEdge: {
         shape: 'flow-polyline-round',

@@ -18,12 +18,6 @@ registerShape(G6);
 registerBehavior(G6);
 
 class Designer extends Component {
-  static defaultProps = {
-    height: 500,
-    isView: false,
-    mode: 'edit',
-    lang: 'zh',
-  };
   constructor(props) {
     super(props);
     this.pageRef = React.createRef();
@@ -119,7 +113,10 @@ class Designer extends Component {
   initEvents(){
     this.graph.on('afteritemselected',(items)=>{
       if(items && items.length > 0) {
-        const item = this.graph.findById(items[0]);
+        let item = this.graph.findById(items[0]);
+        if(!item){
+          item = this.getNodeInSubProcess(items[0])
+        }
         this.setState({selectedModel: {...item.getModel()}});
       } else {
         this.setState({selectedModel: this.state.processModel});
@@ -144,7 +141,10 @@ class Designer extends Component {
   onItemCfgChange(key,value){
     const items = this.graph.get('selectedItems');
     if(items && items.length > 0){
-      const item = this.graph.findById(items[0]);
+      let item = this.graph.findById(items[0]);
+      if(!item){
+        item = this.getNodeInSubProcess(items[0])
+      }
       if(this.graph.executeCommand) {
         this.graph.executeCommand('update', {
           itemId: items[0],
@@ -159,6 +159,29 @@ class Designer extends Component {
       this.setState({selectedModel: canvasModel});
       this.setState({processModel: canvasModel });
     }
+  }
+
+  getNodeInSubProcess(itemId){
+    const subProcess = this.graph.find('node', (node) => {
+      if (node.get('model')) {
+        const clazz = node.get('model').clazz;
+        if (clazz === 'subProcess') {
+          const containerGroup = node.getContainer();
+          const subGroup = containerGroup.subGroup;
+          const item = subGroup.findById(itemId);
+          return subGroup.contain(item);
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    });
+    if(subProcess) {
+      const group = subProcess.getContainer();
+      return group.getItem(subProcess, itemId);
+    }
+    return null;
   }
 
   render() {
@@ -191,5 +214,12 @@ class Designer extends Component {
     );
   }
 }
+
+Designer.defaultProps = {
+  height: 500,
+  isView: false,
+  mode: 'edit',
+  lang: 'zh',
+};
 
 export default Designer;

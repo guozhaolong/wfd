@@ -105,7 +105,7 @@ class Command{
     const group = subProcess.getContainer();
     const resultModel = group.removeItem(subProcess, itemId);
     graph.updateItem(subProcess, resultModel);
-}
+  }
   initCommands(){
     const cmdPlugin = this;
     cmdPlugin.registerCommand('add',{

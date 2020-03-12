@@ -1,5 +1,5 @@
 import editorStyle from "../util/defaultStyle";
-const SingleShapeMixin = require('@antv/g6/src/shape/single-shape-mixin');
+const SingleShapeMixin = require('@antv/g6/lib/shape/single-shape-mixin');
 
 export default function(G6){
   G6.Shape.registerFactory('anchor', {

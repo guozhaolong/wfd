@@ -1,6 +1,4 @@
-const mix = require('@antv/util/lib/mix');
-const clone = require('@antv/util/lib/clone');
-const isString = require('@antv/util/lib/type/is-string');
+import { mix, clone, isString } from '@antv/util';
 
 class Command{
 

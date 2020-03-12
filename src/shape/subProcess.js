@@ -1,10 +1,9 @@
 import editorStyle from '../util/defaultStyle';
 import { getShapeName } from '../util/clazz';
-import { Util } from '@antv/g6';
+const Item = require('@antv/g6/lib/item/item');
+const Node = require('@antv/g6/lib/item/node');
+const Edge = require('@antv/g6/lib/item/edge');
 
-const Item = require('@antv/g6/src/item/item');
-const Node = require('@antv/g6/src/item/node');
-const Edge = require('@antv/g6/src/item/edge');
 export default function(G6) {
   G6.registerNode('sub-process-node', {
     shapeType: 'rect',
@@ -114,11 +113,11 @@ export default function(G6) {
         cfg.content.edges.forEach(edgeCfg => {
           let source = edgeCfg.source;
           let target = edgeCfg.target;
-          if (source && Util.isString(source)) {
+          if (source && G6.Util.isString(source)) {
             source = group.findById(source);
             source = source.get('item');
           }
-          if (target && Util.isString(target)) {
+          if (target && G6.Util.isString(target)) {
             target = group.findById(target);
             target = target.get('item');
           }

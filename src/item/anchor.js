@@ -1,5 +1,5 @@
 import editorStyle from '../util/defaultStyle';
-const Item = require('@antv/g6/src/item/item');
+const Item = require('@antv/g6/lib/item/item');
 
 const createAnchor = (index,style,group) => {
   const anchorContainer = group.addGroup();

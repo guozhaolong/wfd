@@ -1,6 +1,5 @@
-const deepMix = require('@antv/util/lib/deep-mix');
-const each = require('@antv/util/lib/each');
-const createDOM = require('@antv/util/lib/dom/create-dom');
+import { deepMix, each } from '@antv/util';
+import { createDom } from '@antv/dom-util';
 
 class AddItemPanel {
 
@@ -20,7 +19,7 @@ class AddItemPanel {
 
   initPlugin(graph) {
     const parentNode = this.get('container');
-    const ghost = createDOM('<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"'+' style="opacity:0"/>');
+    const ghost = createDom('<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"'+' style="opacity:0"/>');
     const children = parentNode.querySelectorAll('div > div > .ant-collapse-content > div > img[data-item]');
     each(children,(child,i)=>{
       const addModel = (new Function("return " + child.getAttribute('data-item')))();

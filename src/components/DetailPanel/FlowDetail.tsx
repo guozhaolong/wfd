@@ -10,7 +10,7 @@ export interface FlowProps {
   onChange: (...args: any[]) => any;
   readOnly: boolean;
 }
-const FlowDetail: React.FunctionComponent<FlowProps> = ({model,onChange,readOnly = false,}) => {
+const FlowDetail: React.FC<FlowProps> = ({model,onChange,readOnly = false,}) => {
   const { i18n } = useContext(LangContext);
   const title = i18n['sequenceFlow'];
   return (

@@ -3,7 +3,7 @@ import React, {useContext} from "react";
 import DefaultDetail, { DefaultProps } from './DefaultDetail';
 import LangContext from "../../util/context";
 
-const EndEventDetail: React.FunctionComponent<DefaultProps> = ({model,onChange,readOnly = false,}) => {
+const EndEventDetail: React.FC<DefaultProps> = ({model,onChange,readOnly = false,}) => {
   const { i18n } = useContext(LangContext);
   const title = i18n['endEvent'];
   return (

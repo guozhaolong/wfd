@@ -10,7 +10,7 @@ export interface ScriptProps {
   onChange: (...args: any[]) => any;
   readOnly: boolean;
 }
-const ScriptTaskDetail: React.FunctionComponent<ScriptProps> = ({model,onChange,readOnly = false,}) => {
+const ScriptTaskDetail: React.FC<ScriptProps> = ({model,onChange,readOnly = false,}) => {
   const { i18n } = useContext(LangContext);
   const title = i18n['scriptTask'];
   return (

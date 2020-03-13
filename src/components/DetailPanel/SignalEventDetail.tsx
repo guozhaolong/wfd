@@ -11,7 +11,7 @@ export interface SignalProps {
   readOnly: boolean;
   signalDefs: ISelectData[];
 }
-const SignalEventDetail: React.FunctionComponent<SignalProps> = ({model,onChange,readOnly = false,signalDefs = []}) => {
+const SignalEventDetail: React.FC<SignalProps> = ({model,onChange,readOnly = false,signalDefs = []}) => {
   const { i18n } = useContext(LangContext);
   const title = i18n['signalEvent'];
   return (

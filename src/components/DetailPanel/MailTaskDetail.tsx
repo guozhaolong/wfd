@@ -10,7 +10,7 @@ export interface MailProps {
   onChange: (...args: any[]) => any;
   readOnly: boolean;
 }
-const MailTaskDetail: React.FunctionComponent<MailProps> = ({model,onChange,readOnly = false,}) => {
+const MailTaskDetail: React.FC<MailProps> = ({model,onChange,readOnly = false,}) => {
   const { i18n } = useContext(LangContext);
   const title = i18n['mailTask'];
   return (

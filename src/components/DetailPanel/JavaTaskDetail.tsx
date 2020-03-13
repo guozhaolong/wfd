@@ -10,7 +10,7 @@ export interface JavaProps {
   onChange: (...args: any[]) => any;
   readOnly: boolean;
 }
-const JavaTaskDetail: React.FunctionComponent<JavaProps> = ({model,onChange,readOnly = false,}) => {
+const JavaTaskDetail: React.FC<JavaProps> = ({model,onChange,readOnly = false,}) => {
   const { i18n } = useContext(LangContext);
   const title = i18n['javaTask'];
   return (

@@ -10,7 +10,7 @@ export interface ProcessProps {
   onChange: (...args: any[]) => any;
   readOnly: boolean;
 }
-const ProcessDetail: React.FunctionComponent<ProcessProps> = ({model,onChange,readOnly = false,}) => {
+const ProcessDetail: React.FC<ProcessProps> = ({model,onChange,readOnly = false,}) => {
   const { i18n,lang } = useContext(LangContext);
   const [dataObjsModalVisible,setDataObjsModalVisible] = useState(false);
   const [signalDefsModalVisible,setSignalDefsModalVisible] = useState(false);

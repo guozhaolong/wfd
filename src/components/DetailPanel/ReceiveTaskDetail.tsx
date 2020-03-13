@@ -10,7 +10,7 @@ export interface ReceiveProps {
   onChange: (...args: any[]) => any;
   readOnly: boolean;
 }
-const ReceiveTaskDetail: React.FunctionComponent<ReceiveProps> = ({model,onChange,readOnly = false,}) => {
+const ReceiveTaskDetail: React.FC<ReceiveProps> = ({model,onChange,readOnly = false,}) => {
   const { i18n } = useContext(LangContext);
   const title = i18n['receiveTask'];
   return (

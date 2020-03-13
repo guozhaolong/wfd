@@ -10,7 +10,7 @@ export interface DefaultProps {
   readOnly: boolean;
 }
 
-const DefaultDetail: React.FunctionComponent<DefaultProps> = ({model,onChange,readOnly = false,}) => {
+const DefaultDetail: React.FC<DefaultProps> = ({model,onChange,readOnly = false,}) => {
   const { i18n } = useContext(LangContext);
   return (
     <>

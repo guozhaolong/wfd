@@ -13,7 +13,7 @@ export interface UserProps {
   users: ISelectData[];
   groups: ISelectData[];
 }
-const UserTaskDetail: React.FunctionComponent<UserProps> = ({model,users,groups,onChange,readOnly = false,}) => {
+const UserTaskDetail: React.FC<UserProps> = ({model,users,groups,onChange,readOnly = false,}) => {
   const { i18n } = useContext(LangContext);
   const title = i18n['userTask'];
   return (

@@ -3,7 +3,7 @@ import React, {useContext} from "react";
 import DefaultDetail, { DefaultProps } from './DefaultDetail';
 import LangContext from "../../util/context";
 
-const GatewayDetail: React.FunctionComponent<DefaultProps> = ({model,onChange,readOnly = false,}) => {
+const GatewayDetail: React.FC<DefaultProps> = ({model,onChange,readOnly = false,}) => {
   const { i18n } = useContext(LangContext);
   const title = model.clazz === 'exclusiveGateway' || model.clazz === 'gateway' ? i18n['exclusiveGateway']
     : model.clazz === 'parallelGateway' ? i18n['parallelGateway'] : i18n['inclusiveGateway'];

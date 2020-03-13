@@ -14,7 +14,7 @@ export interface ModalProps {
   lang: 'zh' | 'en';
 }
 
-const DataTableModal: React.FunctionComponent<ModalProps> = ({ visible, title, onOk, onCancel, data, cols, newRowKeyPrefix, lang }) => {
+const DataTableModal: React.FC<ModalProps> = ({ visible, title, onOk, onCancel, data, cols, newRowKeyPrefix, lang }) => {
   const [changedData, setChangedData] = useState([]);
   const handleOk = () => {
     const updateData = data.map(d => {

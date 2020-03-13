@@ -11,7 +11,7 @@ export interface MessageProps {
   readOnly: boolean;
   messageDefs: ISelectData[];
 }
-const MessageEventDetail: React.FunctionComponent<MessageProps> = ({model,onChange,readOnly = false,messageDefs = []}) => {
+const MessageEventDetail: React.FC<MessageProps> = ({model,onChange,readOnly = false,messageDefs = []}) => {
   const { i18n } = useContext(LangContext);
   const title = i18n['signalEvent'];
   return (

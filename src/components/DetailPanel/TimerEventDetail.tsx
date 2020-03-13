@@ -10,7 +10,7 @@ export interface TimerProps {
   onChange: (...args: any[]) => any;
   readOnly: boolean;
 }
-const TimerEventDetail: React.FunctionComponent<TimerProps> = ({model,onChange,readOnly = false,}) => {
+const TimerEventDetail: React.FC<TimerProps> = ({model,onChange,readOnly = false,}) => {
   const { i18n } = useContext(LangContext);
   const title = i18n['timerEvent'];
   return (

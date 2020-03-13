@@ -1,9 +1,16 @@
 import { mix, clone, isString } from '@antv/util';
 
 class Command{
+  private _cfgs: any;
+  private _events: null;
+  private list: any[];
+  private queue: any[];
+  private destroyed: boolean;
 
   constructor() {
-
+    this._cfgs = this.getDefaultCfg();
+    this.list = [];
+    this.queue = [];
   }
 
   getDefaultCfg() {
@@ -18,9 +25,6 @@ class Command{
   }
 
   initPlugin(graph) {
-    this._cfgs = this.getDefaultCfg();
-    this.list = [];
-    this.queue = [];
     this.initCommands();
     graph.getCommands = () => { return this.get('_command').queue };
     graph.getCurrentCommand = () => {

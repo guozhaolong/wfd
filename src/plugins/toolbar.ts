@@ -2,6 +2,8 @@ import { deepMix, each, wrapBehavior } from '@antv/util';
 import { modifyCSS } from '@antv/dom-util';
 
 class Toolbar {
+  private readonly _cfgs: any;
+  private _events: any;
 
   constructor(cfgs) {
     this._cfgs = deepMix(this.getDefaultCfg(), cfgs);

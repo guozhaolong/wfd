@@ -1,3 +1,4 @@
+import { Moment } from 'moment';
 export interface IDefaultModel {
   id?: string;
   clazz?: 'start' | 'end' | 'gateway' | 'exclusiveGateway' | 'parallelGateway' | 'inclusiveGateway'
@@ -20,7 +21,7 @@ export interface IMailModel extends IDefaultModel {
 export interface IUserModel extends IDefaultModel {
   assignType?: 'person' | 'persongroup' | 'custom';
   assignValue?: string;
-  dueDate?: Date;
+  dueDate?: Moment;
   isSequential?: boolean;
   javaClass?: string;
 }

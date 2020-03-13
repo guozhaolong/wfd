@@ -8,7 +8,7 @@ const { Panel } = Collapse;
 export interface ItemPanelProps {
   height:number;
 }
-const ItemPanel: React.FunctionComponent<ItemPanelProps & RefAttributes<any>> = forwardRef(({height},ref) => {
+const ItemPanel = forwardRef<any, ItemPanelProps>(({height},ref) => {
   const { i18n } = useContext(LangContext);
   return (
     <div ref={ref} className={styles.itemPanel} style={{ height }}>

@@ -28,7 +28,7 @@ export interface DetailProps{
   onChange: (...args: any[]) => any;
   readOnly: boolean;
 }
-const DetailPanel: React.FunctionComponent<DetailProps & RefAttributes<any>> = forwardRef(({height,model,users,groups,messageDefs,signalDefs,onChange,readOnly = false},ref)=>{
+const DetailPanel = forwardRef<any, DetailProps>(({height,model,users,groups,messageDefs,signalDefs,onChange,readOnly = false},ref)=>{
   return (
     <div ref={ref} className={styles.detailPanel} style={{height}}>
       { model.clazz === 'userTask' && <UserTaskDetail model={model} onChange={onChange} readOnly={readOnly} users={users} groups={groups}/>}

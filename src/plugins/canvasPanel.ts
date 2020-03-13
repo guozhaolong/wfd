@@ -1,6 +1,7 @@
 import { deepMix } from '@antv/util';
 
 class CanvasPanel {
+  private readonly _cfgs: any;
 
   constructor(cfgs) {
     this._cfgs = deepMix(this.getDefaultCfg(), cfgs);

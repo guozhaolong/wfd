@@ -2,6 +2,7 @@ import { deepMix, each } from '@antv/util';
 import { createDom } from '@antv/dom-util';
 
 class AddItemPanel {
+  private readonly _cfgs: any;
 
   constructor(cfgs) {
     this._cfgs = deepMix(this.getDefaultCfg(), cfgs);

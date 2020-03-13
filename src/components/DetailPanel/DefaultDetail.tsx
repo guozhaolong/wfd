@@ -1,9 +1,16 @@
+import React, {useContext} from "react";
 import styles from "./index.less";
 import { Checkbox, Input } from "antd";
-import React, {useContext} from "react";
 import LangContext from "../../util/context";
+import { IDefaultModel } from '../../types';
 
-const DefaultDetail = ({model,onChange,readOnly = false,}) => {
+export interface DefaultProps {
+  model: IDefaultModel;
+  onChange: (...args: any[]) => any;
+  readOnly: boolean;
+}
+
+const DefaultDetail: React.FunctionComponent<DefaultProps> = ({model,onChange,readOnly = false,}) => {
   const { i18n } = useContext(LangContext);
   return (
     <>

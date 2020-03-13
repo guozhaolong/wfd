@@ -1,11 +1,11 @@
-import React, {forwardRef, useContext} from "react";
+import React, { forwardRef, RefAttributes, useContext,PropsWithoutRef } from 'react';
 import '../../iconfont.css';
 import styles from "./index.less";
 import { Tooltip } from "antd";
 import 'antd/lib/tooltip/style';
 import LangContext from "../../util/context";
 
-const ToolbarPanel = forwardRef((props,ref) => {
+const ToolbarPanel: React.FunctionComponent<PropsWithoutRef<any> & RefAttributes<any>> = forwardRef((props,ref) => {
   const { i18n } = useContext(LangContext);
   return (
     <div className={styles.toolbar} ref={ref}>

@@ -1,11 +1,14 @@
-import React, {forwardRef, useContext} from "react";
+import React, { forwardRef, RefAttributes, useContext } from 'react';
 import styles from "./index.less";
 import {Collapse} from "antd";
 import 'antd/lib/collapse/style';
 import LangContext from "../../util/context";
 const { Panel } = Collapse;
 
-const ItemPanel = forwardRef(({height},ref) => {
+export interface ItemPanelProps {
+  height:number;
+}
+const ItemPanel: React.FunctionComponent<ItemPanelProps & RefAttributes<any>> = forwardRef(({height},ref) => {
   const { i18n } = useContext(LangContext);
   return (
     <div ref={ref} className={styles.itemPanel} style={{ height }}>

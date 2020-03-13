@@ -3,8 +3,14 @@ import { Input, } from "antd";
 import React, {useContext} from "react";
 import DefaultDetail from "./DefaultDetail";
 import LangContext from "../../util/context";
+import { IScriptModel } from '../../types';
 
-const ScriptTaskDetail = ({model,onChange,readOnly = false,}) => {
+export interface ScriptProps {
+  model: IScriptModel;
+  onChange: (...args: any[]) => any;
+  readOnly: boolean;
+}
+const ScriptTaskDetail: React.FunctionComponent<ScriptProps> = ({model,onChange,readOnly = false,}) => {
   const { i18n } = useContext(LangContext);
   const title = i18n['scriptTask'];
   return (

@@ -3,8 +3,15 @@ import { Select, } from "antd";
 import React, {useContext} from "react";
 import DefaultDetail from "./DefaultDetail";
 import LangContext from "../../util/context";
+import { IMessageModel, ISelectData } from '../../types';
 
-const MessageEventDetail = ({model,onChange,readOnly = false,messageDefs = []}) => {
+export interface MessageProps {
+  model: IMessageModel;
+  onChange: (...args: any[]) => any;
+  readOnly: boolean;
+  messageDefs: ISelectData[];
+}
+const MessageEventDetail: React.FunctionComponent<MessageProps> = ({model,onChange,readOnly = false,messageDefs = []}) => {
   const { i18n } = useContext(LangContext);
   const title = i18n['signalEvent'];
   return (

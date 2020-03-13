@@ -14,6 +14,7 @@ import ItemPanel from "./components/ItemPanel";
 import ToolbarPanel from "./components/ToolbarPanel";
 import registerShape from './shape'
 import registerBehavior from './behavior'
+import { IDefaultModel, IProcessModel, ISelectData } from './types';
 registerShape(G6);
 registerBehavior(G6);
 
@@ -29,14 +30,14 @@ export interface DesignerProps {
   /** 流程数据 */
   data: any;
   /** 审核人 */
-  users?: [any];
+  users?: ISelectData[];
   /** 审核组 */
-  groups?: [any];
+  groups?: ISelectData[];
 }
 
 export interface DesignerStates {
-  selectedModel: any;
-  processModel: any;
+  selectedModel: IDefaultModel;
+  processModel: IProcessModel;
 }
 
 export default class Designer extends React.Component<DesignerProps, DesignerStates> {

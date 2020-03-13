@@ -4,8 +4,16 @@ import React, {useContext} from "react";
 import moment from "moment";
 import DefaultDetail from "./DefaultDetail";
 import LangContext from "../../util/context";
+import { ISelectData, IUserModel } from '../../types';
 
-const UserTaskDetail = ({model,users,groups,onChange,readOnly = false,}) => {
+export interface UserProps {
+  model: IUserModel;
+  onChange: (...args: any[]) => any;
+  readOnly: boolean;
+  users: ISelectData[];
+  groups: ISelectData[];
+}
+const UserTaskDetail: React.FunctionComponent<UserProps> = ({model,users,groups,onChange,readOnly = false,}) => {
   const { i18n } = useContext(LangContext);
   const title = i18n['userTask'];
   return (
@@ -43,7 +51,7 @@ const UserTaskDetail = ({model,users,groups,onChange,readOnly = false,}) => {
               optionFilterProp="children"
               defaultValue={model.assignValue}
               onChange={(e) => onChange('assignValue', e)}
-              filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+              filterOption={(input, option) => option.props.title.indexOf(input) >= 0}
               disabled={readOnly}
             >
               {users && users.map(user => (<Select.Option key={user.id}>{user.name}</Select.Option>))}
@@ -62,7 +70,7 @@ const UserTaskDetail = ({model,users,groups,onChange,readOnly = false,}) => {
               optionFilterProp="children"
               defaultValue={model.assignValue}
               onChange={(e) => onChange('assignValue', e)}
-              filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+              filterOption={(input, option) => option.props.title.indexOf(input) >= 0}
               disabled={readOnly}
             >
               {groups && groups.map(group => (<Select.Option key={group.id}>{group.name}</Select.Option>))}

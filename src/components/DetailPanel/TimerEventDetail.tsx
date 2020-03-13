@@ -1,33 +1,39 @@
 import styles from "./index.less";
-import { Input, } from "antd";
+import {Input,} from "antd";
 import React, {useContext} from "react";
-import DefaultDetail from "./DefaultDetail";
+import DefaultDetail from './DefaultDetail';
 import LangContext from "../../util/context";
+import { ITimerModel } from '../../types';
 
-const ReceiveTaskDetail = ({model,onChange,readOnly = false,}) => {
+export interface TimerProps {
+  model: ITimerModel;
+  onChange: (...args: any[]) => any;
+  readOnly: boolean;
+}
+const TimerEventDetail: React.FunctionComponent<TimerProps> = ({model,onChange,readOnly = false,}) => {
   const { i18n } = useContext(LangContext);
-  const title = i18n['receiveTask'];
+  const title = i18n['timerEvent'];
   return (
     <div data-clazz={model.clazz}>
       <div className={styles.panelTitle}>{title}</div>
       <div className={styles.panelBody}>
         <DefaultDetail model={model} onChange={onChange} readOnly={readOnly} />
         <div className={styles.panelRow}>
-          <div>{i18n['receiveTask.waitState']}：</div>
+          <div>{i18n['timerEvent.cycle']}：</div>
           <Input style={{width: '100%', fontSize: 12}}
-                 value={model.waitState}
+                 value={model.cycle}
                  onChange={(e) => {
-                   onChange('waitState', e.target.value)
+                   onChange('cycle', e.target.value)
                  }}
                  disabled={readOnly}
           />
         </div>
         <div className={styles.panelRow}>
-          <div>{i18n['receiveTask.stateValue']}：</div>
+          <div>{i18n['timerEvent.duration']}：</div>
           <Input style={{width: '100%', fontSize: 12}}
-                 value={model.stateValue}
+                 value={model.duration}
                  onChange={(e) => {
-                   onChange('stateValue', e.target.value)
+                   onChange('duration', e.target.value)
                  }}
                  disabled={readOnly}
           />
@@ -37,4 +43,4 @@ const ReceiveTaskDetail = ({model,onChange,readOnly = false,}) => {
   )
 };
 
-export default ReceiveTaskDetail;
+export default TimerEventDetail;

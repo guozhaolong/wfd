@@ -1,17 +1,29 @@
-import React, {useState} from "react";
-import {Modal} from "antd";
-import EditableTable from "antd-etable";
+import React, { useState } from 'react';
+import { Modal } from 'antd';
+import EditableTable from 'antd-etable';
 
-const DataTableModal = ({visible,title,onOk,onCancel,data,cols,newRowKeyPrefix,lang}) => {
-  const [changedData,setChangedData] = useState([]);
+
+export interface ModalProps {
+  visible: boolean;
+  title: string;
+  onOk: (...args: any[]) => any;
+  onCancel: (...args: any[]) => any;
+  data: any[];
+  cols: any[];
+  newRowKeyPrefix: string;
+  lang: 'zh' | 'en';
+}
+
+const DataTableModal: React.FunctionComponent<ModalProps> = ({ visible, title, onOk, onCancel, data, cols, newRowKeyPrefix, lang }) => {
+  const [changedData, setChangedData] = useState([]);
   const handleOk = () => {
     const updateData = data.map(d => {
       const updater = changedData.find(s => d.id === s.id);
       if (updater) {
-        if(updater.isDelete){
+        if (updater.isDelete) {
           return;
         } else {
-          const u = {...d, ...updater};
+          const u = { ...d, ...updater };
           delete u.isNew;
           delete u.isUpdate;
           return u;
@@ -19,7 +31,11 @@ const DataTableModal = ({visible,title,onOk,onCancel,data,cols,newRowKeyPrefix,l
       }
       return d;
     }).filter(s => !!s);
-    const newData = changedData.filter(s => s.isNew).map(s => { delete s.isNew; delete s.isUpdate; return s;});
+    const newData = changedData.filter(s => s.isNew).map(s => {
+      delete s.isNew;
+      delete s.isUpdate;
+      return s;
+    });
     const result = newData.concat(updateData);
     onOk(result);
   };
@@ -47,10 +63,12 @@ const DataTableModal = ({visible,title,onOk,onCancel,data,cols,newRowKeyPrefix,l
         pageSize={data.length}
         total={data.length}
         cols={cols}
-        onChangedDataUpdate={(d)=>{setChangedData(d)}}
+        onChangedDataUpdate={(d) => {
+          setChangedData(d);
+        }}
       />
     </Modal>
-  )
+  );
 };
 
 export default DataTableModal;

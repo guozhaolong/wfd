@@ -1,10 +1,16 @@
 import styles from "./index.less";
 import {Checkbox, Input,} from "antd";
 import React, {useContext} from "react";
-import DefaultDetail from "./DefaultDetail";
+import DefaultDetail from './DefaultDetail';
 import LangContext from "../../util/context";
+import { IFlowModel } from '../../types';
 
-const FlowDetail = ({model,onChange,readOnly = false,}) => {
+export interface FlowProps {
+  model: IFlowModel;
+  onChange: (...args: any[]) => any;
+  readOnly: boolean;
+}
+const FlowDetail: React.FunctionComponent<FlowProps> = ({model,onChange,readOnly = false,}) => {
   const { i18n } = useContext(LangContext);
   const title = i18n['sequenceFlow'];
   return (

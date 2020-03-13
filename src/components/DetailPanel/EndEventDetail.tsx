@@ -1,11 +1,11 @@
 import styles from "./index.less";
 import React, {useContext} from "react";
-import DefaultDetail from "./DefaultDetail";
+import DefaultDetail, { DefaultProps } from './DefaultDetail';
 import LangContext from "../../util/context";
 
-const StartEventDetail = ({model,onChange,readOnly = false,}) => {
+const EndEventDetail: React.FunctionComponent<DefaultProps> = ({model,onChange,readOnly = false,}) => {
   const { i18n } = useContext(LangContext);
-  const title = i18n['startEvent'];
+  const title = i18n['endEvent'];
   return (
     <div data-clazz={model.clazz}>
       <div className={styles.panelTitle}>{title}</div>
@@ -16,4 +16,4 @@ const StartEventDetail = ({model,onChange,readOnly = false,}) => {
   )
 };
 
-export default StartEventDetail;
+export default EndEventDetail;

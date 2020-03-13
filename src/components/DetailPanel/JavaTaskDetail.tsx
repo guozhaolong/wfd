@@ -3,8 +3,14 @@ import { Input, } from "antd";
 import React, {useContext} from "react";
 import DefaultDetail from "./DefaultDetail";
 import LangContext from "../../util/context";
+import { IJavaModel } from '../../types';
 
-const JavaTaskDetail = ({model,onChange,readOnly = false,}) => {
+export interface JavaProps {
+  model: IJavaModel;
+  onChange: (...args: any[]) => any;
+  readOnly: boolean;
+}
+const JavaTaskDetail: React.FunctionComponent<JavaProps> = ({model,onChange,readOnly = false,}) => {
   const { i18n } = useContext(LangContext);
   const title = i18n['javaTask'];
   return (

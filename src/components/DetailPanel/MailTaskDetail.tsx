@@ -3,8 +3,14 @@ import { Input, } from "antd";
 import React, {useContext} from "react";
 import DefaultDetail from "./DefaultDetail";
 import LangContext from "../../util/context";
+import { IMailModel } from '../../types';
 
-const MailTaskDetail = ({model,onChange,readOnly = false,}) => {
+export interface MailProps {
+  model: IMailModel;
+  onChange: (...args: any[]) => any;
+  readOnly: boolean;
+}
+const MailTaskDetail: React.FunctionComponent<MailProps> = ({model,onChange,readOnly = false,}) => {
   const { i18n } = useContext(LangContext);
   const title = i18n['mailTask'];
   return (

@@ -3,8 +3,14 @@ import {Input, Button} from "antd";
 import React, {useContext, useState} from "react";
 import LangContext from "../../util/context";
 import DataTableModal from "./DataTableModal";
+import { IProcessModel } from '../../types';
 
-const ProcessDetail = ({model,onChange,readOnly = false,}) => {
+export interface ProcessProps {
+  model: IProcessModel;
+  onChange: (...args: any[]) => any;
+  readOnly: boolean;
+}
+const ProcessDetail: React.FunctionComponent<ProcessProps> = ({model,onChange,readOnly = false,}) => {
   const { i18n,lang } = useContext(LangContext);
   const [dataObjsModalVisible,setDataObjsModalVisible] = useState(false);
   const [signalDefsModalVisible,setSignalDefsModalVisible] = useState(false);

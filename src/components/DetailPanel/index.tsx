@@ -1,4 +1,4 @@
-import React, {forwardRef} from "react";
+import React, { forwardRef, RefAttributes } from 'react';
 import UserTaskDetail from "./UserTaskDetail";
 import ScriptTaskDetail from "./ScriptTaskDetail";
 import JavaTaskDetail from "./JavaTaskDetail";
@@ -16,8 +16,19 @@ import 'antd/lib/input/style';
 import 'antd/lib/select/style';
 import 'antd/lib/switch/style';
 import styles from "./index.less";
+import { IDefaultModel, ISelectData } from '../../types';
 
-const DetailPanel = forwardRef(({height,model,users,groups,messageDefs,signalDefs,onChange,readOnly = false,},ref)=>{
+export interface DetailProps{
+  height: number;
+  model: IDefaultModel;
+  users: ISelectData[];
+  groups: ISelectData[];
+  messageDefs: ISelectData[];
+  signalDefs: ISelectData[];
+  onChange: (...args: any[]) => any;
+  readOnly: boolean;
+}
+const DetailPanel: React.FunctionComponent<DetailProps & RefAttributes<any>> = forwardRef(({height,model,users,groups,messageDefs,signalDefs,onChange,readOnly = false},ref)=>{
   return (
     <div ref={ref} className={styles.detailPanel} style={{height}}>
       { model.clazz === 'userTask' && <UserTaskDetail model={model} onChange={onChange} readOnly={readOnly} users={users} groups={groups}/>}

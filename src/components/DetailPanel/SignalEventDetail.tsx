@@ -3,8 +3,15 @@ import { Select, } from "antd";
 import React, {useContext} from "react";
 import DefaultDetail from "./DefaultDetail";
 import LangContext from "../../util/context";
+import { ISelectData, ISignalModel } from '../../types';
 
-const SignalEventDetail = ({model,onChange,readOnly = false,signalDefs = []}) => {
+export interface SignalProps {
+  model: ISignalModel;
+  onChange: (...args: any[]) => any;
+  readOnly: boolean;
+  signalDefs: ISelectData[];
+}
+const SignalEventDetail: React.FunctionComponent<SignalProps> = ({model,onChange,readOnly = false,signalDefs = []}) => {
   const { i18n } = useContext(LangContext);
   const title = i18n['signalEvent'];
   return (

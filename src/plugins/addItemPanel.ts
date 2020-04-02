@@ -26,12 +26,12 @@ class AddItemPanel {
       const addModel = (new Function("return " + child.getAttribute('data-item')))();
       child.addEventListener('dragstart', e => {
         e.dataTransfer.setDragImage(ghost, 0, 0);
-        graph.set('onDragAddNode',true);
+        graph.set('addNodeDragging',true);
         graph.set('addModel',addModel);
       });
       child.addEventListener('dragend', e => {
         graph.emit('canvas:mouseup',e);
-        graph.set('onDragAddNode',false);
+        graph.set('addNodeDragging',false);
         graph.set('addModel',null);
       });
     })

@@ -28,7 +28,7 @@ const SignalEventDetail: React.FC<SignalProps> = ({model,onChange,readOnly = fal
             onChange={(e) => onChange('signal', e)}
             disabled={readOnly}
           >
-            {signalDefs && signalDefs.map(signalDef => (<Select.Option key={signalDef.id}>{signalDef.name}</Select.Option>))}
+            {signalDefs && signalDefs.map(signalDef => (<Select.Option value={signalDef.id}>{signalDef.name}</Select.Option>))}
           </Select>
         </div>
       </div>

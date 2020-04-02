@@ -114,7 +114,7 @@ export default function (G6) {
           this.graph.updateItem(item, point);
         } else {
           item.updatePosition(point);
-          this.graph.paint();
+          // this.graph.paint();
         }
       }
     },

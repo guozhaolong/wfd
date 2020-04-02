@@ -1,6 +1,6 @@
 export default function(G6){
   G6.registerBehavior('deleteItem', {
-    getEvents() {
+    getEvents():any {
       return {
         'keydown': 'onKeydown',
         'canvas:mouseleave': 'onCanvasLeave',

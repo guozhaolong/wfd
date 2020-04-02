@@ -1,4 +1,4 @@
-import React, { forwardRef, RefAttributes } from 'react';
+import React, { forwardRef } from 'react';
 import UserTaskDetail from "./UserTaskDetail";
 import ScriptTaskDetail from "./ScriptTaskDetail";
 import JavaTaskDetail from "./JavaTaskDetail";

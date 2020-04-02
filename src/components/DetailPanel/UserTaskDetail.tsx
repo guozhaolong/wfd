@@ -34,9 +34,9 @@ const UserTaskDetail: React.FC<UserProps> = ({model,users,groups,onChange,readOn
             }}
             disabled={readOnly}
           >
-            <Select.Option key="person">{i18n['userTask.assignType.person']}</Select.Option>
-            <Select.Option key="persongroup">{i18n['userTask.assignType.persongroup']}</Select.Option>
-            <Select.Option key="custom">{i18n['userTask.assignType.custom']}</Select.Option>
+            <Select.Option value="person">{i18n['userTask.assignType.person']}</Select.Option>
+            <Select.Option value="persongroup">{i18n['userTask.assignType.persongroup']}</Select.Option>
+            <Select.Option value="custom">{i18n['userTask.assignType.custom']}</Select.Option>
           </Select>
         </div>
         {
@@ -54,7 +54,7 @@ const UserTaskDetail: React.FC<UserProps> = ({model,users,groups,onChange,readOn
               filterOption={(input, option) => option.props.title.indexOf(input) >= 0}
               disabled={readOnly}
             >
-              {users && users.map(user => (<Select.Option key={user.id}>{user.name}</Select.Option>))}
+              {users && users.map(user => (<Select.Option value={user.id}>{user.name}</Select.Option>))}
             </Select>
           </div>
         }
@@ -73,7 +73,7 @@ const UserTaskDetail: React.FC<UserProps> = ({model,users,groups,onChange,readOn
               filterOption={(input, option) => option.props.title.indexOf(input) >= 0}
               disabled={readOnly}
             >
-              {groups && groups.map(group => (<Select.Option key={group.id}>{group.name}</Select.Option>))}
+              {groups && groups.map(group => (<Select.Option value={group.id}>{group.name}</Select.Option>))}
             </Select>
           </div>
         }

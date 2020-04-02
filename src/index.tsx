@@ -115,7 +115,7 @@ export default class Designer extends React.Component<DesignerProps, DesignerSta
           'dragPanelItemAddNode','clickSelected','deleteItem','itemAlign','dragPoint'],
       },
       defaultEdge: {
-        shape: 'flow-polyline-round',
+        type: 'flow-polyline-round',
       },
     });
     this.graph.saveXML = (createFile = true) => exportXML(this.graph.save(),this.state.processModel,createFile);
@@ -137,7 +137,7 @@ export default class Designer extends React.Component<DesignerProps, DesignerSta
       return {
         nodes: data.nodes.map(node => {
           return {
-            shape: getShapeName(node.clazz),
+            type: getShapeName(node.clazz),
             ...node,
           }
         }),

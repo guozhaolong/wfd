@@ -23,19 +23,20 @@
   ],
   "dependencies": {
     "@antv/dom-util": "^2.0.2",
-    "@antv/g6": "~3.2.4",
-    "@antv/util": "~2.0.5",
-    "antd": "^3.22.2",
-    "antd-etable": "^1.3.4",
+    "@antv/matrix-util": "^2.0.5",
+    "@antv/g-canvas": "^0.4.2",
+    "@antv/g6": "~3.4.4",
+    "@antv/util": "~2.0.7",
+    "antd": "^4.0.4",
+    "antd-etable": "^1.3.9",
     "moment": "^2.24.0"
   },
   "peerDependencies": {
-    "react": "16.x"
+    "react": "^16.12.0"
   },
   "devDependencies": {
-    "father": "^2.23.1",
-    "numericjs": "^1.2.6",
-    "umi": "^2.8.15"
+    "father": "^3.0.0-alpha.1",
+    "umi": "^3.0.12"
   },
   "license": "MIT",
   "bugs": {

@@ -28,7 +28,7 @@ const MessageEventDetail: React.FC<MessageProps> = ({model,onChange,readOnly = f
             onChange={(e) => onChange('message', e)}
             disabled={readOnly}
           >
-            {messageDefs && messageDefs.map(messageDef => (<Select.Option key={messageDef.id}>{messageDef.name}</Select.Option>))}
+            {messageDefs && messageDefs.map(messageDef => (<Select.Option value={messageDef.id}>{messageDef.name}</Select.Option>))}
           </Select>
         </div>
       </div>

@@ -5,7 +5,7 @@ export default function(G6) {
         multiple: false,
       };
     },
-    getEvents() {
+    getEvents():any {
       return {
         'node:click': 'onClick',
         'edge:click': 'onClick',

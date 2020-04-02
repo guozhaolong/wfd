@@ -27,7 +27,7 @@ export default function (G6) {
                 sourceNode: node,
                 sourceAnchor: anchorIndex
             };
-            this.graph.set('onDragEdge', true);
+            this.graph.set('edgeDragging', true);
         },
         onDrag(e) {
             if (!this.origin) {
@@ -94,7 +94,7 @@ export default function (G6) {
             const group = node.getContainer();
             group.clearControlPoints(group);
             group.showControlPoints(group);
-            this.graph.set('onDragEdge', false);
+            this.graph.set('edgeDragging', false);
         },
     });
 }

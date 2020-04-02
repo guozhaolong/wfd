@@ -1,4 +1,6 @@
 import editorStyle from "../util/defaultStyle";
+import { EdgeConfig } from '@antv/g6/lib/types';
+import { Marker } from '@antv/g-canvas/lib/shape';
 
 export default function (G6) {
   G6.registerBehavior('dragEdge', {
@@ -10,7 +12,7 @@ export default function (G6) {
         dragEdge: false,
       };
     },
-    getEvents() {
+    getEvents():any {
       return {
         'anchor:dragstart': 'onDragStart',
         'anchor:drag': 'onDrag',
@@ -64,7 +66,7 @@ export default function (G6) {
         };
         this.dragEdgeBeforeShowAnchor(e);
       }
-      this.graph.set('onDragEdge', true);
+      this.graph.set('edgeDragging', true);
     },
     onDrag(e) {
       if (!this.origin) {
@@ -85,16 +87,16 @@ export default function (G6) {
       this.graph.setItemState(this.origin.sourceNode, 'show-anchor', false);
       this.target = null;
       this.origin = null;
-      this.graph.set('onDragEdge', false);
+      this.graph.set('edgeDragging', false);
     },
     sameNode(e) {
-      return e.target.type === 'marker' && e.target.getParent() && e.target.getParent().getParent().get('item').get('id') === this.origin.sourceNode.get('id')
+      return e.target instanceof Marker && e.target.getParent() && e.target.getParent().getParent().get('item').get('id') === this.origin.sourceNode.get('id')
     },
     dragEdgeBeforeShowAnchorBySub(subProcessNode) {
       const group = subProcessNode.getContainer();
       group.nodes.forEach(a => {
         const aGroup = a.getContainer();
-        aGroup.showAnchor(aGroup);
+        aGroup.showAnchor();
         aGroup.anchorShapes.forEach(b => b.get('item').showHotpot());
       });
     },
@@ -109,7 +111,7 @@ export default function (G6) {
         if (!sourceGroupId && targetGroupId || sourceGroupId && !targetGroupId || sourceGroupId !== targetGroupId)
           return;
         const group = node.getContainer();
-        group.showAnchor(group);
+        group.showAnchor();
         group.anchorShapes.forEach(a => a.get('item').showHotpot())
       });
     },
@@ -153,7 +155,7 @@ export default function (G6) {
     _clearAllAnchor() {
       this.graph.getNodes().forEach(node => {
         const group = node.getContainer();
-        group.clearAnchor(group);
+        group.clearAnchor();
       });
     },
     _addSubProcessEdge(node, e) {
@@ -183,7 +185,7 @@ export default function (G6) {
     },
     _addEdge() {
       if (this.origin.targetNode) {
-        const addModel = {
+        const addModel:EdgeConfig = {
           clazz: 'flow',
           source: this.origin.sourceNode.get('id'),
           target: this.origin.targetNode.get('id'),

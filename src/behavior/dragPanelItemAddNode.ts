@@ -16,7 +16,7 @@ export default function (G6) {
       }
     },
     onMouseMove(e) {
-      if (this.graph.get('onDragAddNode')) {
+      if (this.graph.get('addNodeDragging')) {
         let delegateShape = this.graph.get('addDelegateShape');
         const addModel = this.graph.get('addModel');
         const width = parseInt(addModel.size.split('*')[0]);
@@ -44,7 +44,7 @@ export default function (G6) {
       }
     },
     onMouseUp(e) {
-      if (this.graph.get('onDragAddNode')) {
+      if (this.graph.get('addNodeDragging')) {
         const p = this.graph.getPointByClient(e.clientX, e.clientY);
         const subProcessNode = this.graph.find('node', (node) => {
           if (node.get('model')) {
@@ -70,7 +70,7 @@ export default function (G6) {
       }
     },
     _addNodeBySubProcess(p, node) {
-      if (this.graph.get('onDragAddNode')) {
+      if (this.graph.get('addNodeDragging')) {
         const addModel = this.graph.get('addModel');
         const { clazz = 'userTask' } = addModel;
         addModel.shape = getShapeName(clazz);
@@ -99,26 +99,24 @@ export default function (G6) {
       }
     },
     onMouseLeave(e) {
-      if (this.graph.get('onDragAddNode')) {
+      if (this.graph.get('addNodeDragging')) {
         this._clearDelegate();
-        this.graph.emit('afternodedragend');
       }
     },
     _clearDelegate() {
-      if (this.graph.get('onDragAddNode')) {
-        const delegateShape = this.graph.get('addDelegateShape');
-        if (delegateShape) {
-          delegateShape.remove();
-          this.graph.set('addDelegateShape', null);
-          this.graph.paint();
-        }
+      const delegateShape = this.graph.get('addDelegateShape');
+      if (delegateShape) {
+        delegateShape.remove();
+        this.graph.set('addDelegateShape', null);
+        this.graph.paint();
       }
+      this.graph.emit('afternodedragend');
     },
     _addNode(p) {
-      if (this.graph.get('onDragAddNode')) {
+      if (this.graph.get('addNodeDragging')) {
         const addModel = this.graph.get('addModel');
         const { clazz = 'userTask' } = addModel;
-        addModel.shape = getShapeName(clazz);
+        addModel.type = getShapeName(clazz);
         const timestamp = new Date().getTime();
         const id = clazz + timestamp;
         const x = p.x;
@@ -141,6 +139,7 @@ export default function (G6) {
             id: id,
           });
         }
+        this._clearDelegate();
       }
     }
   });

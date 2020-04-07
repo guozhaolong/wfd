@@ -10,7 +10,7 @@ export default function(G6){
         _alignLines: [],
       };
     },
-    getEvents() {
+    getEvents():any {
       return {
         'afternodedrag': 'onDrag',
         'afternodedragend': 'onDragEnd',

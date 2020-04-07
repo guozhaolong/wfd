@@ -2,7 +2,7 @@ import { Marker } from '@antv/g-canvas/lib/shape';
 
 export default function(G6){
   G6.registerBehavior('hoverNodeActived', {
-    getEvents() {
+    getEvents():any {
       return {
         'node:mouseenter': 'onNodeEnter',
         'node:mouseleave': 'onNodeLeave',

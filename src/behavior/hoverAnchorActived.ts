@@ -1,6 +1,6 @@
 export default function(G6){
   G6.registerBehavior('hoverAnchorActived', {
-    getEvents() {
+    getEvents():any {
       return {
         'anchor:mouseenter': 'onAnchorEnter',
         'anchor:mousemove': 'onAnchorEnter',

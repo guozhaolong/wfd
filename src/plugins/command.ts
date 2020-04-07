@@ -104,9 +104,11 @@ class Command{
             return false;
         }
     });
-    const group = subProcess.getContainer();
-    const resultModel = group.removeItem(subProcess, itemId);
-    graph.updateItem(subProcess, resultModel);
+    if(subProcess){
+      const group = subProcess.getContainer();
+      const resultModel = group.removeItem(subProcess, itemId);
+      graph.updateItem(subProcess, resultModel);
+    }
   }
   initCommands(){
     const cmdPlugin = this;

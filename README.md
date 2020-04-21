@@ -9,6 +9,9 @@
 ## Online Demo
 https://guozhaolong.github.io/wfd/
 
+## Vue version
+https://github.com/guozhaolong/wfd-vue/
+
 ## Usage
 ```
 import React, { Component } from 'react';

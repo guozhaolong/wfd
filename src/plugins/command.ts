@@ -227,7 +227,10 @@ class Command{
         const addModel = this.pasteData.model;
         addModel.x && (addModel.x += 10);
         addModel.y && (addModel.y += 10);
-        delete addModel.id;
+        const { clazz = 'userTask' } = addModel;
+        const timestamp = new Date().getTime();
+        const id = clazz + timestamp;
+        addModel.id = id;
         const item = graph.add(this.pasteData.type, addModel);
         item.toFront();
       },

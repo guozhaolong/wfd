@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "module": "esnext",
+    "target": "esnext",
+    "lib": ["dom", "esnext"],
+    "moduleResolution": "node",
+    "jsx": "react",
+    "esModuleInterop": true,
+    "declaration": false,
+    "removeComments": true,
+    "noImplicitAny": false
+  },
+  "include": ["src", "typings"],
+  "exclude": ["node_modules", "lib", "es"]
+}

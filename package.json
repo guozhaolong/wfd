@@ -22,19 +22,21 @@
     "assets"
   ],
   "dependencies": {
-    "@antv/g6": "~3.2.4",
-    "@antv/util": "~1.3.1",
-    "antd": "^3.22.2",
-    "antd-etable": "^1.2.4",
-    "moment": "^2.24.0"
+    "@antv/dom-util": "^2.0.2",
+    "@antv/matrix-util": "^2.0.7",
+    "@antv/g-canvas": "^0.4.12",
+    "@antv/g6": "~3.5.0",
+    "@antv/util": "~2.0.9",
+    "antd": "^4.2.5",
+    "antd-etable": "^1.3.44",
+    "moment": "^2.26.0"
   },
   "peerDependencies": {
-    "react": "16.x"
+    "react": "^16.12.0"
   },
   "devDependencies": {
-    "father": "^2.23.1",
-    "numericjs": "^1.2.6",
-    "umi": "^2.8.15"
+    "father": "^3.0.0-alpha.1",
+    "umi": "^3.2.2"
   },
   "license": "MIT",
   "bugs": {

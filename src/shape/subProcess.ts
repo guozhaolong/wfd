@@ -1,6 +1,6 @@
 import editorStyle from '../util/defaultStyle';
 import { getShapeName } from '../util/clazz';
-const Item = require('@antv/g6/lib/item/item');
+import ControlPoint from '../item/controlPoint';
 const Node = require('@antv/g6/lib/item/node');
 const Edge = require('@antv/g6/lib/item/edge');
 
@@ -55,20 +55,16 @@ export default function(G6) {
         } else if (p[0] === 0.5 && p[1] === 0) {
           cursor = 'ns-resize';
         }
-        const anchor = new Item({
-          type: 'controlPoint',
+        const anchor = new ControlPoint({
           group: anchorContainer,
-          capture: false,
           index: i,
-          isActived: false,
-          model: {
-            style: {
+          model:{
+            style:{
               x: bbox.minX + bbox.width * p[0],
               y: bbox.minY + bbox.height * p[1],
-              ...editorStyle.anchorPointStyle,
               cursor,
-            },
-          },
+            }
+          }
         });
         // fuck 坑了好几天，全局注册的东西，在Item内部调用 Shape.getFactory('anchor') 查询不到。
         // 导致 item 初始化不成功。 只能暂时手工在外部把item 初始化了。 有点坑。

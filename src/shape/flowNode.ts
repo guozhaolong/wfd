@@ -248,7 +248,8 @@ export default function(G6) {
           ],
           fill: this.options.style.stroke,
           stroke: this.options.style.stroke,
-        }
+        },
+        draggable: true,
       });
     },
     getAnchorPoints() {
@@ -288,7 +289,8 @@ export default function(G6) {
           ],
           fill: this.options.style.stroke,
           stroke: this.options.style.stroke,
-        }
+        },
+        draggable: true,
       });
     },
     getAnchorPoints() {

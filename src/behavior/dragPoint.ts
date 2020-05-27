@@ -74,8 +74,7 @@ export default function(G6) {
       // 移动过程中的控制点全部隐藏。
       group.controlPointShapes.forEach(a => a.hide());
 
-      this.graph.updateItem(node, { size: [width, height] });
-
+      this.graph.updateItem(node, { size: [width, height], });
       this.origin = {
         x: e.x,
         y: e.y,

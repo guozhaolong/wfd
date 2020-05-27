@@ -119,7 +119,8 @@ const nodeDefinition:ShapeOptions = {
         attrs: {
           img:this.options.icon,
           ...attrs,
-        }
+        },
+        draggable: true,
       });
       if(cfg.hideIcon){
         group.icon.hide();

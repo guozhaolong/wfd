@@ -4,11 +4,14 @@
 [![NPM Downloads](https://img.shields.io/npm/dm/wfd.svg?style=flat)](https://www.npmjs.org/package/wfd)
 ![](https://img.shields.io/badge/license-MIT-000000.svg)
 
+## Online Demo 1
 ![image](https://github.com/guozhaolong/wfd/raw/master/example/snapshots/1.jpg)
+
+https://guozhaolong.github.io/wfd/
+
+## Online Demo 2
 ![image](https://github.com/guozhaolong/wfd/raw/master/example/snapshots/2.jpg)
 
-## Online Demo
-https://guozhaolong.github.io/wfd/
 https://guozhaolong.github.io/wfd2-example/
 
 ## Vue version

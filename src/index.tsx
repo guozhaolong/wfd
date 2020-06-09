@@ -112,7 +112,7 @@ export default class Designer extends React.Component<DesignerProps, DesignerSta
         default: ['drag-canvas', 'clickSelected'],
         view: [ ],
         edit: ['drag-canvas', 'hoverNodeActived','hoverAnchorActived','dragNode','dragEdge',
-          'dragPanelItemAddNode','clickSelected','deleteItem','itemAlign','dragPoint'],
+          'dragPanelItemAddNode','clickSelected','deleteItem','itemAlign','dragPoint','brush-select'],
       },
       defaultEdge: {
         type: 'flow-polyline-round',

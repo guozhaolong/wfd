@@ -17,6 +17,9 @@ https://guozhaolong.github.io/wfd2-example/
 ## Vue version
 https://github.com/guozhaolong/wfd-vue/
 
+## Form Designer
+https://guozhaolong.github.io/apd-example/
+
 ## Usage
 ```
 import React, { Component } from 'react';

@@ -5,9 +5,11 @@
 ![](https://img.shields.io/badge/license-MIT-000000.svg)
 
 ![image](https://github.com/guozhaolong/wfd/raw/master/example/snapshots/1.jpg)
+![image](https://github.com/guozhaolong/wfd/raw/master/example/snapshots/2.jpg)
 
 ## Online Demo
 https://guozhaolong.github.io/wfd/
+https://guozhaolong.github.io/wfd2-example/
 
 ## Vue version
 https://github.com/guozhaolong/wfd-vue/

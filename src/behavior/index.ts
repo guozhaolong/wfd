@@ -7,6 +7,7 @@ import hoverAnchorActived from './hoverAnchorActived'
 import hoverNodeActived from './hoverNodeActived'
 import itemAlign from './itemAlign'
 import dragPoint from "./dragPoint";
+import moveNode from './moveNode';
 export default function(G6){
   clickSelected(G6);
   deleteItem(G6);
@@ -17,4 +18,5 @@ export default function(G6){
   hoverNodeActived(G6);
   itemAlign(G6);
   dragPoint(G6);
+  moveNode(G6);
 }

@@ -129,6 +129,7 @@ export default class Designer extends React.Component<DesignerProps, DesignerSta
     if(isView && this.props.data && this.props.data.nodes){
       this.graph.fitView(5)
     }
+    this.graph.get('canvas').set('localRefresh', false);
     this.initEvents();
   }
 

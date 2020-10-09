@@ -1,5 +1,3 @@
-import { Marker } from '@antv/g-canvas/lib/shape';
-
 export default function(G6){
   G6.registerBehavior('hoverNodeActived', {
     getEvents():any {
@@ -21,7 +19,7 @@ export default function(G6){
         this.graph.setItemState(e.item, 'show-anchor', true);
     },
     onNodeLeave(e){
-      if(!(e.target instanceof Marker) && !this.graph.get('edgeDragging')) {
+      if(!(e.target.cfg.type === 'marker') && !this.graph.get('edgeDragging')) {
         this.graph.setItemState(e.item, 'show-anchor', false);
       }
     },

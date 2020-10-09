@@ -22,7 +22,8 @@ export default function(G6){
         hover: {
           stroke: editorStyle.edgeActivedStyle.stroke,
         }
-      }
+      },
+      routeCfg: {}
     },
     setState(name, value, item) {
       const group = item.getContainer();
